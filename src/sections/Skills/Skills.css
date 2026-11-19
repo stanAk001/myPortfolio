@@ -1,0 +1,224 @@
+/*
+  The stack as layers in a cut-away. Six bands, each tinted with one palette colour and stepping in
+  from the left, so the drawing reads top (the screen) to bottom (the server). Hovering brings
+  related things forward and pushes the rest back.
+*/
+.sk {
+  padding: clamp(96px, 14vh, 160px) var(--gutter);
+  font-family: var(--font-text);
+}
+
+.sk__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 32px;
+  margin-bottom: clamp(28px, 5vh, 48px);
+}
+
+.sk__head > div:first-child {
+  display: grid;
+  gap: 16px;
+}
+
+.sk .sk__title {
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: var(--t-h2);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+.sk__intro {
+  max-width: 52ch;
+  line-height: 1.6;
+  color: var(--fg-dim);
+}
+
+.sk__object {
+  margin-right: clamp(0px, 4vw, 64px);
+}
+
+.sk__works {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.sk__works button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px 0 6px;
+  border: 1px solid var(--fg-faint);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.35);
+  font-size: 0.86rem;
+  transition: background-color 0.25s, border-color 0.25s, color 0.25s;
+}
+
+.sk__works button span {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--ink-deep);
+  color: var(--porcelain);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+}
+
+.sk__works button.is-lit {
+  border-color: var(--vermilion);
+  background: rgb(255 255 255 / 0.75);
+}
+
+.sk__works button.is-lit span {
+  background: var(--vermilion);
+}
+
+/* ---------- The strata ---------- */
+.sk__layers {
+  display: grid;
+  gap: 6px;
+}
+
+.sk__layer {
+  --tint: var(--lavender);
+  display: grid;
+  grid-template-columns: minmax(200px, 3fr) minmax(0, 9fr);
+  align-items: center;
+  gap: 24px;
+  margin-left: calc(var(--step, 0) * clamp(8px, 2vw, 34px));
+  padding: 16px 20px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--tint) 55%, transparent), color-mix(in srgb, var(--tint) 14%, transparent));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tint) 60%, transparent);
+}
+
+.sk__layer.is-front {
+  --tint: var(--lavender);
+  --step: 0;
+}
+
+.sk__layer.is-back {
+  --tint: #a9b4fa;
+  --step: 1;
+}
+
+.sk__layer.is-data {
+  --tint: var(--mint);
+  --step: 2;
+}
+
+.sk__layer.is-auth {
+  --tint: #f6c2ab;
+  --step: 3;
+}
+
+.sk__layer.is-product {
+  --tint: #f0d8a8;
+  --step: 4;
+}
+
+.sk__layer.is-ship {
+  --tint: #cfd6df;
+  --step: 5;
+}
+
+.sk__label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 12px;
+  align-items: baseline;
+}
+
+.sk__n {
+  grid-row: 1 / 3;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--fg-dim);
+}
+
+.sk__label h3 {
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.15;
+}
+
+.sk__label p {
+  font-size: 0.82rem;
+  color: var(--fg-dim);
+}
+
+.sk__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+}
+
+.sk__tech li {
+  display: grid;
+  gap: 4px;
+  padding: 4px 0;
+  transition: opacity 0.25s;
+}
+
+.sk__tech b {
+  font-family: var(--font-display);
+  font-stretch: 88%;
+  font-weight: 600;
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+}
+
+.sk__by {
+  display: flex;
+  gap: 3px;
+}
+
+.sk__by i {
+  display: grid;
+  place-items: center;
+  min-width: 20px;
+  height: 18px;
+  padding: 0 3px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--ink-text) 10%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  font-style: normal;
+  color: var(--fg-dim);
+}
+
+/* Focus: related things stay, the rest fades back. */
+.sk[data-focus] .sk__tech li {
+  opacity: 0.32;
+}
+
+.sk[data-focus] .sk__tech li.is-lit {
+  opacity: 1;
+}
+
+.sk__tech li.is-lit b {
+  color: var(--vermilion);
+}
+
+@media (max-width: 760px) {
+  .sk__head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sk__object {
+    display: none;
+  }
+  .sk__layer {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    margin-left: calc(var(--step, 0) * 4px);
+  }
+}

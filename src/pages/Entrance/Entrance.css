@@ -1,0 +1,660 @@
+html.at-door,
+html.at-door body {
+  overflow: hidden;
+}
+
+/*
+  Two materials and one light. Outside: warm black paint on the wall, a darker floor, a timber
+  casing. Inside: plaster in three values (far wall, ceiling, side wall) and a lighter floor.
+  Every tone is flat; depth comes from the planes, never from a glow.
+*/
+.w {
+  --w-wall: #0d0c0a;
+  --w-floor: #080706;
+  --w-light: #dcd6c9;
+  --w-dim: rgb(220 214 201 / 0.6);
+  --w-faint: #2d2a24;
+  position: fixed;
+  inset: 0;
+  z-index: 700;
+  background: var(--w-floor);
+  color: var(--w-light);
+  overflow: clip;
+}
+
+/*
+  Going through: the doorway becomes a hole in the whole scene, onto the real portfolio underneath.
+  Two mask layers, the screen and the doorway, excluded from each other; the doorway layer's alpha
+  is how far the room's light has given way to the work. Where masks are unsupported this is simply
+  ignored, and the camera still flies into the light and the scene fades.
+*/
+.w.is-portal {
+  --hole: linear-gradient(rgb(0 0 0 / var(--hole-a, 0)), rgb(0 0 0 / var(--hole-a, 0)));
+  -webkit-mask-image: linear-gradient(#000, #000), var(--hole);
+  mask-image: linear-gradient(#000, #000), var(--hole);
+  -webkit-mask-size: 100% 100%, var(--hole-w) var(--hole-h);
+  mask-size: 100% 100%, var(--hole-w) var(--hole-h);
+  -webkit-mask-position: 0 0, var(--hole-x) var(--hole-y);
+  mask-position: 0 0, var(--hole-x) var(--hole-y);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.w__stage,
+.w__scene,
+.w__layer {
+  position: absolute;
+  inset: 0;
+}
+
+.w__stage {
+  will-change: transform;
+}
+
+.w__layer {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* ---------- Outside ---------- */
+
+.w__wall { fill: var(--w-wall); }
+.w__floor { fill: var(--w-floor); }
+.w__casing { fill: #15130f; stroke: #2a261f; stroke-width: 1; }
+.w__threshold { fill: #221f19; }
+
+/* ---------- Inside ---------- */
+
+.w__far { fill: var(--w-light); }
+.w__ceiling { fill: #e7dfd0; }
+.w__side { fill: #ddd3c2; }
+.w__roomfloor { fill: #cdbfa7; }
+
+/* ---------- The door ---------- */
+
+.w__leaf { fill: #15130f; }
+.w__panel { fill: #191612; stroke: #24201a; stroke-width: 1; }
+.w__knob { fill: #574e40; }
+.w__edge { stroke: #5a5246; stroke-width: 1.2; }
+
+.w__figure { fill: #17130e; }
+
+/* The guest stands outside with us: a shade lighter than the wall, black against the light. */
+.w__guest { fill: #181511; }
+
+/* The room before anyone has put the light on. */
+.w__dim { fill: #000; }
+
+/* Where knuckles meet the door. A line, not a glow. */
+.w__ring {
+  fill: none;
+  stroke: var(--w-light);
+  stroke-width: 1;
+  opacity: 0;
+}
+
+/* Carved over the door, unlit until the person inside has invited you in. */
+.w__lintel {
+  fill: var(--w-faint);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.62em;
+  text-transform: uppercase;
+}
+
+.w__lintel.is-lit {
+  fill: var(--w-light);
+  opacity: 0;
+}
+
+/* ---------- The floor and the name on it ---------- */
+
+.w__spill { fill: var(--w-light); opacity: 0.1; }
+.w__shadow { fill: var(--w-floor); }
+
+.w__name {
+  fill: var(--w-faint);
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
+  user-select: none;
+}
+
+.w__name.is-lit { fill: var(--w-light); }
+
+/* A filmed welcome is multiplied onto the room: its white wall vanishes into the light. */
+.w__film {
+  position: absolute;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+}
+
+/* The screen on the far wall of the room. It makes its own light, so the room's dimness never touches it. */
+.w__screen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  background: #050505;
+  outline: 2px solid #0e0c0a;
+}
+
+.w__screen video,
+.w__screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.w__motes {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ---------- Dialogue: reverse blocks, typed out over whoever is speaking ---------- */
+
+.w__says {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.w__say {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 6px 9px 5px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.w__say:empty {
+  visibility: hidden;
+}
+
+/* Outside, in the dark, the guest speaks in light; inside, in the light, the host speaks in ink. */
+.w__say.is-guest {
+  background: var(--w-light);
+  color: var(--w-floor);
+}
+
+.w__say.is-host {
+  background: var(--w-floor);
+  color: var(--w-light);
+}
+
+/* ---------- Film: grain over everything, and a slate in the corner ---------- */
+
+.w__grain {
+  position: absolute;
+  inset: -40%;
+  pointer-events: none;
+  background-image: var(--w-grain);
+  opacity: 0.5;
+  animation: w-grain 0.9s steps(6) infinite;
+}
+
+@keyframes w-grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-4%, 3%); }
+  40% { transform: translate(3%, -5%); }
+  60% { transform: translate(-2%, -2%); }
+  80% { transform: translate(5%, 4%); }
+  100% { transform: translate(0, 0); }
+}
+
+.w__top {
+  position: absolute;
+  top: 22px;
+  right: var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.w__hud {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--w-dim);
+  pointer-events: none;
+}
+
+.w__time {
+  font-variant-numeric: tabular-nums;
+  color: var(--w-light);
+}
+
+.w__rec {
+  width: 6px;
+  height: 6px;
+  background: var(--w-faint);
+}
+
+.w__rec.is-on {
+  background: var(--signal);
+  animation: w-blink 1.2s steps(1) infinite;
+}
+
+@keyframes w-blink {
+  50% { opacity: 0; }
+}
+
+/* Sound is off until asked for. Three bars that stand still when off and idle like a meter when on. */
+.w__sound {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 0 4px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--w-dim);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.w__sound:hover,
+.w__sound.is-on {
+  color: var(--w-light);
+}
+
+.w__sound:focus-visible {
+  outline: 1px solid var(--w-light);
+  outline-offset: 4px;
+}
+
+.w__bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 10px;
+}
+
+.w__bars i {
+  width: 2px;
+  height: 3px;
+  background: currentColor;
+}
+
+.w__sound.is-on .w__bars i {
+  animation: w-meter 0.9s ease-in-out infinite alternate;
+}
+
+.w__sound.is-on .w__bars i:nth-child(2) { animation-delay: -0.3s; }
+.w__sound.is-on .w__bars i:nth-child(3) { animation-delay: -0.6s; }
+
+@keyframes w-meter {
+  to { height: 10px; }
+}
+
+/* ---------- Words ---------- */
+
+.w__words {
+  position: absolute;
+  left: var(--gutter);
+  top: 17vh;
+  width: min(32vw, 440px);
+}
+
+.w__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--w-dim);
+}
+
+.w__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal);
+}
+
+.w__hello {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 6vw, 6.4rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+.w__line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.w__rise {
+  display: block;
+}
+
+.w__hello em {
+  font-style: italic;
+}
+
+/* "Expected." waits in the dark with the room, and comes on with its lamp. */
+.w__expected {
+  position: relative;
+  width: fit-content;
+  color: rgb(220 214 201 / 0.36);
+}
+
+.w__lamp {
+  position: absolute;
+  inset: 0;
+  color: var(--w-light);
+}
+
+/*
+  Opening credits. On a wide screen they are a lower third in the corner, like the titles over a
+  film's first shot; on a phone they sit under the headline. One line at a time, each word masked so
+  its letters can rise into it.
+*/
+.w__credits {
+  position: fixed;
+  left: var(--gutter);
+  bottom: 34px;
+  display: grid;
+  gap: 6px;
+  max-width: min(34vw, 440px);
+}
+
+.w__credit-label {
+  min-height: 1em;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--w-dim);
+}
+
+.w__credit-value {
+  min-height: 1.2em;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.2rem, 1.6vw, 1.6rem);
+  line-height: 1.15;
+  color: var(--w-light);
+}
+
+.w__word {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0 0.06em 0.12em 0;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.w__ch {
+  display: inline-block;
+}
+
+.w__credit-ticks {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.w__credit-ticks i {
+  width: 14px;
+  height: 2px;
+  background: var(--w-faint);
+  transition: background 0.4s;
+}
+
+.w__credit-ticks i.is-on {
+  background: var(--w-light);
+}
+
+.w__about {
+  max-width: 25ch;
+  margin-top: 24px;
+  font-size: clamp(1rem, 1.2vw, 1.18rem);
+  line-height: 1.5;
+  color: var(--w-dim);
+}
+
+.w__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 22px;
+  margin-top: 40px;
+}
+
+/* Replay drops to its own line under the way in. */
+.w__break {
+  flex-basis: 100%;
+  height: 0;
+}
+
+/* The way in: a block of the room's light. On hover it opens up into an outline, like the doorway. */
+.w__enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 52px;
+  padding: 0 24px;
+  border: 1px solid var(--w-light);
+  background: var(--w-light);
+  color: var(--w-floor);
+  font-size: 1.08rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background 0.35s var(--ease-out), color 0.35s var(--ease-out), transform 0.15s;
+}
+
+.w__enter i {
+  font-style: normal;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.w__enter:hover,
+.w__enter:focus-visible {
+  background: transparent;
+  color: var(--w-light);
+}
+
+.w__enter:hover i,
+.w__enter:focus-visible i {
+  transform: translateX(6px);
+}
+
+.w__enter:active {
+  transform: scale(0.97);
+}
+
+/* Once the host has asked you in, the arrow points the way twice. */
+.w__enter.is-called i {
+  animation: w-nudge 0.9s var(--ease-out) 2;
+}
+
+@keyframes w-nudge {
+  40% { transform: translateX(8px); }
+}
+
+.w__enter:focus-visible,
+.w__replay:focus-visible {
+  outline: 1px solid var(--w-light);
+  outline-offset: 8px;
+}
+
+.w__key,
+.w__replay {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--w-dim);
+}
+
+.w__replay {
+  min-height: 32px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease, color 0.3s;
+}
+
+.w__replay-icon {
+  display: none;
+}
+
+.w__replay.is-on {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.w__replay:hover {
+  color: var(--w-light);
+}
+
+.w__door {
+  position: absolute;
+  cursor: pointer;
+}
+
+/* ---------- Phones: the words above, the door in the middle, the name on the floor, the way in under the thumb ---------- */
+
+@media (max-aspect-ratio: 9/10) {
+  .w__words {
+    inset: 0;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 5vh var(--gutter) calc(14px + env(safe-area-inset-bottom));
+    text-align: center;
+    pointer-events: none;
+  }
+  .w__words > * {
+    pointer-events: auto;
+  }
+  .w__hello {
+    font-size: clamp(2.4rem, 11vw, 3.4rem);
+  }
+  .w__eyebrow {
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  .w__hud {
+    display: none;
+  }
+  .w__top {
+    top: 8px;
+    right: 8px;
+  }
+  /* Just the meter on a phone, so it never crowds the line under it; the label stays for screen readers. */
+  .w__sound {
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+  }
+  .w__sound-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .w__expected {
+    margin-inline: auto;
+  }
+  .w__enter {
+    min-height: 48px;
+  }
+  .w__about {
+    max-width: 30ch;
+    margin: 10px auto 0;
+    font-size: 0.92rem;
+  }
+  .w__actions {
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: auto;
+  }
+  .w__enter {
+    font-size: 1.05rem;
+  }
+  .w__key,
+  .w__break {
+    display: none;
+  }
+  /* On a phone, replay is a 48px square beside the way in; its label is kept for screen readers. */
+  .w__replay {
+    width: 48px;
+    min-height: 48px;
+    border: 1px solid var(--w-faint);
+    font-size: 1.1rem;
+  }
+  .w__replay-icon {
+    display: inline;
+  }
+  .w__replay-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* On a phone the credits carry who you are, in one line that fits any height; the paragraph stays on wide screens. */
+@media (max-aspect-ratio: 9/10) {
+  .w__about {
+    display: none;
+  }
+  /* The first credit already says what the eyebrow says; on a phone that space goes to the door. */
+  .w__eyebrow {
+    display: none;
+  }
+  .w__words {
+    padding-top: 4vh;
+  }
+  .w__credits {
+    position: static;
+    width: 100%;
+    max-width: 34ch;
+    margin: 14px auto 0;
+    text-align: center;
+  }
+  .w__credit-value {
+    font-size: 1.12rem;
+  }
+  .w__credit-ticks {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .w__grain,
+  .w__rec.is-on,
+  .w__enter.is-called i,
+  .w__sound.is-on .w__bars i {
+    animation: none;
+  }
+}

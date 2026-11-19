@@ -1,0 +1,575 @@
+/*
+  A plaster wall in a dark room. The wall is drawn lit, and the dark sits on top with a hole where the
+  beam falls (--x, --y, radius --r) plus a warm tint inside it. Raised things read --sx/--sy (which
+  way their shadow falls, set from the beam) and --lit (how much light reaches them).
+*/
+.lo {
+  --x: 36vw;
+  --y: 46vh;
+  --sx: 0;
+  --sy: 0;
+  --plaster: #e3dccf;
+  --ink: #2b2620;
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  overflow: hidden;
+  background: #0a0908;
+  color: var(--ink);
+  font-family: var(--font-text);
+  cursor: none;
+}
+
+.lo.is-phone,
+.lo.is-still {
+  cursor: auto;
+}
+
+/* ---------- The wall ---------- */
+.lo__wall {
+  position: absolute;
+  inset: 0;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.13  0 0 0 0 0.1  0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(140% 100% at 50% 0%, #ece6db 0%, var(--plaster) 55%, #d3cbbb 100%);
+}
+
+/* Raised: highlight on the side facing the light, shadow falling away from it. */
+[data-raised] {
+  --shadow: calc(var(--sx) * 1px) calc(var(--sy) * 1px);
+}
+
+.lo__name {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  font-family: var(--font-display);
+  font-stretch: 78%;
+  font-weight: 900;
+  font-size: min(24vw, 44vh);
+  line-height: 0.8;
+  letter-spacing: -0.045em;
+  color: var(--plaster);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  text-shadow:
+    calc(var(--sx) * -0.18px) calc(var(--sy) * -0.18px) 0 rgb(255 252 244 / 0.7),
+    calc(var(--sx) * 0.5px) calc(var(--sy) * 0.5px) 1px rgb(60 48 34 / 0.45),
+    calc(var(--sx) * 1.6px) calc(var(--sy) * 1.6px) 14px rgb(40 30 20 / 0.35);
+  user-select: none;
+}
+
+/* Notes pinned to the wall. */
+.lo__note {
+  position: absolute;
+  margin: 0;
+  padding: 16px 20px 18px;
+  background: #f1ece1;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1rem, 1.35vw, 1.35rem);
+  line-height: 1.2;
+  color: var(--ink);
+  box-shadow:
+    0 1px 1px rgb(0 0 0 / 0.12),
+    calc(var(--sx) * 1.2px) calc(var(--sy) * 1.2px) 12px rgb(40 30 20 / 0.32);
+}
+
+/* The pin. */
+.lo__note::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f07a5a, #b3381d 70%);
+  box-shadow: calc(var(--sx) * 0.4px) calc(var(--sy) * 0.4px) 2px rgb(0 0 0 / 0.4);
+}
+
+.lo__note.is-a {
+  left: 7%;
+  top: 15%;
+  transform: rotate(-2.4deg);
+}
+
+.lo__note.is-b {
+  left: 14%;
+  bottom: 12%;
+  transform: rotate(1.6deg);
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+.lo__note.is-c {
+  right: 31%;
+  top: 13%;
+  max-width: 22ch;
+  transform: rotate(2.2deg);
+}
+
+/* A framed print. */
+.lo__frame {
+  position: absolute;
+  right: 7%;
+  top: 12%;
+  width: clamp(110px, min(15vw, 24vh), 250px);
+  margin: 0;
+  padding: 14px;
+  background: #f4f0e7;
+  border: 9px solid #1b1714;
+  box-shadow: calc(var(--sx) * 1.6px) calc(var(--sy) * 1.6px) 22px rgb(30 22 14 / 0.45);
+  transform: rotate(-0.6deg);
+}
+
+.lo__frame img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top;
+}
+
+.lo__frame figcaption {
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6b6156;
+}
+
+/* ---------- The dark and the beam ---------- */
+.lo__dark {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: radial-gradient(circle var(--r) at var(--x) var(--y), rgb(8 7 6 / 0) 0%, rgb(8 7 6 / 0.45) 52%, rgb(8 7 6 / 0.986) 100%);
+  pointer-events: none;
+}
+
+.lo__warm {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  background: radial-gradient(circle calc(var(--r) * 0.95) at var(--x) var(--y), rgb(255 186 110 / 0.3), rgb(255 186 110 / 0.08) 55%, transparent 75%);
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
+.lo.is-still .lo__dark {
+  background: rgb(8 7 6 / 0.72);
+}
+
+.lo.is-still .lo__warm {
+  display: none;
+}
+
+/* ---------- The switch ---------- */
+.lo__switch {
+  position: absolute;
+  z-index: 4;
+  right: 11%;
+  top: 56%;
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+}
+
+.lo__switch button {
+  position: relative;
+  padding: 0;
+  cursor: pointer;
+}
+
+.lo__plate {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 108px;
+  border-radius: 7px;
+  background: linear-gradient(160deg, #f6f1e6, #ddd4c3);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.8),
+    0 1px 1px rgb(0 0 0 / 0.2),
+    calc(var(--sx) * 1.2px) calc(var(--sy) * 1.2px) 12px rgb(30 22 14 / 0.4);
+  /* Only as bright as the light hitting it. */
+  filter: brightness(calc(0.05 + var(--lit, 0) * 0.95));
+  transition: filter 0.15s;
+}
+
+/* The screws. */
+.lo__plate::before,
+.lo__plate::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #b9ae9a, #8a7f6c);
+}
+
+.lo__plate::before { top: 8px; }
+.lo__plate::after { bottom: 8px; }
+
+.lo__rocker {
+  width: 28px;
+  height: 54px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #fbf8f1 0%, #e9e2d3 48%, #cfc5b2 52%, #e4dccb 100%);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.08), 0 2px 3px rgb(0 0 0 / 0.25);
+  transform: perspective(120px) rotateX(14deg);
+  transition: transform 0.12s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.lo.is-on .lo__rocker {
+  transform: perspective(120px) rotateX(-14deg);
+}
+
+/* The little light on the switch. Always on in the dark, so there's always something to aim for. */
+.lo__led {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 50%;
+  background: #ff9d3c;
+  box-shadow: 0 0 6px 2px rgb(255 140 50 / 0.75), 0 0 22px 6px rgb(255 140 50 / 0.25);
+  animation: lo-led 2.4s ease-in-out infinite;
+}
+
+@keyframes lo-led {
+  50% { opacity: 0.45; }
+}
+
+.lo.is-on .lo__led {
+  animation: none;
+  opacity: 0;
+}
+
+/* A warm, slowly breathing glow around the switch so you can find it from anywhere in the dark. */
+.lo__switch::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 54px;
+  width: 260px;
+  height: 260px;
+  margin: -130px 0 0 -130px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(255 157 60 / 0.3), rgb(255 157 60 / 0.1) 55%, transparent);
+  pointer-events: none;
+  animation: lo-glow 3s ease-in-out infinite;
+}
+
+@keyframes lo-glow {
+  50% { opacity: 0.5; transform: scale(0.88); }
+}
+
+.lo.is-on .lo__switch::before {
+  animation: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lo__switch::before {
+    animation: none;
+  }
+}
+
+.lo__switch button:focus-visible {
+  outline: 2px solid #ff9d3c;
+  outline-offset: 6px;
+  border-radius: 8px;
+}
+
+.lo__hint {
+  min-height: 1.2em;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #f2e7d6;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.6);
+  animation: lo-in 0.5s var(--ease-out);
+}
+
+@keyframes lo-in {
+  from { opacity: 0; transform: translateY(6px); }
+}
+
+/* ---------- Over the dark ---------- */
+.lo__top {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px clamp(18px, 3vw, 44px);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(242 231 214 / 0.55);
+}
+
+.lo__tools {
+  display: flex;
+  gap: 22px;
+}
+
+.lo__tools button {
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: rgb(242 231 214 / 0.6);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.lo__tools button:hover,
+.lo__tools button:focus-visible {
+  color: #f2e7d6;
+  outline: none;
+}
+
+.lo__tools button:last-child {
+  color: #f2e7d6;
+}
+
+.lo__how {
+  position: absolute;
+  z-index: 5;
+  left: 0;
+  right: 0;
+  bottom: 22px;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: rgb(242 231 214 / 0.5);
+  transition: opacity 0.4s;
+}
+
+.lo.is-on .lo__how,
+.lo.is-on .lo__top {
+  opacity: 0;
+}
+
+/* The pointer is the light: a small warm dot marks where it is. */
+.lo:not(.is-phone):not(.is-still)::after {
+  content: '';
+  position: absolute;
+  z-index: 6;
+  left: var(--x);
+  top: var(--y);
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: #ffd7a8;
+  box-shadow: 0 0 10px 3px rgb(255 200 140 / 0.5);
+  pointer-events: none;
+}
+
+.lo.is-on::after {
+  opacity: 0;
+}
+
+/* ---------- Phone: same room, rearranged for a tall screen ---------- */
+.lo.is-phone .lo__name {
+  top: 40%;
+  font-size: 23vw;
+}
+
+.lo.is-phone .lo__note.is-a {
+  left: 6%;
+  top: 12%;
+  font-size: 0.95rem;
+}
+
+.lo.is-phone .lo__note.is-b {
+  left: 8%;
+  bottom: 16%;
+}
+
+.lo.is-phone .lo__note.is-c {
+  right: 6%;
+  top: 56%;
+  max-width: 16ch;
+  font-size: 0.9rem;
+}
+
+.lo.is-phone .lo__frame {
+  right: 6%;
+  top: 9%;
+  width: 26vw;
+  padding: 6px;
+  border-width: 5px;
+}
+
+.lo.is-phone .lo__frame figcaption {
+  display: none;
+}
+
+.lo.is-phone .lo__switch {
+  right: 12%;
+  top: auto;
+  bottom: 11%;
+}
+
+.lo.is-phone .lo__tag {
+  display: none;
+}
+
+.lo.is-phone .lo__how {
+  bottom: auto;
+  top: 56px;
+}
+
+.lo.is-on .lo__plate {
+  filter: none;
+}
+
+.lo.is-still .lo__plate {
+  filter: brightness(0.7);
+}
+
+/*
+  The wall uses the site's paper. Notes are handwritten in ballpoint, the frame has the photo at the
+  desk, and there's a card asking what to call the visitor (only visible in the beam, like the switch).
+*/
+.lo__note {
+  font-family: 'Caveat', 'Segoe Print', cursive;
+  font-style: normal;
+  font-weight: 600;
+  font-size: clamp(1.25rem, 1.7vw, 1.65rem);
+  line-height: 1.05;
+  color: #2b47c4;
+}
+
+.lo__note.is-b {
+  font-family: 'Caveat', 'Segoe Print', cursive;
+  font-size: clamp(1.2rem, 1.55vw, 1.5rem);
+  letter-spacing: 0;
+}
+
+.lo__frame img {
+  object-position: 50% 45%;
+}
+
+.lo__frame figcaption {
+  font-family: 'Caveat', cursive;
+  font-size: 1.05rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #4a4136;
+}
+
+.lo__card {
+  position: absolute;
+  z-index: 4;
+  left: 9%;
+  bottom: 34%;
+  display: grid;
+  gap: 8px;
+  width: min(280px, 34vw);
+  padding: 18px 18px 16px;
+  background: #fbf8f1;
+  box-shadow:
+    0 1px 1px rgb(0 0 0 / 0.12),
+    calc(var(--sx) * 1.2px) calc(var(--sy) * 1.2px) 12px rgb(40 30 20 / 0.32);
+  transform: rotate(-1.8deg);
+  filter: brightness(calc(0.06 + var(--lit, 0) * 0.94));
+  transition: filter 0.15s;
+  cursor: auto;
+}
+
+.lo__card::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f07a5a, #b3381d 70%);
+}
+
+.lo__card label {
+  font-family: 'Caveat', cursive;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.1;
+  color: #2b47c4;
+}
+
+.lo__card input {
+  width: 100%;
+  padding: 6px 2px;
+  border: 0;
+  border-bottom: 1.5px dashed #8d8170;
+  background: none;
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  color: #2b2620;
+  outline: none;
+}
+
+.lo__card input::placeholder {
+  color: #a69a88;
+}
+
+.lo__card input:focus {
+  border-bottom-style: solid;
+  border-bottom-color: #2b47c4;
+}
+
+/* Typing in the card keeps the light on it. */
+.lo__card:focus-within {
+  filter: none;
+}
+
+.lo.is-on .lo__card,
+.lo.is-still .lo__card {
+  filter: none;
+}
+
+.lo.is-phone .lo__card {
+  left: 6%;
+  bottom: 30%;
+  width: 52vw;
+  padding: 14px;
+}
+
+.lo.is-phone .lo__card label {
+  font-size: 1.05rem;
+}
+
+/* The card hangs bottom left under the name; the stack note moves over to make room. */
+.lo:not(.is-phone) .lo__card {
+  left: 6%;
+  bottom: 9%;
+}
+
+.lo:not(.is-phone) .lo__note.is-b {
+  left: 34%;
+  bottom: 13%;
+}

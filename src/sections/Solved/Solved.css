@@ -1,0 +1,468 @@
+/*
+  Before and after, big. The "before" is one large bar, like the moment itself (a search, a page
+  counter, an inbox), typed out with a caret, and while it "searches" a band of light runs along it.
+  The "after" comes up underneath: the product running in its frame on the left, its story on the
+  right, coloured only by its own accent.
+*/
+.sv {
+  position: relative;
+  display: grid;
+  gap: clamp(18px, 3vh, 28px);
+  padding: clamp(96px, 14vh, 160px) var(--gutter);
+  font-family: var(--font-text);
+  color: var(--ink-text);
+}
+
+.sv__head {
+  display: grid;
+  gap: 14px;
+}
+
+.sv__head .g-meta {
+  color: var(--ink-dim);
+}
+
+.sv__title {
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: var(--t-h2, clamp(2rem, 4vw, 3.4rem));
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.sv__title span {
+  display: block;
+  font-weight: 300;
+  color: var(--ink-dim);
+}
+
+/* ---------- Before ---------- */
+.sv__bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: clamp(64px, 9vh, 84px);
+  padding: 0 28px 0 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--porcelain);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--ink-text) 12%, transparent),
+    0 24px 60px -30px rgb(0 0 0 / 0.35);
+}
+
+:root:not([data-theme='dark']) .sv__bar {
+  background: #fff;
+}
+
+.sv__tag {
+  flex: none;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink-text) 8%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.sv__icon svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--ink-text);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sv__query {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: clamp(1.15rem, 2.2vw, 1.9rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.sv__caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 3px;
+  vertical-align: -0.15em;
+  background: var(--ink-text);
+  animation: sv-blink 1s steps(1) infinite;
+}
+
+.sv.is-after .sv__caret {
+  opacity: 0;
+  animation: none;
+}
+
+@keyframes sv-blink {
+  50% { opacity: 0; }
+}
+
+/* While it searches, a band of light passes along the bar. */
+.sv__scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--ink-text) 9%, transparent) 50%, transparent 70%) no-repeat;
+  background-size: 50% 100%;
+  background-position: -60% 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sv.is-finding .sv__scan {
+  opacity: 1;
+  animation: sv-scan 0.7s var(--ease-in-out, ease-in-out) both;
+}
+
+@keyframes sv-scan {
+  to { background-position: 160% 0; }
+}
+
+.sv__picks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sv__picks button {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink-text) 14%, transparent);
+  font-size: 0.82rem;
+  color: var(--ink-dim);
+  transition: color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.sv__picks button span {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+}
+
+.sv__picks button:hover {
+  color: var(--ink-text);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink-text) 40%, transparent);
+}
+
+.sv__picks button[aria-current='true'] {
+  background: var(--ink-text);
+  color: var(--porcelain);
+  box-shadow: none;
+}
+
+/* ---------- After ---------- */
+.sv__after {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(28px, 4vw, 64px);
+  margin-top: clamp(10px, 2vh, 22px);
+  transition: opacity 0.35s, transform 0.6s var(--ease-out);
+}
+
+.sv.is-typing .sv__after,
+.sv.is-finding .sv__after {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.sv.is-after .sv__after {
+  opacity: 1;
+  transform: none;
+}
+
+.sv__frame {
+  overflow: hidden;
+  border-radius: 12px;
+  background: #0d1013;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.08), 0 40px 80px -40px rgb(0 0 0 / 0.45);
+}
+
+.sv__host {
+  display: flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 14px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: rgb(232 228 220 / 0.7);
+  box-shadow: inset 0 -2px 0 var(--p-accent);
+}
+
+.sv__view {
+  position: relative;
+  aspect-ratio: 16 / 10;
+}
+
+.sv__view .rl__clip,
+.sv__view .rl__clip img,
+.sv__view .rl__clip video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.sv.is-after .sv__frame {
+  animation: sv-open 0.9s var(--ease-out) both;
+}
+
+@keyframes sv-open {
+  from { clip-path: inset(0 0 100% 0 round 12px); }
+  to { clip-path: inset(0 0 0 0 round 12px); }
+}
+
+.sv__words {
+  display: grid;
+  gap: 14px;
+}
+
+.sv__words .label {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.sv__was {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--ink-dim);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--ink-text) 35%, transparent);
+  text-decoration-thickness: 1px;
+}
+
+.sv__was .label {
+  text-decoration: none;
+}
+
+.sv__name {
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.sv__fix {
+  max-width: 48ch;
+  line-height: 1.55;
+}
+
+.sv__fixes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.86rem;
+}
+
+.sv__fixes li::before {
+  content: '✓ ';
+  color: #2bb673;
+  font-weight: 700;
+}
+
+.sv__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.sv__live i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ink-faint);
+}
+
+.sv__live.is-up i {
+  background: #2bb673;
+  animation: sv-pulse 2s ease-out infinite;
+}
+
+@keyframes sv-pulse {
+  0% { box-shadow: 0 0 0 0 rgb(43 182 115 / 0.5); }
+  100% { box-shadow: 0 0 0 7px rgb(43 182 115 / 0); }
+}
+
+.sv__go {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+  margin-top: 4px;
+}
+
+.sv__need {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: var(--ink-text);
+  color: var(--porcelain);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.sv__need span {
+  transition: transform 0.4s var(--ease-out);
+}
+
+.sv__need:hover span {
+  transform: translateX(4px);
+}
+
+.sv__how {
+  font-size: 0.9rem;
+  color: var(--ink-dim);
+}
+
+.sv__how:hover {
+  color: var(--ink-text);
+}
+
+.sv button:focus-visible,
+.sv a:focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 3px;
+}
+
+/* The text in the "after" rises in once the frame has opened. */
+.sv.is-after .sv__words > * {
+  animation: sv-rise 0.6s var(--ease-out) both;
+}
+
+.sv.is-after .sv__words > :nth-child(2) { animation-delay: 0.08s; }
+.sv.is-after .sv__words > :nth-child(3) { animation-delay: 0.16s; }
+.sv.is-after .sv__words > :nth-child(4) { animation-delay: 0.22s; }
+.sv.is-after .sv__words > :nth-child(5) { animation-delay: 0.28s; }
+.sv.is-after .sv__words > :nth-child(6) { animation-delay: 0.34s; }
+
+@keyframes sv-rise {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+@media (max-width: 760px) {
+  .sv__after {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .sv__bar {
+    gap: 10px;
+    padding-right: 18px;
+  }
+  .sv__tag {
+    display: none;
+  }
+  .sv__picks {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .sv__picks button {
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sv__after,
+  .sv.is-after .sv__frame,
+  .sv.is-after .sv__words > * {
+    animation: none;
+    transition: none;
+  }
+  .sv__caret {
+    animation: none;
+  }
+}
+
+/* While the next "before" types, the last "after" stays put quietly so there's no empty gap. */
+.sv.is-typing .sv__after,
+.sv.is-finding .sv__after {
+  opacity: 0.22;
+  transform: none;
+}
+
+/*
+  Phones: same as the laptop, the fix next to its proof. The product playing in its handset on the
+  left, the story of the fix on the right.
+*/
+@media (max-width: 760px) {
+  .sv__after {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    align-items: start;
+    gap: 16px;
+  }
+  .sv__film {
+    position: sticky;
+    top: calc(var(--nav-h, 64px) + 16px);
+  }
+  .sv__hs {
+    transform: rotate(-2.5deg);
+  }
+  .sv__words {
+    gap: 10px;
+  }
+  .sv__name {
+    font-size: clamp(1.6rem, 8vw, 2.2rem);
+  }
+  .sv__was,
+  .sv__fix {
+    font-size: 0.82rem;
+    line-height: 1.42;
+  }
+  .sv__fixes {
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.78rem;
+  }
+  .sv__go {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .sv__need {
+    min-height: 42px;
+    padding: 0 18px;
+    font-size: 0.85rem;
+  }
+}

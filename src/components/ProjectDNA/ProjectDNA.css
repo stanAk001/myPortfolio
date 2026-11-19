@@ -1,0 +1,36 @@
+.dna {
+  --dna-accent: var(--p-accent, var(--signal));
+}
+
+.dna__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--dna-accent);
+  color: var(--fg, var(--bone));
+}
+
+.dna__strand {
+  width: 96px;
+  height: 14px;
+  fill: var(--dna-accent);
+}
+
+.dna__row {
+  display: grid;
+  grid-template-columns: 6.5em 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--fg-faint, var(--bone-faint));
+}
+
+.dna__row dd {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  letter-spacing: -0.005em;
+}

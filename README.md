@@ -57,4 +57,3 @@ node scripts/capture.mjs <id> https://your-site.vercel.app
 ## Accessibility & motion
 
 With `prefers-reduced-motion`, the welcome skips its animation, the build film shows as a static sequence, and nothing autoplays. Everything is keyboard-reachable.
-# myPortfolio

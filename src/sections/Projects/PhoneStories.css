@@ -1,0 +1,247 @@
+/*
+  Stories: a card on a wash of the product's colours, the product framed in its handset in the
+  middle, progress bars along the top, the story below. Dark in both themes, like a screen.
+*/
+.ps {
+  position: relative;
+  padding: clamp(72px, 12vh, 110px) var(--gutter) 64px;
+  font-family: var(--font-text);
+}
+
+.ps__anchor {
+  position: absolute;
+  top: 0;
+}
+
+.ps__head {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.ps__head h2 {
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 800;
+  font-size: clamp(2.4rem, 11vw, 3.6rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+}
+
+.ps__head p {
+  max-width: 34ch;
+  color: var(--fg-dim);
+}
+
+.ps__story {
+  --fg: #f4efe6;
+  --fg-dim: rgb(244 239 230 / 0.68);
+  --fg-faint: rgb(244 239 230 / 0.22);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  margin-inline: calc(var(--gutter) * -1 + 8px);
+  padding: 52px 20px 22px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #09090a;
+  color: var(--fg);
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Progress bars along the top. */
+.ps__bars {
+  position: absolute;
+  z-index: 3;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  gap: 4px;
+}
+
+.ps__bars i {
+  position: relative;
+  flex: 1;
+  height: 2.5px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--fg-faint);
+}
+
+.ps__bars i.is-done {
+  background: var(--fg);
+}
+
+.ps__bars b {
+  position: absolute;
+  inset: 0;
+  background: var(--fg);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: ps-fill var(--ms) linear forwards;
+}
+
+.ps__bars b.is-paused {
+  animation-play-state: paused;
+}
+
+.ps__bars b.is-full {
+  animation: none;
+  transform: none;
+}
+
+@keyframes ps-fill {
+  to { transform: scaleX(1); }
+}
+
+.ps__top {
+  position: absolute;
+  z-index: 3;
+  top: 26px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--fg-dim);
+}
+
+.ps__top span:first-child {
+  color: var(--fg);
+}
+
+/* The handset in the middle; the two halves around it are the tap zones. */
+.ps__stage {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding: 6px 0 24px;
+}
+
+.ps__hs {
+  width: min(44%, 200px);
+}
+
+.ps__tap {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  padding: 0;
+}
+
+.ps__tap.is-prev {
+  left: 0;
+}
+
+.ps__tap.is-next {
+  right: 0;
+}
+
+.ps__tap:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: -6px;
+  border-radius: 12px;
+}
+.ps__copy {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  gap: 8px;
+  animation: ps-up 0.5s var(--ease-out) both;
+}
+
+@keyframes ps-up {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+.ps__cat {
+  color: var(--fg-dim);
+}
+
+.ps__name {
+  font-family: var(--font-display);
+  font-stretch: 80%;
+  font-weight: 800;
+  font-size: clamp(2.3rem, 12vw, 4rem);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+}
+
+.ps__problem {
+  max-width: 30ch;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  color: var(--fg);
+}
+
+.ps__stack {
+  color: var(--fg-dim);
+}
+
+.ps__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg-dim);
+}
+
+.ps__live i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--fg-faint);
+}
+
+.ps__live.is-up i {
+  background: #2bb673;
+}
+
+.ps__acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.ps__go {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgb(244 239 230 / 0.42);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.ps__go.is-main {
+  background: var(--fg);
+  color: #111;
+  box-shadow: none;
+}
+
+.ps__go:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+.ps__hint {
+  margin-top: 14px;
+  text-align: center;
+  color: var(--fg-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ps__copy {
+    animation: none;
+  }
+}

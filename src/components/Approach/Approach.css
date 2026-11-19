@@ -1,0 +1,95 @@
+.appr {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  padding-top: 26px;
+}
+
+.appr__line {
+  position: absolute;
+  left: 6px;
+  right: 0;
+  top: 5px;
+  height: 1px;
+  background: linear-gradient(90deg, rgb(220 214 201 / 0.5), rgb(220 214 201 / 0.12));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.6s var(--ease-out) 0.2s;
+}
+
+.appr.is-in .appr__line {
+  transform: none;
+}
+
+.appr li {
+  position: relative;
+  display: grid;
+  gap: 3px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  transition-delay: calc(0.35s + var(--i) * 0.28s);
+}
+
+.appr.is-in li {
+  opacity: 1;
+  transform: none;
+}
+
+/* Each stop's own mark, sitting on the line. */
+.appr__mark {
+  position: absolute;
+  left: 0;
+  top: -26px;
+  width: 11px;
+  height: 11px;
+  background: var(--bg, #111417);
+}
+
+.appr__mark.is-idea {
+  border: 1px solid rgb(220 214 201 / 0.7);
+  border-radius: 50%;
+}
+
+.appr__mark.is-design {
+  border: 1px solid rgb(220 214 201 / 0.7);
+}
+
+.appr__mark.is-eng {
+  border: 1px solid rgb(220 214 201 / 0.7);
+  transform: rotate(45deg) scale(0.86);
+}
+
+.appr__mark.is-live {
+  border-radius: 50%;
+  background: var(--vermilion);
+}
+
+.appr b {
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.appr small {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-dim);
+}
+
+@media (max-width: 600px) {
+  .appr {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .appr__line,
+  .appr li {
+    transition: none;
+  }
+}

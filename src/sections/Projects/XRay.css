@@ -1,0 +1,239 @@
+/*
+  The blueprint behind the line: the same screen, inverted and dimmed like a photo negative, with the
+  stack written over it in mono. It's a screen, so it stays dark in both themes like the frames.
+*/
+.xr {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  pointer-events: none;
+}
+
+.xr__under {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #0d0f12;
+  clip-path: inset(0 0 0 calc(var(--x) * 100%));
+}
+
+.xr__print {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  filter: grayscale(1) invert(1) contrast(1.2) blur(0.6px);
+  opacity: 0.12;
+  /* The negative shows through where nothing's written and fades under the stack. */
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 22%, transparent 48%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 22%, transparent 48%);
+}
+
+@media (max-width: 760px) {
+  .xr__print {
+    opacity: 0.06;
+  }
+}
+
+/* In this view the phone moves aside so the stack is easy to read. */
+.pj__stage:has(.xr.is-open) .pj__phone {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.xr__sheet {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  align-content: center;
+  gap: clamp(10px, 2vh, 18px);
+  width: min(64%, 540px);
+  padding: clamp(14px, 3%, 28px);
+  font-family: var(--font-mono);
+  color: #e8e4dc;
+}
+
+.xr__head,
+.xr__src {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(232 228 220 / 0.55);
+  opacity: clamp(0, calc((var(--o) - 0.08) * 8), 1);
+}
+
+.xr__head span:first-child {
+  color: #e8e4dc;
+}
+
+.xr__src {
+  letter-spacing: 0.04em;
+  text-transform: none;
+  opacity: clamp(0, calc((var(--o) - 0.55) * 6), 1);
+}
+
+/* The stack top to bottom, joined by one line. Each layer shows as the handle passes it. */
+.xr__stack {
+  position: relative;
+  display: grid;
+  gap: clamp(8px, 1.6vh, 14px);
+  margin: 0;
+  padding: 0 0 0 16px;
+  list-style: none;
+}
+
+.xr__stack::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: rgb(232 228 220 / 0.22);
+  transform-origin: top;
+  transform: scaleY(clamp(0, calc((var(--o) - 0.12) * 2.2), 1));
+}
+
+.xr__stack li {
+  --v: clamp(0, calc((var(--o) - 0.12 - var(--k) * 0.08) * 8), 1);
+  position: relative;
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 10px;
+  opacity: var(--v);
+  transform: translateX(calc((1 - var(--v)) * 14px));
+}
+
+.xr__stack li::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 0.45em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #0d0f12;
+  box-shadow: inset 0 0 0 1.5px #e8e4dc;
+}
+
+.xr__name {
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(232 228 220 / 0.6);
+}
+
+.xr__vals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.xr__vals code {
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgb(232 228 220 / 0.07);
+  box-shadow: inset 0 0 0 1px rgb(232 228 220 / 0.16);
+  font-family: inherit;
+  font-size: 0.64rem;
+  white-space: nowrap;
+}
+
+/* The line and its handle. */
+.xr__line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--x) * 100%);
+  width: 2px;
+  margin-left: -1px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.xr.is-open .xr__line {
+  opacity: 1;
+}
+
+.xr__grip {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--x) * 100%);
+  padding: 0;
+  pointer-events: auto;
+  touch-action: none;
+  cursor: ew-resize;
+  transform: translate(calc(var(--x) * -100%), -50%);
+}
+
+.xr__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 11px 8px 9px;
+  border-radius: 999px;
+  background: #121212;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.25), 0 8px 20px -8px rgb(0 0 0 / 0.6);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #fff;
+  transition: transform 0.25s var(--ease-out);
+}
+
+.xr__tab b {
+  font-weight: 400;
+}
+
+.xr__tab i {
+  font-style: normal;
+  font-size: 0.9rem;
+  line-height: 0.6;
+}
+
+.xr__grip:hover .xr__tab {
+  transform: scale(1.06);
+}
+
+.xr__grip:focus-visible {
+  outline: none;
+}
+
+.xr__grip:focus-visible .xr__tab {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 2px;
+}
+
+/* On a phone the sheet takes the whole screen and only shows the first few lines of each layer. */
+@media (max-width: 760px) {
+  .xr__sheet {
+    width: 100%;
+    padding: 12px 12px 12px 15%;
+    gap: 8px;
+  }
+  .xr__stack li {
+    grid-template-columns: 58px minmax(0, 1fr);
+  }
+  .xr__vals code:nth-child(n + 3) {
+    display: none;
+  }
+  .xr__vals code {
+    font-size: 0.56rem;
+  }
+  .xr__src {
+    display: none;
+  }
+}

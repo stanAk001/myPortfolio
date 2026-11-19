@@ -1,0 +1,67 @@
+.mq {
+  position: relative;
+  padding-block: clamp(28px, 5vh, 56px);
+  overflow: hidden;
+  border-block: 1px solid var(--bone-faint);
+}
+
+.mq__row {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.mq__track {
+  display: inline-flex;
+  will-change: transform;
+}
+
+.mq__word {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding-right: 0.6em;
+  font-size: clamp(2rem, 4.4vw, 4.6rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.mq__word em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.mq__word--outline {
+  color: var(--bone-dim);
+}
+
+.mq__star {
+  font-size: 0.42em;
+  color: var(--signal);
+}
+
+/* The second band is a quiet ticker: small, mono, the actual stack. */
+.mq__row--ticker {
+  margin-top: clamp(14px, 2.4vh, 24px);
+  padding-top: clamp(14px, 2.4vh, 24px);
+  border-top: 1px solid var(--bone-faint);
+}
+
+.mq__tick {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.6em;
+  padding-right: 1.6em;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+}
+
+.mq__tick i {
+  font-style: normal;
+  color: var(--signal);
+}

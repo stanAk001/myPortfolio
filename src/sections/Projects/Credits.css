@@ -1,0 +1,149 @@
+/*
+  Film credits styled like the rest of the page: ink on paper, roles to the right of a centre line,
+  the name to the left. No grain, no glow. The joke is how plain it is.
+*/
+.cr {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: clamp(28px, 5vh, 52px);
+  padding: clamp(72px, 14vh, 140px) var(--gutter) clamp(72px, 14vh, 140px);
+  overflow: hidden;
+  background: var(--porcelain);
+  color: var(--ink-text);
+}
+
+.cr__label {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 18px;
+  max-width: 100%;
+  color: var(--fg-dim);
+  text-align: center;
+}
+
+.cr__label span {
+  color: color-mix(in srgb, var(--ink-text) 55%, transparent);
+}
+
+.cr__label span:first-child {
+  color: var(--ink-text);
+}
+
+.cr__list {
+  display: grid;
+  gap: clamp(14px, 2.6vh, 24px);
+  width: min(100%, 760px);
+  margin: 0;
+}
+
+.cr__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+  align-items: baseline;
+  gap: clamp(16px, 3vw, 36px);
+}
+
+/* The centre line the credits hang from. */
+.cr__row::before {
+  content: '';
+  grid-column: 2;
+  grid-row: 1;
+  align-self: stretch;
+  background: color-mix(in srgb, var(--ink-text) 14%, transparent);
+}
+
+.cr__row dt {
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+  justify-items: end;
+  gap: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.cr__row dt small {
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: var(--fg-dim);
+}
+
+.cr__row dd {
+  grid-column: 3;
+  grid-row: 1;
+  margin: 0;
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.cr__next {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  padding-top: clamp(16px, 3vh, 28px);
+  text-align: center;
+}
+
+.cr__next p {
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 700;
+  font-size: clamp(2rem, 4.6vw, 4.2rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.cr__next em {
+  font-style: normal;
+  color: var(--fg-dim);
+}
+
+.cr__go {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 26px;
+  border-radius: 999px;
+  background: var(--ink-deep);
+  color: var(--porcelain);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.cr__go span {
+  transition: transform 0.4s var(--ease-out);
+}
+
+.cr__go:hover span {
+  transform: translateX(4px);
+}
+
+.cr__go:focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .cr__label span:last-child {
+    display: none;
+  }
+  .cr__row {
+    gap: 12px;
+  }
+  .cr__row dt {
+    font-size: 0.6rem;
+  }
+  .cr__row dt small {
+    display: none;
+  }
+}

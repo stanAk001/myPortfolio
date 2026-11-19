@@ -1,0 +1,317 @@
+/*
+  Shared parts for the studio page: section headings, and the wall that hangs flyers like proofs.
+*/
+.sd {
+  padding: clamp(96px, 14vh, 168px) var(--gutter);
+  font-family: var(--font-text);
+}
+
+.sd__head {
+  display: grid;
+  gap: 18px;
+  margin-bottom: clamp(48px, 8vh, 88px);
+}
+
+.sd .sd__title {
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: var(--t-h2);
+  line-height: 1;
+  letter-spacing: -0.015em;
+}
+
+.sd__intro {
+  max-width: 58ch;
+  line-height: 1.6;
+  color: var(--fg-dim);
+}
+
+.sd__skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sd__skills li {
+  padding: 6px 12px;
+  border: 1px solid var(--fg-faint);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.sd__part + .sd__part {
+  margin-top: clamp(80px, 12vh, 140px);
+}
+
+.sd__part-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 32px;
+  margin-bottom: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--fg-faint);
+}
+
+.sd__part-note {
+  max-width: 60ch;
+  font-size: 0.92rem;
+  color: var(--fg-dim);
+}
+
+/* ---------- Pin wall ---------- */
+
+.pw__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.pw__filters button {
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--fg-faint);
+  border-radius: 999px;
+  font-size: 0.88rem;
+  color: var(--fg-dim);
+  transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+}
+
+.pw__filters button span {
+  margin-left: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.pw__filters button:hover {
+  color: var(--fg);
+  border-color: rgb(220 214 201 / 0.3);
+}
+
+.pw__filters button[aria-pressed='true'] {
+  background: var(--warm-white);
+  border-color: var(--warm-white);
+  color: #111417;
+}
+
+/* A window onto the wall: columns drift inside it and the edges fade out. */
+.pw {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: clamp(14px, 1.6vw, 24px);
+  height: min(900px, 92vh);
+  overflow: hidden;
+  border-radius: 14px;
+  mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent);
+  animation: pw-in 0.7s var(--ease-out);
+}
+
+@keyframes pw-in {
+  from { opacity: 0; transform: translateY(16px); }
+}
+
+.pw__col {
+  display: flex;
+  flex-direction: column;
+  animation: pw-up var(--dur) linear infinite;
+}
+
+.pw__col.is-down {
+  animation-name: pw-down;
+}
+
+.pw:hover .pw__col,
+.pw:focus-within .pw__col {
+  animation-play-state: paused;
+}
+
+@keyframes pw-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+@keyframes pw-down {
+  from { transform: translateY(-50%); }
+  to { transform: translateY(0); }
+}
+
+.pw__run {
+  display: grid;
+  gap: clamp(14px, 1.6vw, 24px);
+  padding-bottom: clamp(14px, 1.6vw, 24px);
+}
+
+.pw__print {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 24px 40px -24px rgb(0 0 0 / 0.95), 0 0 0 1px rgb(220 214 201 / 0.06);
+  transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out), opacity 0.4s;
+}
+
+.pw__print img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+/* The one you hover comes forward; the rest step back. */
+.pw:has(.pw__print:hover) .pw__print:not(:hover) {
+  opacity: 0.45;
+}
+
+.pw__print:hover,
+.pw__print:focus-visible {
+  transform: scale(1.035);
+  box-shadow: 0 40px 70px -26px rgb(0 0 0 / 0.95), 0 0 0 1px rgb(220 214 201 / 0.3);
+}
+
+.pw__tag {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgb(14 17 20 / 0.88);
+  font-size: 0.78rem;
+  line-height: 1.35;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s, transform 0.4s var(--ease-out);
+}
+
+.pw__tag b {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vermilion);
+}
+
+.pw__print:hover .pw__tag,
+.pw__print:focus-visible .pw__tag {
+  opacity: 1;
+  transform: none;
+}
+/* Lightbox */
+.lb {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 24px 80px;
+  background: rgb(10 12 14 / 0.94);
+  animation: lb-in 0.3s ease;
+}
+
+@keyframes lb-in {
+  from { opacity: 0; }
+}
+
+.lb__fig {
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+  margin: 0;
+  animation: lb-pop 0.5s var(--ease-out);
+}
+
+@keyframes lb-pop {
+  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+}
+
+.lb__fig img {
+  max-height: calc(100svh - 120px);
+  width: auto;
+  max-width: 100%;
+  border-radius: 6px;
+  box-shadow: 0 50px 100px -40px rgb(0 0 0 / 0.95);
+}
+
+.lb__fig figcaption {
+  display: grid;
+  gap: 4px;
+  text-align: center;
+}
+
+.lb__nav,
+.lb__close {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  min-width: 48px;
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgb(220 214 201 / 0.2);
+  border-radius: 999px;
+  color: var(--warm-white);
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.lb__nav:hover,
+.lb__close:hover {
+  background: rgb(220 214 201 / 0.12);
+}
+
+.lb__prev { left: 20px; top: 50%; }
+.lb__next { right: 20px; top: 50%; }
+.lb__close { top: 20px; right: 20px; font-size: 0.85rem; }
+
+
+@media (max-width: 600px) {
+  .pw {
+    height: 640px;
+  }
+  .lb {
+    padding: 70px 12px 80px;
+  }
+  .lb__prev,
+  .lb__next {
+    top: auto;
+    bottom: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pw__col {
+    animation: none;
+  }
+  .pw {
+    height: auto;
+    max-height: none;
+  }
+  .pw__run + .pw__run {
+    display: none;
+  }
+  .pw__print,
+  .pw__print:hover {
+    transform: none;
+    transition: none;
+  }
+  .lb,
+  .lb__fig {
+    animation: none;
+  }
+}

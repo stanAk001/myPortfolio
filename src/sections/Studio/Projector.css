@@ -1,0 +1,77 @@
+/*
+  The section is near black, darkest at the edges, whatever theme the rest of the site is in. It uses
+  dark-theme values for its own text and controls so everything reads on the dark.
+*/
+section.qc {
+  --porcelain: #0d0c0b;
+  --ink-deep: #efe9df;
+  --ink-text: #efe9df;
+  --ink-dim: rgb(239 233 223 / 0.64);
+  --ink-faint: rgb(239 233 223 / 0.13);
+  --vermilion: #efe9df;
+  --fg: var(--ink-text);
+  --fg-dim: var(--ink-dim);
+  --fg-faint: var(--ink-faint);
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background: #0d0c0b;
+  color: var(--ink-text);
+}
+
+section.qc .bgword {
+  color: rgb(239 233 223 / 0.022);
+}
+
+.pjx {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pjx__light {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* The corners fade off into darkness. */
+.pjx::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 60% 40%, transparent 55%, rgb(0 0 0 / 0.55) 100%);
+}
+
+/* Film grain over everything, shifted every frame. */
+.pjx__grain {
+  position: absolute;
+  inset: -50%;
+  z-index: 1;
+  background-image: var(--grain);
+  background-size: 160px 160px;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  animation: pjx-grain 0.45s steps(6) infinite;
+}
+
+.pjx.is-running .pjx__grain {
+  opacity: 0.1;
+}
+
+@keyframes pjx-grain {
+  0% { transform: translate(0, 0); }
+  17% { transform: translate(-7%, 4%); }
+  33% { transform: translate(5%, -6%); }
+  50% { transform: translate(-3%, 8%); }
+  67% { transform: translate(8%, 2%); }
+  83% { transform: translate(-6%, -5%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pjx__grain {
+    animation: none;
+  }
+}

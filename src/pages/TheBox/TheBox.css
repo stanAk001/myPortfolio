@@ -1,0 +1,591 @@
+/*
+  TheBox Lounge case study, styled like the studio. One reading column for the story; the proof and
+  the split diagram go wider. Graphite, warm white, and one vermilion accent for money moving.
+*/
+.tb {
+  padding: calc(var(--nav-h) + 28px) var(--gutter) clamp(96px, 14vh, 168px);
+  font-family: var(--font-text);
+}
+
+.tb__head {
+  display: grid;
+  gap: 18px;
+  max-width: 900px;
+  margin-bottom: clamp(32px, 6vh, 56px);
+}
+
+.tb__title {
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: var(--t-hero);
+  line-height: 1;
+  letter-spacing: -0.015em;
+}
+
+.tb__hook {
+  max-width: 52ch;
+  font-size: clamp(1.1rem, 1.6vw, 1.32rem);
+  line-height: 1.5;
+  color: var(--fg-dim);
+}
+
+/* ---------- Videos ---------- */
+.lite {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.1), 0 50px 100px -60px rgb(0 0 0 / 0.95);
+}
+
+.lite iframe,
+.lite__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.lite__poster {
+  display: block;
+  padding: 0;
+  cursor: pointer;
+}
+
+.lite__poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-out), filter 0.4s;
+  filter: brightness(0.82);
+}
+
+.lite__poster:hover img {
+  transform: scale(1.025);
+  filter: none;
+}
+
+.lite__play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(56px, 7vw, 84px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--warm-white);
+  transform: translate(-50%, -50%);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.lite__play::after {
+  content: '';
+  position: absolute;
+  left: 54%;
+  top: 50%;
+  border-block: 0.6em solid transparent;
+  border-left: 0.95em solid #111417;
+  font-size: clamp(14px, 1.6vw, 20px);
+  transform: translate(-50%, -50%);
+}
+
+.lite__poster:hover .lite__play {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.lite__poster:focus-visible {
+  outline: 3px solid var(--vermilion);
+  outline-offset: 3px;
+}
+
+.tb__lead {
+  max-width: 1180px;
+  margin: 0 0 clamp(64px, 10vh, 112px);
+}
+
+.tb__cap {
+  max-width: 70ch;
+  margin-top: 12px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--fg-dim);
+}
+
+.tb__cap b {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+/* ---------- The story ---------- */
+.tb__story {
+  display: grid;
+  gap: clamp(48px, 8vh, 80px);
+  max-width: 68ch;
+}
+
+.tb__part {
+  display: grid;
+  gap: 14px;
+}
+
+.tb__part--cont {
+  margin-top: calc(clamp(48px, 8vh, 80px) * -0.4);
+}
+
+.tb__h {
+  padding-top: 16px;
+  border-top: 1px solid var(--fg-faint);
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 700;
+  font-size: var(--t-h3);
+  line-height: 1.1;
+}
+
+.tb__part p,
+.tb__list li {
+  font-size: 1.05rem;
+  line-height: 1.66;
+  color: var(--fg-dim);
+}
+
+.tb__part p.tb__turn {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+  line-height: 1.25;
+  color: var(--fg);
+}
+
+.tb__eng {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+  border-left: 2px solid var(--vermilion);
+  background: rgb(220 214 201 / 0.03);
+}
+
+.tb__part .tb__eng {
+  font-size: 0.96rem;
+}
+
+.tb__list {
+  display: grid;
+  gap: 14px;
+}
+
+.tb__list li {
+  position: relative;
+  padding-left: 22px;
+}
+
+.tb__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 10px;
+  height: 1px;
+  background: var(--vermilion);
+}
+
+.tb__list b {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+/* ---------- The split ---------- */
+.tb__wide {
+  max-width: 1180px;
+  margin: clamp(40px, 7vh, 72px) 0;
+}
+
+.sp {
+  margin: 0;
+  padding: clamp(18px, 3vw, 36px);
+  border-radius: 14px;
+  background: #151a1d;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.08);
+}
+
+.sp__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(90px, 0.9fr) minmax(0, 1fr);
+  grid-template-rows: repeat(3, minmax(108px, auto));
+  row-gap: 14px;
+}
+
+.sp__bill {
+  grid-column: 1;
+  grid-row: 1 / 4;
+  display: grid;
+  grid-template-rows: subgrid;
+  align-items: center;
+  padding: 0 20px;
+  border-radius: 10px;
+  background: var(--warm-white);
+  color: #111417;
+  font-variant-numeric: tabular-nums;
+}
+
+.sp__head,
+.sp__total {
+  display: none;
+}
+
+.sp__line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-stretch: 88%;
+  font-weight: 600;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+}
+
+.sp__line {
+  align-self: stretch;
+  align-items: center;
+}
+
+.sp__line:not(:last-of-type) {
+  border-bottom: 1px dashed rgb(17 20 23 / 0.25);
+}
+
+.sp__flow {
+  grid-column: 2;
+  grid-row: 1 / 4;
+  align-self: stretch;
+  width: 100%;
+  height: 100%;
+  contain: size;
+  overflow: visible;
+}
+
+.sp__main,
+.sp__fee {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.sp__main {
+  stroke: rgb(220 214 201 / 0.55);
+  stroke-width: 1.5;
+}
+
+.sp__fee {
+  stroke: var(--vermilion);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+}
+
+.sp__tag {
+  position: absolute;
+  left: calc((100% - 0px) * 0.37);
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: #151a1d;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: #d98b62;
+  box-shadow: 0 0 0 1px rgb(255 91 38 / 0.5);
+}
+
+.sp__tag--top {
+  top: calc(100% / 6 + 4px);
+}
+
+.sp__tag--bottom {
+  bottom: calc(100% / 6 + 4px);
+}
+
+.sp__down {
+  display: none;
+}
+
+.sp__acct {
+  grid-column: 3;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-content: center;
+  gap: 4px 12px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: #1d2328;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.12);
+}
+
+.sp__acct::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 50%;
+  border-block: 6px solid transparent;
+  border-right: 0;
+  border-left: 7px solid rgb(220 214 201 / 0.55);
+  transform: translateY(-50%);
+}
+
+.sp__acct.is-host {
+  box-shadow: 0 0 0 1px var(--vermilion);
+}
+
+.sp__acct.is-host::before {
+  border-left-color: var(--vermilion);
+}
+
+.sp__name {
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.15;
+}
+
+.sp__name small {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.sp__amount {
+  align-self: center;
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 700;
+  font-size: clamp(1.2rem, 1.9vw, 1.6rem);
+  font-variant-numeric: tabular-nums;
+}
+
+.sp__from {
+  grid-column: 1 / -1;
+  font-size: 0.8rem;
+  color: var(--fg-dim);
+}
+
+.sp__cap {
+  margin-top: 18px;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--fg-dim);
+}
+
+/* ---------- The other films ---------- */
+.tb__pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 2.4vw, 32px);
+  max-width: 1180px;
+  margin-top: clamp(40px, 7vh, 64px);
+}
+
+.tb__pair figure {
+  margin: 0;
+}
+
+.tb__small {
+  margin: 16px 0 clamp(64px, 10vh, 112px);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--fg-dim);
+}
+
+/* ---------- The close ---------- */
+.tb__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tb__tags li {
+  padding: 6px 12px;
+  border: 1px solid var(--fg-faint);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-dim);
+}
+
+.tb__meta {
+  display: grid;
+  gap: 14px;
+}
+
+.tb__yt {
+  justify-self: start;
+  padding-block: 8px;
+  color: var(--fg);
+  background: linear-gradient(currentColor, currentColor) 0 calc(100% - 4px) / 100% 1px no-repeat;
+  transition: color 0.3s;
+}
+
+.tb__yt:hover {
+  color: var(--vermilion);
+}
+
+.tb__end {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--fg-faint);
+}
+
+.tb__end p {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  line-height: 1.15;
+}
+
+/* ---------- Phone: the split reads top to bottom ---------- */
+@media (max-width: 760px) {
+  .tb__pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sp__grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+  .sp__bill {
+    grid-row: auto;
+    grid-template-rows: none;
+    gap: 10px;
+    padding: 16px;
+  }
+  .sp__head,
+  .sp__total {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgb(17 20 23 / 0.6);
+  }
+  .sp__total {
+    padding-top: 10px;
+    border-top: 1px solid rgb(17 20 23 / 0.3);
+    font-size: 0.8rem;
+    color: #111417;
+  }
+  .sp__line:not(:last-of-type) {
+    padding-bottom: 10px;
+  }
+  .sp__dash {
+    display: none;
+  }
+  .sp__flow,
+  .sp__tag {
+    display: none;
+  }
+  .sp__down {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-self: center;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+  .sp__down::before,
+  .sp__down::after {
+    content: '';
+    width: 1px;
+    height: 22px;
+    background: rgb(220 214 201 / 0.4);
+  }
+  .sp__acct {
+    grid-column: 1;
+    grid-row: auto !important;
+  }
+  .sp__acct::before {
+    display: none;
+  }
+}
+
+/* ---------- The entry point on the studio page ---------- */
+.tbx {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+  margin-bottom: clamp(80px, 12vh, 140px);
+}
+
+.tbx__shot {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.1), 0 50px 100px -60px rgb(0 0 0 / 0.95);
+}
+
+.tbx__shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8);
+  transition: transform 0.8s var(--ease-out), filter 0.4s;
+}
+
+.tbx:hover .tbx__shot img {
+  transform: scale(1.025);
+  filter: none;
+}
+
+.tbx__copy {
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+}
+
+.tbx__title {
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: var(--t-h2);
+  line-height: 1.02;
+}
+
+.tbx__title a {
+  color: inherit;
+}
+
+.tbx__hook {
+  max-width: 44ch;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--fg-dim);
+}
+
+@media (max-width: 960px) {
+  .tbx {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Reduced motion: the story is just there, no animation needed to reach it. */
+@media (prefers-reduced-motion: reduce) {
+  .tb .reveal {
+    opacity: 1;
+    transition: none !important;
+  }
+  .lite__poster img,
+  .lite__play,
+  .tbx__shot img {
+    transition: none;
+  }
+}

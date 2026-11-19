@@ -1,0 +1,656 @@
+/*
+  Kept small: a warm-white bug on graphite, one vermilion accent, mono for the machine and serif
+  for the bug's voice. The panel docks in a corner with no scrim so the page stays usable.
+*/
+.egg__perch {
+  position: relative;
+  height: 0;
+  --egg-bg: #101316;
+}
+
+/* ---------- The bug ---------- */
+.bug {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.bug__shell {
+  fill: var(--warm-white);
+}
+
+.bug__seam {
+  stroke: rgb(17 20 23 / 0.22);
+  stroke-width: 1.4;
+}
+
+.bug__legs,
+.bug__wave,
+.bug__ants path {
+  stroke: var(--warm-white);
+  stroke-width: 2.4;
+}
+
+.bug__ants circle {
+  fill: var(--vermilion);
+}
+
+.bug__white {
+  fill: #111417;
+}
+
+.bug__pupil {
+  fill: var(--warm-white);
+  transition: cx 0.3s var(--ease-out);
+}
+
+.bug__lid {
+  fill: var(--warm-white);
+}
+
+.bug__mouth {
+  stroke: #111417;
+  stroke-width: 2;
+}
+
+.bug--surprised .bug__mouth {
+  fill: #111417;
+}
+
+.bug__blush {
+  stroke: var(--vermilion);
+  stroke-width: 1.6;
+}
+
+.bug__eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bug-blink 5.2s linear infinite;
+}
+
+@keyframes bug-blink {
+  0%, 95%, 100% { transform: scaleY(1); }
+  97.5% { transform: scaleY(0.08); }
+}
+
+.bug__wave {
+  transform-box: fill-box;
+  transform-origin: 0 0;
+}
+
+.bug--bye .bug__wave {
+  animation: bug-wave 0.5s ease-in-out 4 alternate;
+  transform-origin: left top;
+}
+
+@keyframes bug-wave {
+  from { transform: rotate(14deg); }
+  to { transform: rotate(-48deg); }
+}
+
+/* ---------- Behind the rule ---------- */
+.egg__hole {
+  position: absolute;
+  right: clamp(4px, 2vw, 28px);
+  bottom: -32px;
+  width: 84px;
+  height: 58px;
+  overflow: hidden;
+}
+
+.egg__peek {
+  position: absolute;
+  left: 20px;
+  right: 2px;
+  bottom: 0;
+  display: block;
+  padding: 0;
+  transform: translateY(104%);
+  transition: transform 0.7s var(--ease-out);
+}
+
+.egg__peek.is-up {
+  transform: translateY(30%);
+}
+
+button.egg__peek {
+  cursor: pointer;
+}
+
+button.egg__peek:hover {
+  transform: translateY(14%);
+}
+
+button.egg__peek:focus-visible {
+  outline: 2px solid var(--warm-white);
+  outline-offset: -2px;
+}
+
+/* ---------- The bubble ---------- */
+.egg__bubble {
+  position: absolute;
+  z-index: 2;
+  right: clamp(82px, 7vw, 104px);
+  bottom: -18px;
+  width: min(360px, 62vw);
+  padding: 16px 18px;
+  border-radius: 12px 12px 2px 12px;
+  background: #1d2328;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.12);
+  animation: egg-in 0.45s var(--ease-out) both;
+}
+
+.egg__bubble p {
+  padding-right: 22px;
+  font-family: var(--font-serif);
+  font-size: 1.28rem;
+  line-height: 1.2;
+  color: var(--warm-white);
+}
+
+@keyframes egg-in {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+.egg__x {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 36px;
+  height: 36px;
+  font-size: 0.8rem;
+  color: rgb(220 214 201 / 0.6);
+}
+
+.egg__x:hover {
+  color: var(--warm-white);
+}
+
+.egg__choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.egg__choices:empty {
+  min-height: 42px;
+}
+
+.egg__btn {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid rgb(220 214 201 / 0.28);
+  border-radius: 6px;
+  font-family: var(--font-text);
+  font-size: 0.92rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--warm-white);
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.egg__btn:hover {
+  border-color: var(--warm-white);
+}
+
+.egg__btn.is-main {
+  border-color: var(--warm-white);
+  background: var(--warm-white);
+  color: #111417;
+}
+
+.egg__btn.is-main:hover {
+  background: #fff;
+}
+
+.egg__perch button:focus-visible {
+  outline: 2px solid var(--vermilion);
+  outline-offset: 2px;
+}
+
+/* ---------- The stolen letter ---------- */
+.egg__fly {
+  position: fixed;
+  z-index: 125;
+  pointer-events: none;
+  color: var(--warm-white);
+}
+
+.egg__loot {
+  position: absolute;
+  left: -2px;
+  top: -5px;
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 800;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--vermilion);
+  transform: rotate(-12deg);
+}
+
+/* ---------- The stage: no backdrop of its own, so the page stays yours ---------- */
+.egg__void {
+  position: fixed;
+  z-index: 118;
+  inset: 0;
+  background: #0a0d0f;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s;
+}
+
+.egg__void.is-on {
+  opacity: 1;
+}
+
+.egg__void.is-dim {
+  opacity: 0.9;
+}
+
+.egg__stage {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: calc(var(--nav-h) + 8px) var(--gutter) 24px;
+  overflow: hidden;
+  pointer-events: none;
+  outline: none;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--warm-white);
+}
+
+.egg__stage button,
+.egg__stage a {
+  pointer-events: auto;
+}
+
+.egg__close {
+  position: absolute;
+  top: calc(var(--nav-h) + 8px);
+  right: var(--gutter);
+  z-index: 2;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 6px;
+  background: #1d2328;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.2);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--warm-white);
+}
+
+.egg__close:hover {
+  background: #2a2b30;
+}
+
+.egg__scene {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  width: min(640px, 100%);
+  max-height: 100%;
+  text-align: center;
+}
+
+.egg__scene--dare {
+  width: min(460px, 100%);
+  padding: 24px;
+  border-radius: 12px;
+  background: #1d2328;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.14), 0 40px 70px -24px rgb(0 0 0 / 0.95);
+  animation: egg-in 0.35s var(--ease-out) both;
+}
+
+.egg__actor {
+  width: clamp(72px, 16vh, 120px);
+}
+
+.egg__actor--small {
+  width: 60px;
+}
+
+.egg__actor--walk {
+  animation: egg-walk 1.1s steps(9) both;
+}
+
+@keyframes egg-walk {
+  from { transform: translateX(-60vw); }
+}
+
+.egg__line,
+.egg__beats p {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+  line-height: 1.12;
+}
+
+.egg__line {
+  font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+}
+
+.egg__beats p {
+  animation: egg-in 0.4s var(--ease-out) both;
+}
+
+.egg__beats p + p {
+  margin-top: 8px;
+}
+
+.egg__beats .egg__choices {
+  justify-content: center;
+  min-height: 56px;
+  margin-top: 22px;
+}
+
+/* Round, red and domed, so you want to press it. */
+.egg__red {
+  width: 136px;
+  height: 136px;
+  border-radius: 50%;
+  background: #d3271c;
+  box-shadow: inset 0 -8px 0 #8d140c, 0 0 0 7px #2b2c31, 0 0 0 8px rgb(220 214 201 / 0.2);
+  font-family: var(--font-display);
+  font-stretch: 80%;
+  font-weight: 800;
+  font-size: 1.04rem;
+  line-height: 1.05;
+  color: #fff;
+  transition: transform 0.45s var(--ease-out), box-shadow 0.12s;
+}
+
+.egg__red.is-bigger {
+  transform: scale(1.22);
+  margin-block: 14px;
+}
+
+.egg__red:hover {
+  transform: scale(1.06);
+}
+
+.egg__red.is-bigger:hover {
+  transform: scale(1.3);
+}
+
+.egg__red:active {
+  box-shadow: inset 0 -2px 0 #8d140c, 0 0 0 7px #2b2c31, 0 0 0 8px rgb(220 214 201 / 0.2);
+}
+
+/* The repair log. */
+.egg__scene--log {
+  width: min(600px, 100%);
+}
+
+.egg__term {
+  width: 100%;
+  min-height: 262px;
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  border-radius: 8px;
+  background: #14181b;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.12);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.7;
+  text-align: left;
+  color: rgb(220 214 201 / 0.62);
+}
+
+.egg__term p.is-found {
+  color: var(--warm-white);
+}
+
+.egg__term p.is-bad {
+  color: #d98b62;
+}
+
+.egg__caret {
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -2px;
+  background: currentColor;
+}
+
+.egg__link {
+  min-height: 40px;
+  font-family: var(--font-text);
+  font-size: 0.9rem;
+  color: rgb(220 214 201 / 0.72);
+}
+
+.egg__term .egg__link {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.egg__link:hover {
+  color: var(--warm-white);
+}
+
+/* Beside the wrecked page. */
+.egg__corner {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: min(440px, calc(100% - 2 * var(--gutter)));
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #1d2328;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.14), 0 30px 50px -20px rgb(0 0 0 / 0.95);
+}
+
+.egg__corner > .bug {
+  flex: none;
+  width: 60px;
+}
+
+.egg__corner p {
+  font-family: var(--font-serif);
+  font-size: 1.32rem;
+  line-height: 1.14;
+}
+
+.egg__corner .egg__choices {
+  margin-top: 10px;
+}
+
+/* Akeem shows up: slowly, from below, not saying anything. */
+.egg__akeem {
+  position: fixed;
+  left: 50%;
+  bottom: -12vh;
+  width: min(62vh, 86vw);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-left: calc(min(62vh, 86vw) / -2);
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.2), 0 -30px 80px -20px rgb(0 0 0 / 0.9);
+  z-index: -1;
+  animation: egg-akeem 1.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes egg-akeem {
+  from { transform: translateY(105%); }
+}
+
+/* The sign. */
+.egg__sign {
+  width: 100%;
+  padding: 18px 14px;
+  border-radius: 3px;
+  background: var(--warm-white);
+  color: #111417;
+  font-family: var(--font-display);
+  font-stretch: 78%;
+  font-weight: 800;
+  font-size: clamp(1.4rem, 3.6vw, 2.5rem);
+  line-height: 1.08;
+  transform: rotate(-1.4deg);
+  animation: egg-sign 0.6s var(--ease-out) both;
+}
+
+@keyframes egg-sign {
+  from { opacity: 0; transform: translateY(26px) rotate(3deg); }
+}
+
+.egg__punch.is-on {
+  color: #b4552c;
+  animation: egg-stamp 0.32s var(--ease-out) both;
+}
+
+@keyframes egg-stamp {
+  from { opacity: 0; transform: scale(1.22); }
+}
+
+.egg__cast {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.egg__face {
+  display: block;
+  width: clamp(64px, 13vh, 96px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+/* Both crops are tight on the face. The stare is the joke. */
+.egg__akeem img,
+.egg__face img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0;
+  transform: scale(2.5);
+  transform-origin: 49% 14%;
+}
+
+.egg__cast .bug {
+  width: clamp(48px, 9vh, 68px);
+}
+
+.egg__sig {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.14rem;
+  color: rgb(220 214 201 / 0.78);
+}
+
+.egg__reveal .egg__choices {
+  justify-content: center;
+  margin-top: 0;
+}
+
+/* ---------- A parting line ---------- */
+.egg__toast {
+  position: fixed;
+  z-index: 120;
+  right: var(--gutter);
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: min(400px, calc(100vw - 2 * var(--gutter)));
+  padding: 12px 16px 12px 12px;
+  border-radius: 10px;
+  background: #1d2328;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.14), 0 24px 40px -18px rgb(0 0 0 / 0.9);
+  pointer-events: none;
+  letter-spacing: 0;
+  text-transform: none;
+  animation: egg-toast 3.6s var(--ease-out) both;
+}
+
+.egg__toast .bug {
+  flex: none;
+  width: 42px;
+}
+
+.egg__toast p {
+  font-family: var(--font-serif);
+  font-size: 1.14rem;
+  line-height: 1.16;
+  color: var(--warm-white);
+}
+
+@keyframes egg-toast {
+  0% { opacity: 0; transform: translateY(14px); }
+  10%, 88% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateY(14px); }
+}
+
+/* ---------- Phone ---------- */
+@media (max-width: 760px) {
+  .egg__perch {
+    height: auto;
+  }
+  .egg__hole {
+    right: 0;
+  }
+  .egg__bubble {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    margin: 16px 0 34px;
+  }
+  .egg__corner {
+    right: 8px;
+    bottom: 8px;
+    width: calc(100% - 16px);
+  }
+  .egg__term {
+    font-size: 0.72rem;
+  }
+  /* The stare has to clear the speech box. */
+  .egg__akeem {
+    bottom: 40px;
+  }
+  .egg__toast {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    max-width: none;
+  }
+  .egg__btn {
+    flex: 1 1 auto;
+    min-height: 46px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bug__eyes,
+  .bug--bye .bug__wave,
+  .egg__bubble,
+  .egg__scene--dare,
+  .egg__actor--walk,
+  .egg__akeem,
+  .egg__beats p,
+  .egg__sign,
+  .egg__punch.is-on,
+  .egg__toast {
+    animation: none;
+  }
+  .egg__peek,
+  .egg__void,
+  .egg__red {
+    transition: none;
+  }
+}

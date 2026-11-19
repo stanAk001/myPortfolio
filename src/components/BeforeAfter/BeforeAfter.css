@@ -1,0 +1,70 @@
+.ba__frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.ba__frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.ba__before {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+}
+
+.ba__handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--pos);
+  width: 1px;
+  background: var(--bone);
+}
+
+.ba__handle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--bone);
+  border-radius: 50%;
+  background: rgb(11 11 10 / 0.5);
+  backdrop-filter: blur(6px);
+  transform: translate(-50%, -50%);
+}
+
+.ba.is-focused .ba__handle::after {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+}
+
+.ba__tag {
+  position: absolute;
+  top: 14px;
+  padding: 5px 9px;
+  background: rgb(11 11 10 / 0.65);
+  color: var(--bone);
+}
+
+.ba__tag--before {
+  left: 14px;
+}
+
+.ba__tag--after {
+  right: 14px;
+}
+
+.ba figcaption {
+  margin-top: 12px;
+}

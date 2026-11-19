@@ -1,0 +1,145 @@
+/*
+  The table of prints and the camera over it. The camera's focus point is behind the screen on the
+  right; the table is tilted back and turned a little, like prints laid out under a low light. Prints
+  the camera isn't on are dimmed; the product on screen is at full strength.
+*/
+.wl {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  perspective: 1400px;
+  perspective-origin: 70% 46%;
+}
+
+.wl__cam {
+  --z: 1;
+  --blur: 0px;
+  --dx: 0px;
+  --dy: 0px;
+  --ry: 0deg;
+  position: absolute;
+  left: 70%;
+  top: 46%;
+  width: 0;
+  height: 0;
+  filter: blur(var(--blur));
+}
+
+.wl__table {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  grid-template-columns: repeat(10, 260px);
+  grid-auto-rows: 170px;
+  grid-auto-flow: dense;
+  gap: 26px;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+/* Tilt and turn around the camera's point. The table is panned first, then this. */
+.wl__cam > .wl__table {
+  translate: var(--dx) var(--dy);
+}
+
+.wl__cam {
+  transform: rotateX(32deg) rotateZ(-12deg) rotateY(var(--ry)) scale(calc(var(--z) * 1.15));
+  transform-style: preserve-3d;
+}
+
+.wl__tile {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #ddd;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.06), 0 26px 40px -24px rgb(0 0 0 / 0.5);
+  opacity: 0.55;
+  transition: opacity 0.9s ease, box-shadow 0.9s ease;
+}
+
+.wl__tile.is-tall {
+  grid-row: span 2;
+}
+
+.wl__tile.is-site {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.wl__tile.is-on {
+  opacity: 1;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.1), 0 40px 60px -26px rgb(0 0 0 / 0.6);
+}
+
+.wl__tile img,
+.wl__tile video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* The text side fades into the paper; the edges fall away top and bottom. */
+.wl__fade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, var(--porcelain) 0%, var(--porcelain) 36%, color-mix(in srgb, var(--porcelain) 70%, transparent) 46%, color-mix(in srgb, var(--porcelain) 10%, transparent) 64%, transparent 80%),
+    linear-gradient(180deg, var(--porcelain) 0, var(--porcelain) 64px, color-mix(in srgb, var(--porcelain) 60%, transparent) 104px, transparent 170px, transparent 80%, var(--porcelain) 100%);
+}
+
+/* Behind the projects stage, under everything on it, with the text side and the controls under
+   the screen kept on plain paper. */
+.pj__stage {
+  isolation: isolate;
+}
+
+/* (Overrides the stage rule that puts every child in the flow at z-index 1.) */
+.pj__stage > .wl.wl--pj {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.wl--pj .wl__fade {
+  background:
+    linear-gradient(90deg, var(--porcelain) 0%, var(--porcelain) 40%, color-mix(in srgb, var(--porcelain) 72%, transparent) 50%, color-mix(in srgb, var(--porcelain) 12%, transparent) 66%, transparent 82%),
+    linear-gradient(180deg, var(--porcelain) 0, var(--porcelain) 64px, color-mix(in srgb, var(--porcelain) 60%, transparent) 104px, transparent 170px, transparent 72%, var(--porcelain) 90%);
+}
+
+:root[data-theme='dark'] .wl__tile {
+  background: #1b1e22;
+  opacity: 0.4;
+}
+
+:root[data-theme='dark'] .wl__tile.is-on {
+  opacity: 0.95;
+}
+
+@media (max-width: 1080px) {
+  .wl {
+    perspective-origin: 50% 74%;
+  }
+  .wl__cam {
+    left: 50%;
+    top: 74%;
+  }
+  .wl__fade {
+    background:
+      linear-gradient(180deg, var(--porcelain) 0%, var(--porcelain) 40%, color-mix(in srgb, var(--porcelain) 55%, transparent) 60%, transparent 78%, var(--porcelain) 100%);
+  }
+}
+
+@media (max-width: 760px) {
+  .wl__table {
+    grid-template-columns: repeat(10, 150px);
+    grid-auto-rows: 98px;
+    gap: 14px;
+  }
+}

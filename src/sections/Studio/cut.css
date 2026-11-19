@@ -1,0 +1,321 @@
+/*
+  The stage for the 8-second ad cut. Everything is sized in container units (cqw) so the same film
+  plays at any width. Graphite background, warm-white type, one accent per vibe.
+*/
+div.ct {
+  --ct-accent: var(--vermilion);
+  position: relative;
+  container-type: inline-size;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #111417;
+  color: var(--warm-white);
+  font-family: var(--font-text);
+  isolation: isolate;
+}
+
+div.ct > * {
+  position: absolute;
+}
+
+.ct-mono {
+  font-family: var(--font-mono);
+  font-size: 1.05cqw;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ct-top {
+  inset: 3.2cqw 3.6cqw auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 2cqw;
+  color: rgb(220 214 201 / 0.7);
+  z-index: 5;
+}
+
+.ct-tc {
+  font-variant-numeric: tabular-nums;
+}
+
+.ct-prog {
+  left: 3.6cqw;
+  right: 3.6cqw;
+  bottom: 2.6cqw;
+  height: 2px;
+  background: rgb(220 214 201 / 0.14);
+  z-index: 5;
+}
+
+.ct-prog-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--ct-accent);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+.ct-slit {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--warm-white);
+  transform: scaleX(0);
+}
+
+.ct-pre {
+  left: 0;
+  right: 0;
+  top: calc(50% - 4cqw);
+  text-align: center;
+  color: rgb(220 214 201 / 0.6);
+  opacity: 0;
+}
+
+.ct-flash {
+  inset: 0;
+  background: var(--warm-white);
+  opacity: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.ct-hero {
+  left: 5cqw;
+  right: 5cqw;
+  top: 50%;
+  translate: 0 -55%;
+  overflow: hidden;
+  padding: 0.06em 0 0.14em;
+  font-family: var(--font-display);
+  font-stretch: 78%;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* GSAP sets each letter's starting offset, so a CSS transform here would fight it. */
+.ct-ch {
+  display: inline-block;
+  white-space: pre;
+}
+
+.ct-word {
+  left: 6cqw;
+  top: 50%;
+  translate: 0 -55%;
+  font-family: var(--font-display);
+  font-stretch: 78%;
+  font-weight: 800;
+  font-size: 13cqw;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  transform-origin: left center;
+  opacity: 0;
+  z-index: 2;
+}
+
+.ct-word.is-last {
+  color: var(--ct-accent);
+}
+
+/* The accent crosses as a band, never a full-frame flood of colour. */
+.ct-wipe {
+  left: 0;
+  right: 0;
+  top: 37%;
+  height: 26%;
+  background: var(--ct-accent);
+  transform: scaleX(0);
+  z-index: 3;
+}
+
+.ct-shot {
+  inset: 0;
+  perspective: 90cqw;
+  opacity: 0;
+}
+
+.ct-shot > * {
+  position: absolute;
+}
+
+.ct-row {
+  left: 0;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-stretch: 78%;
+  font-weight: 800;
+  font-size: 9cqw;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(220 214 201 / 0.14);
+}
+
+.ct-row span {
+  margin-right: 4cqw;
+}
+
+.ct-pack {
+  left: 50%;
+  top: 50%;
+  width: 26cqw;
+  aspect-ratio: 3 / 4;
+  margin: -17.3cqw 0 0 -13cqw;
+  display: grid;
+  align-content: space-between;
+  padding: 2cqw;
+  border-radius: 1.4cqw;
+  background: var(--ct-accent);
+  color: #111417;
+  box-shadow: 0 6cqw 8cqw -4cqw rgb(0 0 0 / 0.9);
+  transform-style: preserve-3d;
+}
+
+.ct-pack-tag {
+  justify-self: start;
+  padding: 0.5cqw 0.9cqw;
+  border: 1px solid currentColor;
+  border-radius: 99px;
+  font-size: 0.95cqw;
+}
+
+.ct-pack-name {
+  font-family: var(--font-display);
+  font-stretch: 80%;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+
+.ct-pack-cat {
+  font-size: 0.95cqw;
+  opacity: 0.75;
+}
+
+.ct-line {
+  left: 6cqw;
+  right: 6cqw;
+  top: 50%;
+  translate: 0 -55%;
+  overflow: hidden;
+  padding: 0.08em 0 0.16em;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 7.2cqw;
+  line-height: 1;
+  text-align: center;
+  color: var(--ct-accent);
+}
+
+.ct-end {
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 2.2cqw;
+  opacity: 0;
+}
+
+.ct-end-name {
+  font-family: var(--font-serif);
+  line-height: 1;
+  text-align: center;
+}
+
+.ct-cta {
+  padding: 1.3cqw 2.6cqw;
+  background: var(--warm-white);
+  color: #111417;
+  font-size: 1.7cqw;
+  font-weight: 600;
+}
+
+.ct-url {
+  color: rgb(220 214 201 / 0.55);
+}
+
+/* ---------- The 9:16 flyer ---------- */
+.fy {
+  --ct-accent: var(--vermilion);
+  position: relative;
+  container-type: inline-size;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #171c20;
+  color: var(--warm-white);
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.1), 0 30px 60px -30px rgb(0 0 0 / 0.95);
+}
+
+.fy::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3cqw;
+  background: var(--ct-accent);
+}
+
+.fy-in {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: start;
+  gap: 5cqw;
+  padding: 9cqw 8cqw;
+}
+
+.fy-tag {
+  font-size: 4cqw;
+  color: var(--ct-accent);
+}
+
+.fy-name {
+  font-family: var(--font-display);
+  font-stretch: 78%;
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+
+.fy-words {
+  font-family: var(--font-display);
+  font-stretch: 80%;
+  font-weight: 700;
+  font-size: 9cqw;
+  line-height: 1.05;
+  color: rgb(220 214 201 / 0.4);
+}
+
+.fy-line {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 9cqw;
+  line-height: 1.05;
+  color: var(--ct-accent);
+}
+
+.fy-cta {
+  justify-self: start;
+  margin-top: 4cqw;
+  padding: 3.5cqw 6cqw;
+  background: var(--warm-white);
+  color: #111417;
+  font-size: 5cqw;
+  font-weight: 600;
+}
+
+.fy-url {
+  position: absolute;
+  left: 8cqw;
+  bottom: 8cqw;
+  font-size: 3.6cqw;
+  color: rgb(220 214 201 / 0.5);
+}

@@ -1,0 +1,283 @@
+:root {
+  /* Black and white. One accent, used sparingly and never as a glow. */
+  --ink: #0e1114;
+  --ink-2: #13171a;
+  --ink-3: #1c2125;
+  --bone: #dcd6c9;
+  --bone-dim: rgb(220 214 201 / 0.62);
+  --bone-faint: rgb(220 214 201 / 0.13);
+
+  --paper: #ebe7df;
+  --paper-2: #e1dcd2;
+  --graphite: #171c20;
+  --graphite-dim: rgb(21 20 19 / 0.64);
+  --graphite-faint: rgb(21 20 19 / 0.12);
+
+  --signal: #c56a3d;
+
+  --font-sans: 'Inter Tight', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  /* Work page fonts: a condensed, heavy grotesk for display, a clean sans for reading. */
+  --font-display: 'Archivo', 'Arial Narrow', 'Helvetica Neue', sans-serif;
+  --font-text: 'Instrument Sans', 'Inter Tight', system-ui, sans-serif;
+
+  /* Work page colours: graphite layers, warm-white type, orange in small doses. */
+  --night: #111417;
+  --graphite: #171c20;
+  --warm-white: #dcd6c9;
+  --vermilion: #c56a3d;
+
+  --fs-label: 0.7rem;
+  --fs-sm: 0.875rem;
+  --fs-body: 1rem;
+  --fs-md: clamp(1.0625rem, 0.4vw + 0.95rem, 1.3rem);
+  --fs-lg: clamp(1.5rem, 1.8vw + 0.9rem, 2.6rem);
+  --fs-xl: clamp(2.4rem, 5vw + 0.6rem, 5.8rem);
+  --fs-mega: clamp(3rem, 8.6vw, 10.5rem);
+
+  /* The work page's type scale. Every display heading uses one of these three and nothing else. */
+  --t-hero: clamp(2.3rem, 3.6vw, 3.9rem);
+  --t-h2: clamp(1.85rem, 2.6vw, 2.9rem);
+  --t-h3: clamp(1.5rem, 2.1vw, 2.3rem);
+
+  --gutter: clamp(16px, 3.4vw, 52px);
+  --col-gap: clamp(12px, 1.6vw, 28px);
+  --nav-h: 76px;
+  --section-y: clamp(96px, 16vh, 200px);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur: 0.9s;
+}
+
+/* Screens inside the page (editors, terminals, the engineering band, contact and footer) stay dark. */
+.tone-dark,
+.cv,
+.term,
+.browser,
+.bh__frame,
+.sty__screen,
+.pc__frame {
+  --ink: #111417;
+  --ink-2: #171c20;
+  --ink-3: #20262b;
+  --bone: #dcd6c9;
+  --bone-dim: rgb(220 214 201 / 0.62);
+  --bone-faint: rgb(220 214 201 / 0.13);
+  --bg: var(--ink);
+  --fg: var(--bone);
+  --fg-dim: var(--bone-dim);
+  --fg-faint: var(--bone-faint);
+}
+
+/* ---------- Older palette (porcelain + cobalt) ---------- */
+:root {
+  --porcelain: #f2eee6;
+  --porcelain-2: #ebe6dc;
+  --ink-deep: #252832;
+  --cobalt: #5268f5;
+  --coral: #f18b67;
+  --lavender: #c9b9f4;
+  --mint: #bbd8c4;
+
+  /* Porcelain backgrounds with a cobalt accent. Screens on the page keep their own dark. */
+  --night: var(--porcelain);
+  --graphite: var(--porcelain);
+  --vermilion: #4a5ff0;
+  --ink-text: #252832;
+  --ink-dim: rgb(37 40 50 / 0.7);
+  --ink-faint: rgb(37 40 50 / 0.13);
+}
+
+/* ---------- Light theme: warm paper with grain, near-black ink; the colour comes from the work ---------- */
+:root {
+  --porcelain: #ece6db;
+  --ink-deep: #121212;
+  --ink-text: #121212;
+  --ink-dim: rgb(18 18 18 / 0.6);
+  --ink-faint: rgb(18 18 18 / 0.1);
+  --vermilion: #121212;
+}
+
+/* ---------- Dark theme: same layout in ink, paper and ink just swap ---------- */
+:root[data-theme='dark'] {
+  --porcelain: #111417;
+  --ink-deep: #e8e4dc;
+  --ink-text: #e8e4dc;
+  --ink-dim: rgb(232 228 220 / 0.62);
+  --ink-faint: rgb(232 228 220 / 0.12);
+  --vermilion: #e8e4dc;
+}
+
+:root[data-theme='dark'] .nav.is-tight::before {
+  background: rgb(17 20 23 / 0.96);
+}
+
+:root[data-theme='dark'] section.ct,
+:root[data-theme='dark'] .tone-ink {
+  --bg: #0b0d10;
+  background: #0b0d10;
+}
+
+:root[data-theme='dark'] .footer.theme-dark {
+  --bg: #0b0d10;
+}
+
+:root[data-theme='dark'] .pj__bignum {
+  color: rgb(232 228 220 / 0.05);
+}
+
+:root[data-theme='dark'] .ds__go.is-main:hover {
+  background: #fff;
+  border-color: #fff;
+}
+
+:root[data-theme='dark'] .sk__works button {
+  background: rgb(255 255 255 / 0.04);
+}
+
+:root[data-theme='dark'] .rl__desk,
+:root[data-theme='dark'] .pj__frame {
+  box-shadow: 0 0 0 1px rgb(232 228 220 / 0.1), 0 40px 80px -40px rgb(0 0 0 / 0.9);
+}
+
+/* The last section is always dark with light text, whichever theme is on. */
+:root[data-theme='dark'] .tone-ink,
+:root[data-theme='dark'] .footer.theme-dark {
+  --fg: #e8e4dc;
+  --fg-dim: rgb(232 228 220 / 0.64);
+  --fg-faint: rgb(232 228 220 / 0.13);
+  color: var(--fg);
+}
+
+:root[data-theme='dark'] .ct__make {
+  background: #e8e4dc;
+  color: #111417;
+}
+
+:root[data-theme='dark'] .footer__name {
+  color: rgb(232 228 220 / 0.07);
+}
+
+/* ==================== Light theme, the rest of the site ==================== */
+/* One accent across the page: the ink itself. */
+:root {
+  --signal: var(--ink-text);
+}
+
+/* The studio button: solid ink. */
+.qc__door {
+  background: var(--ink-deep);
+  color: var(--porcelain);
+}
+.qc__door small {
+  color: color-mix(in srgb, var(--porcelain) 60%, transparent);
+}
+.qc__door i {
+  background: var(--porcelain);
+  color: var(--ink-deep);
+}
+
+/* Big background words: barely visible. */
+.bgword {
+  color: color-mix(in srgb, var(--ink-text) 3%, transparent);
+}
+
+/* Skills: clean ruled lines, no tints. */
+.sk__layer {
+  --tint: transparent !important;
+  margin-left: 0;
+  padding: 18px 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  border-top: 1px solid var(--ink-faint);
+}
+.sk__layers .sk__layer:last-child {
+  border-bottom: 1px solid var(--ink-faint);
+}
+.sk__works button {
+  background: transparent;
+}
+.sk__works button.is-lit {
+  border-color: var(--ink-text);
+  background: transparent;
+}
+.sk__works button.is-lit span,
+.sk__works button span {
+  background: var(--ink-text);
+  color: var(--porcelain);
+}
+.sk__tech li.is-lit b {
+  color: var(--ink-text);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+.sk__by i {
+  background: var(--ink-faint);
+}
+
+/* The 3D object: chrome and smoked glass, no rainbow. */
+.lt__frame {
+  border-image: linear-gradient(160deg, #ffffff, #9a9a9a 30%, #2a2a2a 52%, #c8c8c8 74%, #ffffff) 1 !important;
+}
+.lt__glass {
+  background: linear-gradient(170deg, color-mix(in srgb, var(--ink-text) 10%, transparent), color-mix(in srgb, var(--ink-text) 2%, transparent)) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink-text) 25%, transparent) !important;
+  filter: none !important;
+  animation: none !important;
+}
+.lt__ring {
+  border-color: color-mix(in srgb, var(--ink-text) 30%, transparent) !important;
+}
+.lt__node {
+  background: var(--ink-text) !important;
+  box-shadow: none !important;
+}
+.lt__shadow {
+  background: radial-gradient(closest-side, rgb(0 0 0 / 0.28), transparent) !important;
+}
+
+/* The last section: plain ink, no coloured light. Light text on it in both themes. */
+section.ct {
+  background: #121212 !important;
+}
+:root[data-theme='dark'] section.ct {
+  background: #0a0b0c !important;
+}
+section.ct .lt__frame {
+  border-image: linear-gradient(160deg, #ffffff, #8a8a8a 40%, #3a3a3a 60%, #ffffff) 1 !important;
+}
+section.ct .lt__glass {
+  background: linear-gradient(170deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.02)) !important;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.22) !important;
+}
+section.ct .lt__ring {
+  border-color: rgb(255 255 255 / 0.3) !important;
+}
+section.ct .lt__node {
+  background: #fff !important;
+}
+.ct .ct__title .g-thin {
+  color: rgb(232 228 220 / 0.6);
+}
+.ct__make:hover {
+  background: #fff;
+  color: #121212;
+}
+.footer.theme-dark {
+  --bg: #121212;
+  background: #121212;
+}
+:root[data-theme='dark'] .footer.theme-dark {
+  --bg: #0a0b0c;
+  background: #0a0b0c;
+}
+
+.nav.is-tight::before {
+  background: color-mix(in srgb, var(--porcelain) 94%, transparent);
+}
+:root:not([data-theme='dark']) .ct__card {
+  background: #f4efe6;
+}

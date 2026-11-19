@@ -1,0 +1,392 @@
+/*
+  Studio intro, styled like a TV control room. Credits on the left like the end of a film; on the
+  right a multiview with the films playing, a red tally on PROGRAM and a green one on PREVIEW.
+  Tallies are borders and labels, not glows.
+*/
+.oa {
+  --tally-pgm: #e5322d;
+  --tally-pvw: #2bb673;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: center;
+  gap: clamp(28px, 4vw, 72px) clamp(32px, 4.5vw, 80px);
+  min-height: calc(100svh - var(--nav-h) - 120px);
+  margin-bottom: clamp(64px, 10vh, 120px);
+}
+
+.oa__copy {
+  display: grid;
+  gap: 20px;
+  align-content: center;
+}
+
+.oa__onair {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--fg);
+}
+
+.oa__light {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--tally-pgm);
+  animation: oa-blink 1.6s steps(1) infinite;
+}
+
+@keyframes oa-blink {
+  50% { opacity: 0.25; }
+}
+
+.oa__title {
+  display: grid;
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: var(--t-hero);
+  line-height: 1;
+  letter-spacing: -0.015em;
+}
+
+.oa__line {
+  display: block;
+  animation: oa-rise 1s var(--ease-out) both;
+}
+
+.oa__line--thin {
+  font-weight: 300;
+  animation-delay: 0.12s;
+}
+
+.oa__line em {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  font-stretch: normal;
+  letter-spacing: 0;
+  color: var(--vermilion);
+}
+
+@keyframes oa-rise {
+  from { opacity: 0; transform: translateY(18px); }
+}
+
+.oa__intro {
+  max-width: 50ch;
+  font-size: 1.04rem;
+  line-height: 1.6;
+  color: var(--fg-dim);
+  animation: oa-rise 1s var(--ease-out) 0.22s both;
+}
+
+/* The credits: every role, same name. */
+.oa__credits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 24px;
+  margin: 4px 0 0;
+  padding: 14px 0;
+  border-block: 1px solid var(--fg-faint);
+}
+
+.oa__credits > div {
+  display: grid;
+  align-content: start;
+  gap: 2px;
+  padding: 7px 0;
+  animation: oa-credit 0.7s var(--ease-out) both;
+  animation-delay: calc(0.35s + var(--i) * 0.08s);
+}
+
+@keyframes oa-credit {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+.oa__credits dt {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.oa__credits dd {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  line-height: 1.15;
+}
+
+.oa__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.oa__ctas .g-btn {
+  gap: 10px;
+}
+
+.oa__play {
+  width: 0;
+  height: 0;
+  border-block: 5px solid transparent;
+  border-left: 8px solid currentColor;
+}
+
+/* ---------- The multiview ---------- */
+.oa__wall {
+  min-width: 0;
+}
+
+.mv {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+  border-radius: 14px;
+  background: #0b0e10;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.08), 0 60px 120px -60px rgb(0 0 0 / 0.95);
+}
+
+.mv__tile {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #000;
+  text-align: left;
+  box-shadow: inset 0 0 0 1px rgb(220 214 201 / 0.1);
+}
+
+.mv__tile.is-pgm {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.mv__tile video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.82);
+  transition: filter 0.3s;
+}
+
+.mv__tile.is-pgm video,
+.mv__tile:hover video {
+  filter: none;
+}
+
+/* The tally is a border on the monitor itself, drawn above the picture. */
+.mv__tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgb(220 214 201 / 0.1);
+}
+
+.mv__tile.is-pgm::after {
+  box-shadow: inset 0 0 0 3px var(--tally-pgm);
+}
+
+.mv__tile.is-pvw::after {
+  box-shadow: inset 0 0 0 2px var(--tally-pvw);
+}
+
+.mv__label {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100% - 16px);
+  padding: 4px 8px 4px 4px;
+  border-radius: 4px;
+  background: rgb(10 12 14 / 0.8);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--warm-white);
+}
+
+.mv__label em {
+  font-style: normal;
+  color: rgb(220 214 201 / 0.6);
+}
+
+.mv__tile:not(.is-pgm) .mv__label em {
+  display: none;
+}
+
+.mv__tally {
+  padding: 2px 5px;
+  border-radius: 2px;
+  background: rgb(220 214 201 / 0.16);
+  font-weight: 500;
+}
+
+.is-pgm .mv__tally {
+  background: var(--tally-pgm);
+}
+
+.is-pvw .mv__tally {
+  background: var(--tally-pvw);
+  color: #0b0e10;
+}
+
+.mv__tile.is-pgm .mv__label {
+  left: 12px;
+  top: 12px;
+  font-size: 0.68rem;
+}
+
+.mv__tc {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgb(10 12 14 / 0.8);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--warm-white);
+}
+
+.mv__open {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 5px 9px;
+  border-radius: 4px;
+  background: var(--warm-white);
+  color: #111417;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.25s, transform 0.35s var(--ease-out);
+}
+
+.mv__tile:hover .mv__open,
+.mv__tile:focus-visible .mv__open {
+  opacity: 1;
+  transform: none;
+}
+
+.mv__tile:focus-visible {
+  outline: 2px solid var(--warm-white);
+  outline-offset: 2px;
+}
+
+/* One white frame when program changes, like a vision mixer cutting. */
+.mv__cut {
+  position: absolute;
+  inset: 0;
+  background: var(--warm-white);
+  pointer-events: none;
+  animation: mv-cut 0.32s ease-out forwards;
+}
+
+@keyframes mv-cut {
+  from { opacity: 0.55; }
+  to { opacity: 0; }
+}
+
+/* ---------- The lower third ---------- */
+.oa__third {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px clamp(20px, 3.4vw, 56px);
+  padding: 18px 0;
+  border-block: 1px solid var(--fg-faint);
+  font-size: 0.92rem;
+  color: var(--fg-dim);
+}
+
+.oa__third b {
+  margin-right: 8px;
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: var(--t-h3);
+  line-height: 1;
+  color: var(--fg);
+}
+
+.oa__third-end {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1080px) {
+  .oa {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .mv {
+    gap: 6px;
+    padding: 6px;
+  }
+  .mv__label {
+    font-size: 0.5rem;
+    left: 4px;
+    top: 4px;
+    padding: 2px 5px 2px 2px;
+  }
+  .mv__tile:not(.is-pgm) .mv__label {
+    gap: 0;
+    font-size: 0;
+  }
+  .mv__tile:not(.is-pgm) .mv__tally {
+    font-size: 0.5rem;
+  }
+  .oa__credits dd {
+    font-size: 1.05rem;
+  }
+  /* Leaves room for the program timecode next to its label. */
+  .mv__tile.is-pgm .mv__label {
+    left: 8px;
+    top: 8px;
+    font-size: 0.56rem;
+  }
+  .mv__tile.is-pgm .mv__label em {
+    display: none;
+  }
+  .mv__tc {
+    right: 8px;
+    top: 8px;
+    font-size: 0.62rem;
+  }
+  .oa__third-end {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oa__light,
+  .oa__line,
+  .oa__intro,
+  .oa__credits > div,
+  .mv__cut {
+    animation: none;
+  }
+}

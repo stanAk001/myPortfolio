@@ -1,0 +1,489 @@
+/*
+  The studio teaser on the work page. The pitch and the link on the left (a claim, the proof, one
+  big button); on the right the monitor and its control deck as one unit. Type a name on the deck,
+  the monitor cuts the ad, and a matching flyer slides out from behind it.
+*/
+.qc {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 88px);
+  padding: clamp(96px, 14vh, 168px) var(--gutter);
+  font-family: var(--font-text);
+}
+
+.qc__copy {
+  display: grid;
+  gap: 20px;
+  align-content: center;
+}
+
+.qc__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--fg);
+}
+
+.qc__light {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #e5322d;
+  animation: qc-blink 1.6s steps(1) infinite;
+}
+
+@keyframes qc-blink {
+  50% { opacity: 0.25; }
+}
+
+.qc .qc__title {
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: var(--t-h2);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+.qc__thin {
+  font-weight: 300;
+}
+
+.qc__thin em {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  font-stretch: normal;
+  letter-spacing: 0;
+  color: var(--vermilion);
+}
+
+.qc__intro {
+  max-width: 46ch;
+  line-height: 1.6;
+  color: var(--fg-dim);
+}
+
+/* The proof: three numbers, no adjectives. */
+.qc__proof {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 4px 0 0;
+  border-block: 1px solid var(--fg-faint);
+}
+
+.qc__proof > div {
+  display: grid;
+  gap: 4px;
+  padding: 14px 0;
+}
+
+.qc__proof > div + div {
+  padding-left: 18px;
+  border-left: 1px solid var(--fg-faint);
+}
+
+.qc__proof dt {
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: var(--t-h3);
+  line-height: 1;
+}
+
+.qc__proof dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+/* The button: the one thing on the left you can't miss. */
+.qc__door {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: min(440px, 100%);
+  padding: 16px 16px 16px 24px;
+  border-radius: 999px;
+  background: var(--warm-white);
+  color: #111417;
+  text-align: left;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.qc__door > span {
+  display: grid;
+  gap: 2px;
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 700;
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+
+.qc__door small {
+  color: rgb(17 20 23 / 0.6);
+}
+
+.qc__door i {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #111417;
+  color: var(--warm-white);
+  font-style: normal;
+  font-size: 1.2rem;
+  transition: transform 0.5s var(--ease-out), background-color 0.3s;
+}
+
+.qc__door:hover {
+  transform: translateY(-2px);
+}
+
+.qc__door:hover i {
+  transform: translateX(4px);
+  background: var(--vermilion);
+}
+
+.qc__door:focus-visible {
+  outline: 2px solid var(--vermilion);
+  outline-offset: 3px;
+}
+
+/* ---------- Monitor and deck ---------- */
+.qc__screen {
+  position: relative;
+  padding-right: clamp(0px, 7%, 96px);
+}
+
+.qc__rig {
+  position: relative;
+  z-index: 2;
+  border-radius: 16px;
+  background: #0d1013;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.1), 0 60px 120px -60px rgb(0 0 0 / 0.95);
+}
+
+.qc__frame {
+  position: relative;
+  overflow: hidden;
+  margin: 8px 8px 0;
+  border-radius: 10px;
+}
+
+.qc__badge {
+  position: absolute;
+  left: 14px;
+  bottom: 22px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgb(13 16 19 / 0.8);
+  color: rgb(220 214 201 / 0.8);
+}
+
+.qc__outro {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: end;
+  gap: 18px;
+  padding: clamp(18px, 3vw, 36px);
+  background: rgb(13 16 19 / 0.84);
+  animation: qc-outro 0.6s var(--ease-out);
+}
+
+@keyframes qc-outro {
+  from { opacity: 0; }
+}
+
+.qc__took {
+  display: grid;
+  gap: 4px;
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: var(--t-h3);
+  line-height: 1.05;
+}
+
+.qc__took span {
+  font-weight: 300;
+  color: var(--fg-dim);
+}
+
+.qc__outro-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.qc__deck {
+  display: grid;
+  gap: 12px;
+  padding: 16px 18px 18px;
+}
+
+.qc__deck-title {
+  color: var(--fg-dim);
+}
+
+.qc__deck-title span {
+  color: var(--vermilion);
+}
+
+.qc__deck-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.qc__deck-row--sub {
+  justify-content: space-between;
+}
+
+.qc__field {
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
+.qc__field input {
+  width: 100%;
+  height: 54px;
+  padding: 0 18px;
+  border: 1px solid rgb(220 214 201 / 0.16);
+  border-radius: 999px;
+  background: #121317;
+  color: var(--fg);
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: -0.005em;
+  transition: border-color 0.3s;
+}
+
+.qc__field input::placeholder {
+  color: rgb(220 214 201 / 0.32);
+}
+
+.qc__field input:focus {
+  outline: none;
+  border-color: var(--warm-white);
+}
+
+.qc__go {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 54px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: var(--warm-white);
+  color: #111417;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.qc__go:hover {
+  transform: translateY(-1px);
+}
+
+.qc__go:focus-visible {
+  outline: 2px solid var(--vermilion);
+  outline-offset: 3px;
+}
+
+.qc__rec {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e5322d;
+}
+
+.qc__vibes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.qc__vibes button {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--fg-faint);
+  border-radius: 999px;
+  font-size: 0.86rem;
+  color: var(--fg-dim);
+  transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+}
+
+.qc__vibes button:hover {
+  color: var(--fg);
+  border-color: rgb(220 214 201 / 0.3);
+}
+
+.qc__vibes button[aria-checked='true'] {
+  background: rgb(220 214 201 / 0.12);
+  border-color: rgb(220 214 201 / 0.5);
+  color: var(--fg);
+}
+
+.qc__sound {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.qc__sound:hover {
+  color: var(--fg);
+  background: rgb(220 214 201 / 0.08);
+}
+
+.qc__bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 10px;
+}
+
+.qc__bars i {
+  width: 2px;
+  height: 3px;
+  background: currentColor;
+}
+
+.qc__sound.is-on {
+  color: var(--fg);
+}
+
+.qc__sound.is-on .qc__bars i {
+  animation: qc-meter 0.8s ease-in-out infinite alternate;
+}
+
+.qc__sound.is-on .qc__bars i:nth-child(2) { animation-delay: -0.3s; }
+.qc__sound.is-on .qc__bars i:nth-child(3) { animation-delay: -0.55s; }
+
+@keyframes qc-meter {
+  to { height: 10px; }
+}
+
+/* The flyer waits behind the monitor and slides out when the cut ends. */
+.qc__flyer {
+  position: absolute;
+  right: 0;
+  top: 8%;
+  width: 21%;
+  z-index: 1;
+  opacity: 0;
+  transform: translateX(-60%) rotate(-2deg);
+  transition: transform 0.9s var(--ease-out), opacity 0.4s;
+}
+
+.qc__flyer.is-in {
+  z-index: 3;
+  opacity: 1;
+  transform: translateX(0) rotate(3deg);
+}
+
+@media (max-width: 760px) {
+  .qc {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .qc__screen {
+    padding-right: 0;
+  }
+  .qc__flyer {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .qc__outro {
+    position: static;
+  }
+  .qc__took {
+    font-size: 1.35rem;
+  }
+  .qc__go {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+  .qc__door > span {
+    font-size: 1.15rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qc__light {
+    animation: none;
+  }
+  .qc__sound.is-on .qc__bars i {
+    animation: none;
+    height: 8px;
+  }
+  .qc__flyer,
+  .qc__outro {
+    transition: none;
+    animation: none;
+  }
+}
+
+/*
+  Phones: show the studio before explaining it. The title, then the monitor (edge to edge, with the
+  brief under it like controls under your thumb), then the text, the numbers and the button.
+*/
+@media (max-width: 760px) {
+  section.qc {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 22px;
+    text-align: left;
+  }
+  .qc__kicker {
+    align-self: flex-start;
+  }
+  .qc__copy {
+    display: contents;
+  }
+  .qc__kicker { order: 1; }
+  .qc .qc__title { order: 2; }
+  .qc__screen {
+    order: 3;
+    margin-inline: calc(var(--gutter) * -1 + 8px);
+  }
+  .qc__intro { order: 4; }
+  .qc__proof { order: 5; }
+  .qc__enter { order: 6; }
+}
+
+/* Phones: the monitor goes edge to edge under the title, and the button sits under the numbers. */
+@media (max-width: 760px) {
+  .qc__screen {
+    margin-inline: calc(var(--gutter) * -1);
+  }
+  .qc__frame {
+    border-radius: 0;
+  }
+  .qc__deck {
+    border-radius: 0 0 16px 16px;
+  }
+}

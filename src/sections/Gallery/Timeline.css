@@ -1,0 +1,385 @@
+/*
+  An edit track in the page's ink: a transport line (timecode, which clip, its state), then the clips.
+  Inactive clips are greyed out; the open one is in colour, wider, with the playhead running across
+  it. Each clip has a stripe in its product's colour, like an editor colour-coding a timeline. That's
+  the only colour on this side, and it comes from the work.
+*/
+.tl {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* ---------- Transport ---------- */
+.tl__bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--ink-deep);
+  color: var(--fg-dim);
+}
+
+.tl__roll {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--ink-deep);
+  border-radius: 50%;
+  font-size: 0.62rem;
+  color: var(--ink-deep);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.tl__roll:hover,
+.tl__roll.is-on {
+  background: var(--ink-deep);
+  color: var(--porcelain);
+}
+
+.tl__roll:disabled {
+  opacity: 0.35;
+}
+
+.tl__tc {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--ink-deep);
+}
+
+.tl__now {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tl__now b {
+  font-weight: inherit;
+  color: var(--ink-deep);
+}
+
+.tl__state {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: auto;
+}
+
+.tl__roll.is-on ~ .tl__state {
+  color: var(--ink-deep);
+}
+
+/* ---------- The track ---------- */
+.tl__track {
+  display: flex;
+  gap: 6px;
+  height: clamp(108px, 15vh, 140px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 0;
+}
+
+.tl__clip {
+  flex: 1 1 0;
+  min-width: 0;
+  border: 0;
+  transition: flex-grow 0.7s var(--ease-out);
+}
+
+.tl__clip.is-on {
+  flex-grow: 2.4;
+}
+
+.tl__clip > button {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 7px;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  text-align: left;
+  color: var(--ink-deep);
+}
+
+.tl__thumb {
+  --t: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--ink-text) 8%, transparent);
+  box-shadow: inset 0 3px 0 var(--p-accent), 0 0 0 1px color-mix(in srgb, var(--ink-text) 10%, transparent);
+}
+
+.tl__thumb img,
+.tl__mirror {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Clips not on screen stay quiet and grey until hovered. */
+.tl__thumb > img:first-child {
+  filter: grayscale(1) contrast(0.9);
+  opacity: 0.55;
+  transition: filter 0.5s, opacity 0.5s;
+}
+
+.tl__clip > button:hover .tl__thumb > img:first-child,
+.tl__clip.is-on .tl__thumb > img:first-child {
+  filter: none;
+  opacity: 1;
+}
+
+.tl__frame {
+  z-index: 1;
+}
+
+.tl__mirror {
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.tl__mirror.is-live {
+  opacity: 1;
+}
+
+/* The colour stripe sits over the footage. */
+.tl__thumb::after {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  inset: 0 0 auto;
+  height: 3px;
+  background: var(--p-accent);
+}
+
+/* In-point timecode, top-left of each clip. */
+.tl__in {
+  position: absolute;
+  z-index: 3;
+  left: 5px;
+  top: 8px;
+  padding: 1px 5px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--porcelain) 88%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-style: normal;
+  letter-spacing: 0.04em;
+  color: var(--ink-deep);
+}
+
+.tl__scrub {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.35);
+  pointer-events: none;
+}
+
+/* The playhead: a bright line with a head above the footage, running across the open clip. */
+.tl__head {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--t) * (100% - 2px));
+  width: 2px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.4);
+  pointer-events: none;
+}
+
+.tl__head::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 0;
+  width: 12px;
+  height: 9px;
+  background: #fff;
+  clip-path: polygon(0 0, 100% 0, 100% 55%, 50% 100%, 0 55%);
+  filter: drop-shadow(0 0 1px rgb(0 0 0 / 0.5));
+}
+
+/* The played part of the open clip is slightly darker, like a rendered region. */
+.tl__clip.is-on .tl__thumb::before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  inset: 0 auto 0 0;
+  width: calc(var(--t) * 100%);
+  background: rgb(0 0 0 / 0.16);
+  pointer-events: none;
+}
+
+.tl__label {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.tl__clip:not(.is-on) .tl__no {
+  display: none;
+}
+
+.tl__no {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--fg-dim);
+}
+
+.tl__name {
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 700;
+  font-size: clamp(0.76rem, 0.95vw, 0.95rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--fg-dim);
+  transition: color 0.3s;
+}
+
+.tl__clip.is-on .tl__name,
+.tl__clip > button:hover .tl__name {
+  color: var(--ink-deep);
+}
+
+.tl__clip.is-on .tl__name {
+  font-size: clamp(0.95rem, 1.25vw, 1.15rem);
+}
+
+.tl__clip > button:hover .tl__thumb {
+  box-shadow: inset 0 3px 0 var(--p-accent), 0 0 0 1.5px var(--ink-deep);
+}
+
+.tl__clip > button:focus-visible {
+  outline: none;
+}
+
+.tl__clip > button:focus-visible .tl__thumb {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 2px;
+}
+
+/* The thumbnail flying up to the big screen. */
+.tl__ghost {
+  position: fixed;
+  z-index: 60;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 4px;
+  box-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.45);
+  pointer-events: none;
+}
+
+/* ---------- Under the track: what it is and where to go ---------- */
+.tl__more {
+  display: grid;
+  gap: 14px;
+}
+
+.tl__more p {
+  max-width: 52ch;
+  line-height: 1.5;
+  color: var(--fg-dim);
+}
+
+.tl__more p span {
+  animation: tl-in 0.5s var(--ease-out);
+}
+
+@keyframes tl-in {
+  from { opacity: 0; filter: blur(4px); }
+}
+
+@media (min-width: 1081px) and (max-height: 760px) {
+  .tl {
+    gap: 10px;
+  }
+  .tl__bar {
+    padding-top: 10px;
+  }
+  .tl__track {
+    height: 104px;
+  }
+  .tl__more p {
+    display: none;
+  }
+}
+
+/* ---------- Phones: a strip you swipe ---------- */
+@media (max-width: 760px) {
+  .tl__bar {
+    gap: 10px;
+  }
+  .tl__tc {
+    font-size: 0.8rem;
+  }
+  .tl__state {
+    display: none;
+  }
+  .tl__track {
+    height: 128px;
+    overflow-x: auto;
+    margin-inline: calc(var(--gutter, 16px) * -1);
+    padding-inline: var(--gutter, 16px);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .tl__track::-webkit-scrollbar {
+    display: none;
+  }
+  .tl__clip {
+    flex: 0 0 34%;
+    scroll-snap-align: center;
+  }
+  .tl__clip.is-on {
+    flex-basis: 58%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl__clip,
+  .tl__more p span {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* Updated since this visitor's last visit. */
+.tl__new {
+  position: absolute;
+  z-index: 3;
+  right: 5px;
+  top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #2bb673;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+}

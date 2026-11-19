@@ -1,0 +1,23 @@
+.chapter {
+  display: flex;
+  align-items: center;
+  gap: 1.2em;
+  color: var(--fg-dim);
+}
+
+.chapter__no {
+  color: var(--fg);
+}
+
+.chapter__rule {
+  flex: 1;
+  height: 1px;
+  background: var(--fg-faint);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1.6s var(--ease-out) 0.2s;
+}
+
+.chapter.is-in .chapter__rule {
+  transform: none;
+}

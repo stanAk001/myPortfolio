@@ -1,0 +1,1570 @@
+/*
+  The work page. Graphite in two shades, warm-white type, orange only in small marks. Colour on this
+  page comes from the products, and every one of them is shown running.
+
+  Fonts: Archivo (condensed, heavy) for display with a lighter second line under it, Instrument Sans
+  for reading, JetBrains Mono for labels.
+*/
+
+/* ---------- Grounds ---------- */
+
+.tone-night,
+.tone-graphite {
+  --fg: var(--ink-text);
+  --fg-dim: var(--ink-dim);
+  --fg-faint: var(--ink-faint);
+}
+
+/* The finale: deep ink with porcelain text. */
+.tone-ink {
+  --bg: var(--ink-deep);
+  --fg: var(--porcelain);
+  --fg-dim: rgb(242 238 230 / 0.66);
+  --fg-faint: rgb(242 238 230 / 0.13);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.tone-night {
+  --bg: var(--night);
+}
+
+.tone-graphite {
+  --bg: var(--graphite);
+}
+
+/* The one light surface: a sheet of paper over a project's screen. */
+.tone-paper {
+  --bg: var(--warm-white);
+  --fg: #151a1d;
+  --fg-dim: rgb(18 19 22 / 0.66);
+  --fg-faint: rgb(18 19 22 / 0.14);
+}
+
+.tone-paper {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.tone-night,
+.tone-graphite {
+  background: transparent;
+  color: var(--fg);
+}
+
+.hr,
+.pi,
+.ab,
+.contact {
+  font-family: var(--font-text);
+}
+
+/* ---------- Type ---------- */
+
+/* Scoped to the section where they meet the global .display rules, which load after this file. */
+.hr__title,
+.px__title,
+.ab__title,
+.eng .eng__title,
+.contact .contact__title {
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.015em;
+}
+
+.g-thin,
+.eng .eng__title em,
+.contact .contact__title em {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 250;
+  letter-spacing: 0;
+}
+
+.g-square {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  background: var(--vermilion);
+}
+
+.g-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+}
+
+.g-meta__no {
+  color: var(--fg);
+}
+
+/* ---------- Buttons, facts ---------- */
+
+.g-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.g-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 1px solid var(--fg-faint);
+  border-radius: 999px;
+  color: var(--fg);
+  font-family: var(--font-text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out), border-color 0.3s;
+}
+
+.g-btn:hover,
+.g-btn:focus-visible {
+  border-color: var(--fg);
+}
+
+.g-btn--solid {
+  background: var(--fg);
+  border-color: var(--fg);
+  color: var(--bg);
+}
+
+.g-btn--solid:hover,
+.g-btn--solid:focus-visible {
+  background: var(--vermilion);
+  border-color: var(--vermilion);
+  color: #fff;
+}
+
+.g-btn span[aria-hidden] {
+  transition: transform 0.45s var(--ease-out);
+}
+
+.g-btn:hover span[aria-hidden] {
+  transform: translateX(3px);
+}
+
+.g-facts > div {
+  display: grid;
+  grid-template-columns: 7.5em minmax(0, 1fr);
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--fg-faint);
+}
+
+.g-facts dt {
+  padding-top: 0.2em;
+}
+
+.g-facts dd {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 0.94rem;
+}
+
+/* ---------- The first screen ---------- */
+
+.hr {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  row-gap: 48px;
+  align-items: center;
+  min-height: 100svh;
+  padding: calc(var(--nav-h) + 24px) var(--gutter) 56px;
+  overflow: clip;
+}
+
+.hr > .ds {
+  grid-column: 1 / span 5;
+}
+
+.hr > .rl {
+  grid-column: 6 / -1;
+}
+
+.hr__kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hr__title {
+  font-size: var(--t-hero);
+}
+
+.hr__sub {
+  max-width: 44ch;
+  font-size: 1.04rem;
+  line-height: 1.55;
+  color: var(--fg-dim);
+}
+
+.hr__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hr__facts {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: start;
+  gap: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--fg-faint);
+}
+
+.hr__facts dd {
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* ---------- The reel ---------- */
+
+.rl__stage {
+  position: relative;
+  padding-left: 9%;
+}
+
+.rl__desk {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #0d1013;
+  box-shadow:
+    0 0 0 1px rgb(220 214 201 / 0.08),
+    0 70px 120px -50px rgb(0 0 0 / 0.9);
+}
+
+.rl__view {
+  position: relative;
+  aspect-ratio: 1440 / 900;
+  background: #0d1013;
+}
+
+.rl__clip {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.rl__clip.is-on {
+  opacity: 1;
+}
+
+.rl__clip img,
+.rl__clip video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.rl__phone {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  bottom: -6%;
+  width: 19%;
+}
+
+.rl__view {
+  display: block;
+}
+
+.rl__what {
+  margin-top: 34px;
+  padding-left: 22%;
+  max-width: 60ch;
+  min-height: 1.5em;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--fg-dim);
+}
+
+.rl__what b {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.rl__tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.rl__tabs button {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 0;
+  text-align: left;
+  font-size: 0.78rem;
+  color: var(--fg-dim);
+  transition: color 0.3s;
+}
+
+.rl__tabs button:hover,
+.rl__tabs button[aria-current] {
+  color: var(--fg);
+}
+
+.rl__tabs i {
+  position: relative;
+  height: 2px;
+  overflow: hidden;
+  background: var(--fg-faint);
+}
+
+.rl__tabs i::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--vermilion);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.rl__tabs i.is-on::after {
+  transform: scaleX(1);
+}
+
+.rl__tabs i.is-running::after {
+  animation: rl-fill var(--slide) linear forwards;
+}
+
+@keyframes rl-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* ---------- The exhibit: browser + phone ---------- */
+
+.ex {
+  position: relative;
+}
+
+.ex__desk {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #0d1013;
+  box-shadow:
+    0 0 0 1px rgb(220 214 201 / 0.08),
+    0 70px 120px -50px rgb(0 0 0 / 0.9);
+}
+
+.ex__bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 38px;
+  padding: 0 6px 0 14px;
+  background: #0d1013;
+  border-bottom: 1px solid rgb(220 214 201 / 0.06);
+  color: rgb(220 214 201 / 0.7);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+}
+
+.ex__host {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ex__state {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ex__state i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgb(220 214 201 / 0.45);
+}
+
+.ex__state.is-live {
+  color: var(--warm-white);
+}
+
+.ex__state.is-live i {
+  background: var(--vermilion);
+}
+
+.ex__open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(220 214 201 / 0.82);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.ex__open:hover,
+.ex__open:focus-visible {
+  background: var(--warm-white);
+  color: #111417;
+}
+
+.ex__phone {
+  position: absolute;
+  z-index: 2;
+}
+
+.ex__handset {
+  padding: 6px;
+  border-radius: 30px;
+  background: #0d1013;
+  box-shadow:
+    0 0 0 1px rgb(220 214 201 / 0.1),
+    0 44px 70px -30px rgb(0 0 0 / 0.9);
+  transition: transform 0.8s var(--ease-out);
+}
+
+.ex__handset .lv {
+  border-radius: 25px;
+}
+
+.ex:hover .ex__handset,
+.rl:hover .ex__handset {
+  transform: translateY(-10px);
+}
+
+.ex--opening .ex__desk {
+  margin-left: 9%;
+}
+
+.ex--opening .ex__phone {
+  left: 0;
+  bottom: -5%;
+  width: 19%;
+}
+
+.ex--panel .ex__desk {
+  border-radius: 0 10px 10px 0;
+}
+
+.ex--panel .ex__phone {
+  left: 7%;
+  bottom: -11%;
+  width: 16%;
+}
+
+.ex--bleed .ex__phone {
+  right: 5%;
+  bottom: -13%;
+  width: 15%;
+}
+
+.ex--mirror {
+  padding-left: 20%;
+}
+
+.ex--mirror .ex__phone {
+  left: 0;
+  top: 50%;
+  width: 25%;
+  transform: translateY(-46%);
+}
+
+/* ---------- One live viewport ---------- */
+
+.lv {
+  position: relative;
+  overflow: hidden;
+  background: #0d1013;
+}
+
+.lv--desk {
+  aspect-ratio: 1440 / 900;
+}
+
+.lv--phone {
+  aspect-ratio: 390 / 844;
+}
+
+.lv__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.lv__site {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(var(--k, 0.5));
+  transform-origin: 0 0;
+  transition: opacity 0.9s ease;
+}
+
+.lv[data-live='on'] .lv__site {
+  opacity: 1;
+}
+
+.lv[data-active] .lv__site {
+  pointer-events: auto;
+}
+
+.lv[data-active] {
+  box-shadow: inset 0 0 0 2px var(--vermilion);
+}
+
+.lv__shield {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: end center;
+  padding-bottom: 16px;
+  cursor: pointer;
+}
+
+.lv__ask {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: rgb(11 12 14 / 0.9);
+  color: var(--warm-white);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s, transform 0.5s var(--ease-out);
+}
+
+.lv__ask i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--vermilion);
+}
+
+.lv__shield:hover .lv__ask,
+.lv__shield:focus-visible .lv__ask {
+  opacity: 1;
+  transform: none;
+}
+
+.lv--phone .lv__ask {
+  padding: 7px 10px;
+  font-size: 0.56rem;
+}
+
+.lv__done {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: var(--vermilion);
+  color: #111417;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ---------- About ---------- */
+
+.ab {
+  padding: clamp(96px, 14vh, 168px) var(--gutter);
+}
+
+.ab__head {
+  display: grid;
+  gap: 18px;
+  margin-bottom: clamp(48px, 8vh, 88px);
+}
+
+.ab__title {
+  font-size: var(--t-h2);
+}
+
+.ab__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 4fr) minmax(0, 5fr);
+  column-gap: clamp(28px, 3.4vw, 60px);
+  row-gap: 48px;
+  align-items: start;
+}
+
+.ab__portrait {
+  margin: 0;
+}
+
+/* Opens from the bottom as it arrives, like a print being pulled. */
+.ab__photo {
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: 8px;
+  background: var(--graphite);
+}
+
+.ab__portrait.reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* The quieter version: the portrait opens out from a slit down the middle. */
+.ab__portrait.reveal .ab__photo {
+  clip-path: inset(0 50% 0 50%);
+  transition: clip-path 1.5s var(--ease-in-out);
+}
+
+.ab__portrait.reveal.is-in .ab__photo {
+  clip-path: inset(0 0 0 0);
+}
+
+.ab__photo img {
+  width: 100%;
+  height: 112%;
+  margin-top: -6%;
+  object-fit: cover;
+  object-position: 50% 20%;
+}
+
+.ab__portrait figcaption {
+  display: grid;
+  gap: 4px;
+  margin-top: 16px;
+}
+
+.ab__name {
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.ab__open {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 0.86rem;
+  color: var(--fg-dim);
+}
+
+.ab__open i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #5fd39a;
+  box-shadow: 0 0 0 0 rgb(95 211 154 / 0.5);
+  animation: pulse 2.4s ease-out infinite;
+}
+
+.ab__words {
+  display: grid;
+  gap: 36px;
+}
+
+.ab__statement {
+  font-size: clamp(1.15rem, 1.45vw, 1.45rem);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+
+.ab__list {
+  border-top: 1px solid var(--fg-faint);
+}
+
+.ab__item {
+  display: grid;
+  gap: 8px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--fg-faint);
+}
+
+.ab__item dd {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--fg-dim);
+}
+
+.ab__shell {
+  display: grid;
+  gap: 14px;
+}
+
+.ab__shell .label {
+  line-height: 1.7;
+}
+
+.ab__shell kbd {
+  padding: 1px 6px;
+  border: 1px solid var(--fg-faint);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  color: var(--fg);
+  text-transform: none;
+}
+
+.ab__caret {
+  color: var(--vermilion);
+}
+
+.ab__shell .term {
+  height: 100%;
+}
+/* ---------- Short laptop screens: the first screen still has to fit ---------- */
+
+/* Short windows: the screen shrinks so the dossier and its index stay on the first screen. */
+@media (min-width: 1081px) and (max-height: 800px) {
+  .hr {
+    padding-top: calc(var(--nav-h) + 8px);
+    padding-bottom: 24px;
+    row-gap: 20px;
+  }
+  .hr > .rl {
+    justify-self: end;
+    width: min(100%, calc((100svh - 190px) * 1.6 / 0.91));
+  }
+  .rl__what {
+    margin-top: 18px;
+  }
+  .ds__num {
+    font-size: clamp(7rem, 22svh, 11rem);
+  }
+}
+
+/* ---------- Tablet ---------- */
+
+@media (max-width: 1080px) {
+  .hr {
+    min-height: 0;
+  }
+  .hr > .ds,
+  .hr > .rl {
+    grid-column: 1 / -1;
+  }
+  .hr__title {
+    font-size: clamp(2.3rem, 6vw, 3.6rem);
+  }
+
+  .px__title,
+  .px__note {
+    grid-column: 1 / -1;
+  }
+
+  .ab__grid {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
+}
+
+/* ---------- Phone: the phone screen comes first ---------- */
+
+@media (max-width: 760px) {
+  .hr {
+    row-gap: 40px;
+    padding-bottom: 72px;
+  }
+  .hr__title {
+    font-size: clamp(2.1rem, 9.6vw, 2.8rem);
+  }
+  .hr__facts {
+    gap: 20px;
+  }
+  .hr__facts dd {
+    font-size: 1.1rem;
+  }
+
+  .rl__stage,
+  .ex,
+  .ex--mirror {
+    display: grid;
+    padding: 0;
+  }
+  .rl__desk,
+  .rl__phone,
+  .ex__desk,
+  .ex__phone {
+    grid-area: 1 / 1;
+  }
+  .rl__desk,
+  .ex__desk,
+  .ex--opening .ex__desk,
+  .ex--panel .ex__desk {
+    width: 82%;
+    margin: 0;
+    align-self: start;
+    border-radius: 8px;
+  }
+  .rl__phone,
+  .ex__phone,
+  .ex--opening .ex__phone,
+  .ex--panel .ex__phone,
+  .ex--bleed .ex__phone,
+  .ex--mirror .ex__phone {
+    position: relative;
+    inset: auto;
+    width: 42%;
+    margin-top: 26%;
+    justify-self: end;
+    transform: none;
+  }
+  .ex__handset {
+    padding: 5px;
+    border-radius: 24px;
+  }
+  .ex__handset .lv {
+    border-radius: 20px;
+  }
+  .ex__bar {
+    height: 32px;
+    gap: 8px;
+    padding-left: 10px;
+  }
+  .ex__state {
+    display: none;
+  }
+  .rl__under {
+    grid-template-columns: minmax(0, 1fr);
+    padding-left: 0;
+    margin-top: 28px;
+  }
+  .rl__tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 14px;
+  }
+  .rl__tabs button {
+    min-height: 40px;
+  }
+
+  .px__name {
+    font-size: clamp(1.8rem, 8.4vw, 2.4rem);
+  }
+  .px__link {
+    flex: 1 1 calc(50% - 8px);
+    justify-content: center;
+    min-height: 44px;
+  }
+
+  .ab__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ab__portrait {
+    max-width: 340px;
+  }
+  .g-actions .g-btn {
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hl__card,
+  .hl__benefit {
+    animation: none;
+  }
+  .ab__portrait.reveal .ab__photo {
+    clip-path: none;
+    transition: none;
+  }
+  .ab__open i {
+    animation: none;
+  }
+  .ex__handset,
+  .lv__site,
+  .rl__clip,
+  .px__name a,
+  .px__more-inner,
+  .px__view .rl__clip,
+  .px__view .rl__clip img {
+    transition: none !important;
+  }
+  .rl__tabs i.is-running::after {
+    animation: none;
+    transform: scaleX(1);
+  }
+}
+
+/* ---------- About: the statement reveals itself as you read ---------- */
+
+.st {
+  font-size: clamp(1.3rem, 1.75vw, 1.75rem);
+  line-height: 1.38;
+  letter-spacing: -0.015em;
+}
+
+.st__w.is-stack {
+  position: relative;
+  transition: color 0.5s;
+}
+
+.st__w.is-stack::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0.3em;
+  bottom: 0.02em;
+  height: 2px;
+  background: var(--vermilion);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease-out);
+}
+
+.st__w.is-stack.is-lit {
+  color: var(--vermilion);
+}
+
+.st__w.is-stack.is-lit::after {
+  transform: scaleX(1);
+}
+
+/* ---------- About: three principles, each with a live proof ---------- */
+
+.ab__proofs {
+  margin-top: clamp(72px, 11vh, 128px);
+}
+
+.ab__proofs-head {
+  margin-bottom: 22px;
+}
+
+.ab__principles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 24px);
+}
+
+.ab__pr {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  gap: 10px;
+  padding: 24px;
+  border-radius: 14px;
+  background: #171c20;
+  box-shadow: inset 0 0 0 1px rgb(220 214 201 / 0.07);
+  transition: box-shadow 0.4s, transform 0.6s var(--ease-out);
+}
+
+.ab__pr:hover {
+  box-shadow: inset 0 0 0 1px rgb(220 214 201 / 0.18);
+  transform: translateY(-4px);
+}
+
+.ab__pr-no {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: var(--vermilion);
+}
+
+.ab__pr-title {
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: var(--t-h3);
+  line-height: 1.02;
+}
+
+.ab__pr-text {
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: var(--fg-dim);
+}
+
+.pf {
+  align-self: end;
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 10px;
+  background: #101316;
+  box-shadow: inset 0 0 0 1px rgb(220 214 201 / 0.06);
+}
+
+/* What I build: a phone playing the real sites, with the layers lighting up in turn. */
+.pf--build {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+}
+
+.pf__phone .ex__handset {
+  padding: 4px;
+  border-radius: 20px;
+}
+
+.pf__phone .lv {
+  border-radius: 16px;
+}
+
+.pf__phone .rl__clip {
+  position: absolute;
+  inset: 0;
+}
+
+.pf__cap {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--fg-dim);
+}
+
+.pf__cap b {
+  display: inline-block;
+  font-weight: 500;
+  color: var(--warm-white);
+  animation: nav-roll 0.5s var(--ease-out);
+}
+
+.pf__layers {
+  display: grid;
+  gap: 6px;
+}
+
+.pf__layers li {
+  display: grid;
+  gap: 2px;
+  padding: 9px 11px;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgb(220 214 201 / 0.06);
+  font-size: 0.86rem;
+  color: rgb(220 214 201 / 0.45);
+  transition: color 0.4s, box-shadow 0.4s, background-color 0.4s;
+}
+
+.pf__layers code {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: rgb(220 214 201 / 0.35);
+}
+
+.pf__layers li.is-on {
+  color: var(--warm-white);
+  background: rgb(255 91 38 / 0.08);
+  box-shadow: inset 0 0 0 1px rgb(255 91 38 / 0.55);
+}
+
+.pf__layers li.is-on code {
+  color: var(--vermilion);
+}
+
+/* How I work: a live uptime board. */
+.pf__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.pf__head span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.pf__pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #5fd39a;
+  animation: pulse 2s ease-out infinite;
+}
+
+.pf__sites {
+  display: grid;
+  gap: 2px;
+}
+
+.pf__sites li {
+  display: grid;
+  grid-template-columns: 8px minmax(0, 1fr) 64px 4.4em;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgb(220 214 201 / 0.05);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.pf__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgb(220 214 201 / 0.25);
+}
+
+.pf__sites li.is-up .pf__dot {
+  background: #5fd39a;
+}
+
+.pf__sites li.is-down .pf__dot {
+  background: var(--vermilion);
+}
+
+.pf__host {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pf__spark {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 18px;
+}
+
+.pf__spark i {
+  flex: 1;
+  min-height: 2px;
+  border-radius: 1px;
+  background: rgb(95 211 154 / 0.7);
+  animation: pf-bar 0.4s var(--ease-out);
+}
+
+.pf__spark i.is-fail {
+  background: var(--vermilion);
+}
+
+@keyframes pf-bar {
+  from { transform: scaleY(0); transform-origin: bottom; }
+}
+
+.pf__ms {
+  text-align: right;
+  color: var(--warm-white);
+}
+
+/* What I care about: a tap test. */
+.pf--tap {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+}
+
+.pf__tap {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--warm-white);
+  color: #111417;
+  font-weight: 600;
+  font-size: 0.92rem;
+  box-shadow: 0 0 0 6px rgb(220 214 201 / 0.06);
+  transition: transform 0.12s, background-color 0.3s, box-shadow 0.3s;
+  touch-action: manipulation;
+}
+
+.pf__tap:hover {
+  background: var(--vermilion);
+  box-shadow: 0 0 0 10px rgb(255 91 38 / 0.12);
+}
+
+.pf__tap:active {
+  transform: scale(0.92);
+}
+
+.pf__result {
+  display: grid;
+  gap: 2px;
+}
+
+.pf__result b {
+  font-family: var(--font-display);
+  font-stretch: 80%;
+  font-weight: 700;
+  font-size: clamp(2.4rem, 3.4vw, 3.2rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: #5fd39a;
+  animation: nav-roll 0.45s var(--ease-out);
+}
+
+.pf__result span {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: var(--fg-dim);
+}
+
+.pf__hint {
+  font-family: var(--font-text) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.45;
+}
+
+.pf__taps {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pf__taps li {
+  padding: 3px 9px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgb(220 214 201 / 0.1);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--fg-dim);
+}
+
+.pf__taps li::after {
+  content: 'ms';
+  opacity: 0.6;
+}
+
+@media (max-width: 1080px) {
+  .ab__principles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ab__pr {
+    grid-template-rows: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf__pulse,
+  .pf__spark i,
+  .pf__result b,
+  .pf__cap b {
+    animation: none;
+  }
+  .ab__pr:hover {
+    transform: none;
+  }
+}
+
+/* Proofs go first in each card, all the same height, so the three panels line up like screens. */
+.ab__pr {
+  grid-template-rows: none;
+  align-content: start;
+}
+
+.ab__pr .pf {
+  order: -1;
+  align-self: stretch;
+  display: grid;
+  align-content: center;
+  min-height: 270px;
+  margin: 0 0 10px;
+}
+
+.ab__pr .pf--build,
+.ab__pr .pf--tap {
+  align-items: center;
+}
+
+.ab__pr .pf__phone {
+  width: 100%;
+  max-width: 118px;
+  justify-self: center;
+}
+
+/* The slit of light the hero screen opens from (driven by the hero timeline). */
+.rl__desk {
+  position: relative;
+}
+
+.rl__seam {
+  position: absolute;
+  top: 38px;
+  bottom: 0;
+  left: 50%;
+  z-index: 3;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--warm-white);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* A thin line of light along the top of the screens, like a lit display catching the room. */
+.rl__view::after,
+.px__view::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .px__edge {
+    display: none;
+  }
+  .px__view .rl__clip,
+  .px__view .rl__clip.is-on {
+    transition: none;
+  }
+}
+
+/* Under the presentation: the statement, with the terminal next to it. */
+.ab__after {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+  margin-top: clamp(64px, 10vh, 112px);
+}
+
+@media (max-width: 760px) {
+  .ab__after {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/*
+  Screens on the paper: browser frames, terminals, editors, monitors. They keep their own dark glass
+  and light text whatever section they're in.
+*/
+.qc__rig,
+.pr__board,
+.pr__screen,
+.pf,
+.bc__win,
+.su,
+.lk,
+.mv,
+.sp,
+.pj__frame,
+.pj__plates,
+.jn,
+.term,
+.lb,
+.sl,
+.rl__desk,
+.ex__desk {
+  --bg: #111417;
+  --fg: #dcd6c9;
+  --fg-dim: rgb(220 214 201 / 0.64);
+  --fg-faint: rgb(220 214 201 / 0.13);
+  color: var(--fg);
+}
+
+/* ---------- The plane: colour as printed material, not light ---------- */
+.rl__plane {
+  position: absolute;
+  z-index: 0;
+  top: 9%;
+  right: -3.5%;
+  bottom: -11%;
+  left: 24%;
+  background: var(--p-accent);
+  transition: background-color 0.7s var(--ease-in-out);
+}
+
+/* Crop marks just outside each corner, like a printer trimming a sheet. */
+.rl__plane i {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--ink-deep);
+  border-style: solid;
+  border-width: 0;
+}
+
+.rl__plane i:nth-child(1) { left: -26px; top: -26px; border-right-width: 1px; border-bottom-width: 1px; }
+.rl__plane i:nth-child(2) { right: -26px; top: -26px; border-left-width: 1px; border-bottom-width: 1px; }
+.rl__plane i:nth-child(3) { left: -26px; bottom: -26px; border-right-width: 1px; border-top-width: 1px; }
+.rl__plane i:nth-child(4) { right: -26px; bottom: -26px; border-left-width: 1px; border-top-width: 1px; }
+
+/* The screen sits on the plane with a hard, printed-looking shadow. */
+.rl__desk {
+  box-shadow: 0 0 0 1.5px var(--ink-deep), 16px 16px 0 var(--ink-deep);
+}
+
+.rl__phone .ex__handset {
+  box-shadow: 0 0 0 1.5px var(--ink-deep), 10px 10px 0 var(--ink-deep);
+}
+
+.rl__what {
+  position: relative;
+  color: var(--ink-deep);
+}
+
+.rl__plane {
+  bottom: -5%;
+}
+
+.rl .rl__what {
+  margin-top: 46px;
+}
+
+/* ---------- Light theme: no plane, no hard shadow, the screen just rests on the paper ---------- */
+.rl__plane {
+  display: none;
+}
+
+.rl__desk {
+  box-shadow: 0 0 0 1px rgb(18 18 18 / 0.08), 0 40px 80px -40px rgb(18 18 18 / 0.35);
+}
+
+.rl__phone .ex__handset {
+  box-shadow: 0 0 0 1px rgb(18 18 18 / 0.1), 0 30px 50px -24px rgb(18 18 18 / 0.4);
+}
+
+/* The wall sits behind the first screen's two halves. */
+.hr {
+  position: relative;
+  isolation: isolate;
+}
+
+.hr > .ds,
+.hr > .rl {
+  position: relative;
+  z-index: 1;
+}
+
+/*
+  ---------- Phones ----------
+  The first screen goes in the order your thumb reaches it: who and what (status, headline), then the
+  work running (screen and phone), then the clips to pick from, then the links. The wall of prints is
+  a desktop thing; on a narrow screen it only blurs whatever's on top of it.
+*/
+@media (max-width: 760px) {
+  .hr {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 22px;
+    text-align: left;
+  }
+  .hr > .ds {
+    display: contents;
+  }
+  .hr .ds__top {
+    order: 1;
+  }
+  .hr .hl {
+    order: 2;
+  }
+  .hr > .rl {
+    order: 3;
+    margin-top: 4px;
+  }
+  .hr .tl {
+    order: 4;
+  }
+  .hr .tl__more {
+    order: 5;
+  }
+  .hr > .wl {
+    display: none;
+  }
+  .hr .ds__go {
+    flex: 0 1 auto;
+  }
+  .hr > .rl {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+    justify-self: stretch;
+  }
+}
+
+/* The big background words run into the headings on narrow screens. */
+@media (max-width: 760px) {
+  .hr .ds__top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .hr .rl__phone {
+    width: 34%;
+    margin-top: 22%;
+  }
+  .bgword {
+    display: none;
+  }
+}
+
+/*
+  Small laptops and tablets (761–1080px): the first screen keeps both columns, text and clips on the
+  left, the work playing on the right, same as on a big screen.
+*/
+@media (min-width: 761px) and (max-width: 1080px) {
+  .hr {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    align-items: center;
+    column-gap: clamp(20px, 3vw, 40px);
+  }
+  .hr > .ds {
+    grid-column: 1;
+  }
+  .hr > .rl {
+    grid-column: 2;
+  }
+  .hr .ds__title {
+    font-size: clamp(2.2rem, 5.2vw, 3.4rem);
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1080px) {
+  /* The tilted wall needs a wide screen. Here it only shows through the words. */
+  .hr > .wl {
+    display: none;
+  }
+  .hr .ds__top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .hr .rl__phone {
+    width: 30%;
+  }
+}
+

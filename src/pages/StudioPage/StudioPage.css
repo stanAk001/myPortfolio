@@ -1,0 +1,812 @@
+/*
+  Studio page, same graphite as the work page. Styled like video editing software throughout: a
+  clapperboard at the top, a monitor and tracks, an export dialog. One red playhead; everything
+  else is warm white on graphite.
+*/
+.st {
+  padding: calc(var(--nav-h) + 28px) var(--gutter) clamp(96px, 14vh, 168px);
+  font-family: var(--font-text);
+}
+
+.st__crumbs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: clamp(12px, 3vh, 32px);
+}
+
+.st__back {
+  color: var(--fg);
+  transition: color 0.3s;
+}
+
+.st__back:hover {
+  color: var(--vermilion);
+}
+
+/* ---------- The slate ---------- */
+.sl {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  padding: var(--gutter);
+  background: var(--night);
+  cursor: pointer;
+  animation: sl-out 0.35s ease-in 0.95s forwards;
+}
+
+@keyframes sl-out {
+  to { opacity: 0; visibility: hidden; }
+}
+
+.sl__board {
+  width: min(560px, 100%);
+  animation: sl-in 0.4s var(--ease-out);
+}
+
+@keyframes sl-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+}
+
+.sl__sticks {
+  position: relative;
+  height: 46px;
+}
+
+.sl__sticks i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 22px;
+  background: repeating-linear-gradient(-55deg, var(--warm-white) 0 22px, #1a1b1f 22px 44px);
+  border: 2px solid var(--warm-white);
+}
+
+.sl__top {
+  top: 0;
+  transform-origin: 0 100%;
+  transform: rotate(-16deg);
+  animation: sl-clap 0.22s cubic-bezier(0.6, 0, 0.9, 0.4) 0.42s forwards;
+}
+
+.sl__bottom {
+  bottom: 0;
+}
+
+@keyframes sl-clap {
+  to { transform: rotate(0); }
+}
+
+.sl__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  border: 2px solid var(--warm-white);
+  border-top: 0;
+}
+
+.sl__grid > div {
+  padding: 12px 14px;
+  border-top: 2px solid var(--warm-white);
+  border-left: 2px solid var(--warm-white);
+}
+
+.sl__grid > div:nth-child(2),
+.sl__grid > div:nth-child(1) {
+  border-left: 0;
+}
+
+.sl__prod {
+  grid-column: 1 / -1;
+}
+
+.sl__grid > div:nth-child(5) {
+  grid-column: 1 / -1;
+  border-left: 0;
+}
+
+.sl__grid dt {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(220 214 201 / 0.6);
+}
+
+.sl__grid dd {
+  margin: 4px 0 0;
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+  line-height: 1.1;
+}
+
+/* ---------- The edit suite ---------- */
+.su {
+  overflow: hidden;
+  border-radius: 14px;
+  background: #14181b;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.08), 0 60px 120px -60px rgb(0 0 0 / 0.95);
+}
+
+.su__monitor {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr);
+}
+
+.su__screen {
+  position: relative;
+  display: grid;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.su__screen > video,
+.su__screen > .ct {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+}
+
+.su__screen > video {
+  object-fit: contain;
+  cursor: pointer;
+}
+
+/* Live captions, taken from the voiceover cue sheet. */
+.su__caption {
+  position: absolute;
+  left: 50%;
+  bottom: 7%;
+  max-width: 80%;
+  padding: 6px 12px;
+  translate: -50% 0;
+  background: rgb(10 12 14 / 0.82);
+  font-size: clamp(0.78rem, 1.1vw, 1rem);
+  line-height: 1.4;
+  text-align: center;
+  pointer-events: none;
+}
+
+.su__info {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 24px;
+  border-left: 1px solid rgb(220 214 201 / 0.07);
+}
+
+.su__rec {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--vermilion);
+  animation: pulse 2s ease-out infinite;
+}
+
+.su__title {
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 700;
+  font-size: var(--t-h3);
+  line-height: 1.1;
+  animation: nav-roll 0.5s var(--ease-out);
+}
+
+.su__note {
+  line-height: 1.55;
+  color: var(--fg-dim);
+}
+
+.su__live {
+  display: grid;
+  gap: 6px;
+  font-size: 0.86rem;
+  color: rgb(220 214 201 / 0.35);
+}
+
+.su__live li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+}
+
+.su__live i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  transition: background-color 0.2s;
+}
+
+.su__live li.is-on {
+  color: var(--fg);
+}
+
+.su__live li.is-on i {
+  background: var(--vermilion);
+  border-color: var(--vermilion);
+}
+
+.su__live li.is-silent i {
+  background: transparent;
+}
+
+.su__live em {
+  font-style: normal;
+  color: var(--fg-dim);
+}
+
+.su__service {
+  display: grid;
+  gap: 12px;
+  animation: nav-roll 0.4s var(--ease-out);
+}
+
+.su__service ul {
+  display: grid;
+  gap: 8px;
+  line-height: 1.45;
+}
+
+.su__service li {
+  padding-left: 16px;
+  position: relative;
+  color: var(--fg-dim);
+}
+
+.su__service li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 7px;
+  height: 1px;
+  background: var(--vermilion);
+}
+
+.su__service-btns,
+.su__btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.su__tc {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.su__tc span {
+  color: var(--fg-dim);
+}
+
+/* ---------- Tracks ---------- */
+.su__timeline {
+  --head: 168px;
+  padding: 12px 14px 14px;
+  border-top: 1px solid rgb(220 214 201 / 0.07);
+  background: #0e1215;
+  outline: none;
+}
+
+.su__timeline:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--warm-white);
+}
+
+.su__row {
+  display: grid;
+  grid-template-columns: var(--head) minmax(0, 1fr);
+  align-items: stretch;
+  min-height: 38px;
+}
+
+.su__row + .su__row {
+  margin-top: 4px;
+}
+
+.su__row--reel {
+  min-height: 46px;
+  margin-bottom: 8px;
+}
+
+.su__lane-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 10px;
+}
+
+.su__name {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.su__name:hover,
+.su__row.is-picked .su__name {
+  background: rgb(220 214 201 / 0.08);
+}
+
+.su__row.is-picked .su__name {
+  box-shadow: inset 0 0 0 1px var(--warm-white);
+}
+
+.su__ms {
+  display: flex;
+  gap: 3px;
+}
+
+.su__ms button {
+  width: 24px;
+  height: 22px;
+  border-radius: 4px;
+  border: 1px solid rgb(220 214 201 / 0.2);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--fg-dim);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.su__ms button:hover {
+  color: var(--fg);
+}
+
+.su__ms button.is-on {
+  background: var(--warm-white);
+  border-color: var(--warm-white);
+  color: #111417;
+}
+
+.su__lane {
+  position: relative;
+  border-radius: 6px;
+  background: rgb(220 214 201 / 0.03);
+}
+
+.su__film,
+.su__seg {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  min-width: 2px;
+  overflow: hidden;
+  border-radius: 5px;
+  text-align: left;
+}
+
+.su__film {
+  background: #23252b;
+  box-shadow: inset 0 0 0 1px rgb(220 214 201 / 0.12);
+  opacity: 0.7;
+  transition: opacity 0.2s, box-shadow 0.2s;
+}
+
+.su__film img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
+}
+
+.su__film span,
+.su__seg span {
+  position: relative;
+  display: block;
+  padding: 0 8px;
+  overflow: hidden;
+  font-size: 0.7rem;
+  line-height: 32px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.su__film span {
+  line-height: 40px;
+}
+
+.su__film:hover,
+.su__film.is-on {
+  opacity: 1;
+}
+
+.su__film.is-on {
+  box-shadow: inset 0 0 0 2px var(--warm-white);
+}
+
+.su__film.is-cut {
+  background: #2a2420;
+}
+
+/* Clips stay dim until the playhead is over them. */
+.su__seg {
+  background: rgb(220 214 201 / 0.12);
+  transition: background-color 0.15s;
+}
+
+.su__seg span {
+  color: rgb(220 214 201 / 0.6);
+  font-weight: 500;
+}
+
+.su__seg:hover {
+  background: rgb(220 214 201 / 0.22);
+}
+
+.su__seg.is-on {
+  background: var(--warm-white);
+}
+
+.su__seg.is-on span {
+  color: #111417;
+}
+
+.su__row.is-audio .su__seg {
+  background: rgb(220 214 201 / 0.08);
+  background-image: repeating-linear-gradient(90deg, rgb(220 214 201 / 0.18) 0 1px, transparent 1px 4px);
+}
+
+.su__row.is-audio .su__seg.is-on {
+  background-color: var(--warm-white);
+  background-image: repeating-linear-gradient(90deg, rgb(17 20 23 / 0.25) 0 1px, transparent 1px 4px);
+}
+
+.su__seg.is-quiet {
+  opacity: 0.35;
+}
+
+/* Delivered with the film rather than cut into it. */
+.su__seg.is-extra {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px rgb(220 214 201 / 0.3);
+}
+
+.su__seg.is-extra:hover {
+  background: rgb(220 214 201 / 0.08);
+}
+
+.su__tracks {
+  position: relative;
+}
+
+.su__lanes {
+  position: relative;
+  cursor: col-resize;
+}
+
+.su__headwrap {
+  position: absolute;
+  top: -6px;
+  bottom: -6px;
+  left: var(--head);
+  right: 0;
+  pointer-events: none;
+}
+
+.su__head {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--vermilion);
+}
+
+.su__head::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -5px;
+  width: 12px;
+  height: 10px;
+  background: var(--vermilion);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.su__ruler {
+  position: relative;
+  height: 18px;
+  margin: 8px 0 0 var(--head);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: rgb(220 214 201 / 0.35);
+}
+
+.su__ruler span {
+  position: absolute;
+  top: 0;
+  padding-left: 4px;
+  border-left: 1px solid rgb(220 214 201 / 0.15);
+}
+
+.su__clipnav {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.su__vertical {
+  max-height: calc(100svh - 140px);
+  width: auto;
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+/* ---------- Launch kit: the export dialog ---------- */
+.lk {
+  overflow: hidden;
+  border-radius: 14px;
+  background: #14181b;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.08), 0 60px 120px -60px rgb(0 0 0 / 0.95);
+}
+
+.lk__bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgb(220 214 201 / 0.07);
+  background: #0e1215;
+}
+
+.lk__dots {
+  display: flex;
+  gap: 6px;
+}
+
+.lk__dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgb(220 214 201 / 0.18);
+}
+
+.lk__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+}
+
+.lk__formats {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  margin: 0;
+  padding: 24px;
+  border: 0;
+  border-right: 1px solid rgb(220 214 201 / 0.07);
+}
+
+.lk__formats legend {
+  float: left;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.lk__item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.lk__item:hover {
+  background: rgb(220 214 201 / 0.05);
+}
+
+.lk__item input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.lk__box {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  border: 1px solid rgb(220 214 201 / 0.4);
+  border-radius: 4px;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.lk__item.is-on .lk__box {
+  background: var(--warm-white);
+  border-color: var(--warm-white);
+  box-shadow: inset 0 0 0 4px #14181b;
+}
+
+.lk__item input:focus-visible + .lk__box {
+  outline: 2px solid var(--vermilion);
+  outline-offset: 2px;
+}
+
+.lk__item b {
+  display: block;
+  font-weight: 600;
+}
+
+.lk__item small {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.86rem;
+  color: var(--fg-dim);
+}
+
+.lk__output {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 24px;
+}
+
+.lk__pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.lk__field {
+  display: grid;
+  gap: 6px;
+}
+
+.lk__field > span {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.lk__field input,
+.lk__field textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid rgb(220 214 201 / 0.14);
+  border-radius: 8px;
+  background: #0e1215;
+  color: var(--fg);
+  font: inherit;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+.lk__field input:focus,
+.lk__field textarea:focus {
+  outline: none;
+  border-color: var(--warm-white);
+}
+
+.lk__field input[aria-invalid='true'] {
+  border-color: var(--vermilion);
+}
+
+.lk__err {
+  font-size: 0.82rem;
+  font-style: normal;
+  color: var(--vermilion);
+}
+
+.lk__dest {
+  color: var(--fg-dim);
+}
+
+.lk__render {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.lk__meter {
+  position: relative;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: rgb(220 214 201 / 0.12);
+}
+
+.lk__meter i {
+  position: absolute;
+  inset: 0;
+  background: var(--vermilion);
+  transform-origin: left;
+  transition: transform 0.1s linear;
+}
+
+.lk__status {
+  min-height: 1.4em;
+  color: var(--fg-dim);
+}
+
+@media (max-width: 1080px) {
+  .su__monitor {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .su__info {
+    border-left: 0;
+    border-top: 1px solid rgb(220 214 201 / 0.07);
+  }
+  .lk__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lk__formats {
+    border-right: 0;
+    border-bottom: 1px solid rgb(220 214 201 / 0.07);
+  }
+}
+
+@media (max-width: 600px) {
+  .su__timeline {
+    --head: 92px;
+    padding: 10px 8px 12px;
+  }
+  .su__name {
+    font-size: 0.7rem;
+    padding: 0 4px;
+  }
+  .su__name .label {
+    display: none;
+  }
+  .su__ms button {
+    width: 20px;
+  }
+  .su__seg span,
+  .su__film span {
+    display: none;
+  }
+  .lk__pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .lk__render {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sl__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sl__grid > div:nth-child(4) {
+    border-left: 2px solid var(--warm-white);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .su__rec,
+  .su__title,
+  .su__service {
+    animation: none;
+  }
+}
+
+/* Phones: track names take the whole header; mute and solo are desktop only. */
+@media (max-width: 760px) {
+  .su__ms {
+    display: none;
+  }
+}

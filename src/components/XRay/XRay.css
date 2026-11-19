@@ -1,0 +1,76 @@
+html[data-xray] body * {
+  outline: 1px solid rgb(255 91 38 / 0.3);
+  outline-offset: -1px;
+}
+
+html[data-xray] :is(.cursor, .xray) * {
+  outline: none;
+}
+
+html[data-xray] :is(img, video, .pm__fallback) {
+  filter: grayscale(1) contrast(0.85) brightness(0.55);
+}
+
+html[data-xray] [data-component]::before {
+  content: '<' attr(data-component) ' />';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 60;
+  padding: 3px 7px;
+  background: var(--signal);
+  color: var(--ink);
+  font: 500 10px/1.2 var(--font-mono);
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+
+.xray {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  pointer-events: none;
+}
+
+.xray__cols {
+  position: absolute;
+  inset: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+}
+
+.xray__cols span {
+  background: rgb(255 91 38 / 0.06);
+  border-inline: 1px solid rgb(255 91 38 / 0.18);
+}
+
+.xray__scan {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 2px;
+  background: var(--signal);
+  animation: xray-scan 0.9s var(--ease-in-out) forwards;
+}
+
+@keyframes xray-scan {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(100vh); opacity: 0; }
+}
+
+.xray__readout {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 18px;
+  padding: 8px 12px;
+  background: var(--signal);
+  color: var(--ink);
+  font: 500 0.68rem/1.2 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xray__scan { display: none; }
+}

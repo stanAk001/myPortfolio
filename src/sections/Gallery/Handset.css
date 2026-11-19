@@ -1,0 +1,78 @@
+/*
+  The handset and its colour wash, shared by the phone layouts. The handset itself is the laptop
+  one (.ex__handset in Gallery.css); this just sizes it and handles switching products.
+*/
+.hs {
+  position: relative;
+  width: 100%;
+}
+
+.hs .ex__handset {
+  padding: 5px;
+  border-radius: 26px;
+  box-shadow:
+    0 0 0 1px rgb(244 239 230 / 0.14),
+    0 30px 50px -22px rgb(0 0 0 / 0.85);
+}
+
+.hs .ex__handset .lv {
+  border-radius: 21px;
+}
+
+.hs__screen img,
+.hs__screen video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* A new product wipes in from the side, like a cut. */
+.hs__screen {
+  animation: hs-cut 0.75s cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+
+@keyframes hs-cut {
+  from { clip-path: inset(0 0 0 100% round 21px); }
+  to { clip-path: inset(0 0 0 0 round 21px); }
+}
+
+.hs__aura {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hs__aura img {
+  position: absolute;
+  inset: -12%;
+  width: 124%;
+  height: 124%;
+  object-fit: cover;
+  filter: blur(42px) saturate(1.25);
+  opacity: 0.42;
+  animation: hs-fade 0.9s ease both;
+}
+
+/* Ink over the colour wash so the text always reads. */
+.hs__aura::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(9 9 10 / 0.55), rgb(9 9 10 / 0.35) 40%, rgb(9 9 10 / 0.8));
+}
+
+@keyframes hs-fade {
+  from { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hs__screen,
+  .hs__aura img {
+    animation: none;
+  }
+}

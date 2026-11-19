@@ -1,0 +1,86 @@
+.lab__head {
+  margin-top: clamp(32px, 7vh, 80px);
+  align-items: end;
+  row-gap: 24px;
+}
+
+.lab__title {
+  grid-column: 1 / span 7;
+  font-size: var(--fs-xl);
+}
+
+.lab__intro {
+  grid-column: 9 / span 4;
+  color: var(--bone-dim);
+}
+
+.lab__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(32px, 5vw, 80px) var(--col-gap);
+  margin-top: clamp(56px, 9vh, 110px);
+}
+
+.lab__card:nth-child(even) {
+  margin-top: clamp(40px, 10vh, 140px);
+}
+
+.lab__media {
+  display: block;
+}
+
+.lab__meta {
+  display: grid;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.lab__meta .label {
+  display: flex;
+  justify-content: space-between;
+}
+
+.lab__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--bone);
+}
+
+.lab__meta h3 {
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.lab__meta h3 a {
+  background: linear-gradient(var(--p-accent), var(--p-accent)) 0 100% / 0% 3px no-repeat;
+  transition: background-size 0.6s var(--ease-out);
+}
+
+.lab__card:hover h3 a {
+  background-size: 100% 3px;
+}
+
+.lab__tag {
+  color: var(--bone-dim);
+}
+
+.lab__links {
+  display: flex;
+  gap: 22px;
+}
+
+@media (max-width: 900px) {
+  .lab__title,
+  .lab__intro {
+    grid-column: 1 / -1;
+  }
+  .lab__grid {
+    grid-template-columns: 1fr;
+  }
+  .lab__card:nth-child(even) {
+    margin-top: 0;
+  }
+}

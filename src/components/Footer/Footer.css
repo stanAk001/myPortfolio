@@ -1,0 +1,328 @@
+/*
+  Footer: the name across the full width with each letter showing one product, then the credits
+  strip, the rule (where the bug hides) and the small print.
+*/
+.footer {
+  position: relative;
+  padding: clamp(64px, 11vh, 120px) var(--gutter) 24px;
+  overflow: hidden;
+}
+
+/* Dark ink, carried on from the section above. */
+.footer.theme-dark {
+  --bg: #1f222b;
+  --fg: var(--porcelain);
+  --fg-dim: rgb(242 238 230 / 0.62);
+  --fg-faint: rgb(242 238 230 / 0.12);
+}
+
+.footer__kicker {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--fg-dim);
+}
+
+.footer__kicker span:first-child {
+  color: var(--fg);
+}
+
+/* ---------- The name, made of the work ---------- */
+.footer__name {
+  display: flex;
+  width: max-content;
+  max-width: none;
+  margin: clamp(10px, 2vh, 22px) 0 0 -0.03em;
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 800;
+  /* JS resizes this so the word fills the width; this is just the starting size. */
+  font-size: 22vw;
+  line-height: 0.8;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.footer__l {
+  --lift: 0;
+  display: inline-block;
+  padding-bottom: 0.06em;
+  color: rgb(242 238 230 / 0.06);
+  background: var(--img) center top / cover no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: rgb(242 238 230 / 0.06);
+  transform: translateY(calc(var(--lift) * -0.03em));
+  transition:
+    -webkit-text-fill-color 0.9s var(--ease-out),
+    filter 0.5s,
+    opacity 0.5s,
+    transform 0.5s var(--ease-out);
+  transition-delay: calc(var(--i) * 140ms), 0s, 0s, 0s;
+  -webkit-user-drag: none;
+}
+
+/* On arrival each letter fills with its product, one after another, and the image drifts slowly. */
+.footer.is-lit .footer__l {
+  -webkit-text-fill-color: transparent;
+  animation: footer-pan 22s ease-in-out infinite alternate;
+  animation-delay: calc(var(--i) * -4s);
+}
+
+@keyframes footer-pan {
+  from { background-position: 50% 0%; }
+  to { background-position: 50% 100%; }
+}
+
+.footer__l.is-on {
+  --lift: 1;
+  filter: saturate(1.15) brightness(1.1);
+}
+
+.footer__l.is-off {
+  opacity: 0.35;
+  filter: grayscale(1);
+}
+
+/* The rule under the name, and the marker that slides under the letter you point at. */
+.footer__which {
+  --mx: 0px;
+  --mw: 0px;
+  position: relative;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--fg-faint);
+}
+
+.footer__mark {
+  position: absolute;
+  top: -1.5px;
+  left: 0;
+  width: var(--mw);
+  height: 2px;
+  background: rgb(242 238 230 / 0.25);
+  transform: translateX(var(--mx));
+  transition: transform 0.55s cubic-bezier(0.25, 1.2, 0.4, 1), width 0.55s cubic-bezier(0.25, 1.2, 0.4, 1), background-color 0.3s;
+}
+
+.footer__mark.is-on {
+  background: var(--fg);
+}
+
+.footer__which .label {
+  min-height: 1.6em;
+  color: var(--fg-dim);
+  transform: translateX(min(var(--mx), calc(100% - 34ch)));
+  transition: transform 0.55s cubic-bezier(0.25, 1.2, 0.4, 1);
+}
+
+.footer__which .label span {
+  display: inline-block;
+  animation: footer-in 0.35s var(--ease-out);
+}
+
+@keyframes footer-in {
+  from { opacity: 0; transform: translateY(6px); }
+}
+
+/* ---------- The end credits: one slim strip ---------- */
+.footer__credits {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px clamp(20px, 3vw, 48px);
+  margin-top: 14px;
+}
+
+.footer__cr {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  min-height: 40px;
+}
+
+.footer__cr + .footer__cr {
+  padding-left: clamp(20px, 3vw, 48px);
+  border-left: 1px solid var(--fg-faint);
+}
+
+.footer__cr-k {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg-dim);
+}
+
+.footer__cr-v {
+  font-size: 0.95rem;
+  color: var(--fg);
+}
+
+.footer__caret {
+  display: inline-block;
+  width: 2px;
+  height: 0.95em;
+  margin-left: 3px;
+  vertical-align: -0.12em;
+  background: var(--fg);
+  animation: footer-blink 1s steps(1) infinite;
+}
+
+.footer__air {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer__air {
+  flex-wrap: wrap;
+  column-gap: 14px;
+  row-gap: 4px;
+}
+
+.footer__air a {
+  font-size: 0.95rem;
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--fg-faint);
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.2s;
+}
+
+.footer__air a:hover,
+.footer__air a:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+.footer__brief {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--fg);
+  color: #111;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.footer__brief span {
+  transition: transform 0.4s var(--ease-out);
+}
+
+.footer__brief:hover span {
+  transform: translateX(4px);
+}
+
+.footer__brief:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .footer__cr + .footer__cr {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+/* ---------- The small print ---------- */
+.footer__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 32px;
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--fg-faint);
+}
+
+.footer__top {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--fg);
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
+
+.footer__top span {
+  font-size: 0.8em;
+  letter-spacing: -0.15em;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.footer__top:hover span {
+  transform: translateX(-4px);
+}
+
+@media (hover: none) {
+  .footer__hint {
+    display: none;
+  }
+}
+
+/* The bug took this letter. The gap stays, that's the joke. */
+.footer__k.is-stolen,
+.footer__name.is-k-stolen .footer__k {
+  visibility: hidden;
+}
+
+/* Back to top: a timecode counts down to zero while the page scrolls up. */
+.footer__rewind {
+  position: fixed;
+  z-index: 130;
+  left: 50%;
+  top: calc(var(--nav-h, 64px) + 18px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: #121212;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.12), 0 18px 40px -16px rgb(0 0 0 / 0.6);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: #f2efe8;
+  transform: translateX(-50%);
+  animation: footer-in 0.3s var(--ease-out);
+}
+
+.footer__rewind b {
+  font-weight: 600;
+  color: #e5484d;
+  animation: footer-blink 0.6s steps(1) infinite;
+}
+
+.footer__rewind span {
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes footer-blink {
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer__l,
+  .footer.is-lit .footer__l {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* When the bug talks, its bubble needs the space above the rule, so the credits move over. */
+.footer__credits {
+  transition: padding-bottom 0.4s var(--ease-out);
+}
+
+@media (min-width: 761px) {
+  .footer:has(.egg__bubble) .footer__credits {
+    padding-bottom: 96px;
+  }
+}

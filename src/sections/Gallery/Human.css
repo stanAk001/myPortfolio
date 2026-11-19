@@ -1,0 +1,496 @@
+/*
+  The About section on paper: photo prints held with tape, ballpoint notes in the margin, a couple of
+  small cards with what's true right now, and the road so far. All on the page's own paper.
+*/
+.hu {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 80px);
+  margin-bottom: clamp(64px, 10vh, 120px);
+}
+
+/* ---------- The prints ---------- */
+.hu__print {
+  position: relative;
+  margin: 0;
+  padding: 12px 12px 40px;
+  background: #fbf8f2;
+  box-shadow:
+    0 1px 2px rgb(40 30 20 / 0.18),
+    0 24px 40px -22px rgb(40 30 20 / 0.45);
+}
+
+.hu__print img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hu__print.is-main {
+  justify-self: center;
+  width: min(46%, 340px);
+  aspect-ratio: 3 / 4.1;
+  transform: rotate(-2.2deg);
+}
+
+.hu__print.is-off {
+  width: min(46%, 190px);
+  aspect-ratio: 3 / 4.3;
+  padding: 8px 8px 30px;
+  transform: rotate(3deg);
+}
+
+/* A strip of tape across the top. */
+.hu__tape {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: -12px;
+  width: 92px;
+  height: 26px;
+  background: rgb(232 222 200 / 0.78);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+  transform: translateX(-50%) rotate(-4deg);
+}
+
+.hu__print.is-off .hu__tape {
+  width: 64px;
+  height: 20px;
+  top: -9px;
+  transform: translateX(-50%) rotate(6deg);
+}
+
+.hu__cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 9px;
+  font-family: 'Caveat', cursive;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #3a3329;
+  text-align: center;
+}
+
+.hu__print.is-off .hu__cap {
+  bottom: 5px;
+  font-size: 0.92rem;
+}
+
+/* The notes around the main print. */
+.hu__n {
+  position: absolute;
+  z-index: 3;
+}
+
+.hu__n.is-1 { right: calc(100% + 6px); top: 12%; }
+.hu__n.is-2 { left: calc(100% + 6px); top: 30%; }
+.hu__n.is-3 { right: calc(100% + 6px); top: 56%; }
+.hu__n.is-4 { left: calc(100% + 6px); top: 76%; }
+
+/* ---------- Right side: cards and facts ---------- */
+.hu__side {
+  display: grid;
+  gap: 18px;
+}
+
+.hu__life {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 12px;
+}
+
+.hu__card {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--porcelain) 60%, #fff);
+  box-shadow:
+    0 0 0 1.5px var(--ink-text),
+    3px 4px 0 var(--ink-text);
+}
+
+:root[data-theme='dark'] .hu__card {
+  background: #181b1f;
+}
+
+.hu__k {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-text);
+}
+
+.hu__k span {
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.hu__k i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e5484d;
+  animation: hu-blink 1.4s steps(1) infinite;
+}
+
+@keyframes hu-blink {
+  50% { opacity: 0.3; }
+}
+
+.hu__time {
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 800;
+  font-size: 1.9rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-text);
+}
+
+.hu__now {
+  font-family: var(--font-display);
+  font-stretch: 88%;
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.15;
+  color: var(--ink-text);
+}
+
+.hu__sub {
+  font-size: 0.8rem;
+  color: var(--ink-dim);
+}
+
+.hu__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.hu__facts > div {
+  padding: 12px 14px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink-text) 22%, transparent);
+}
+
+.hu__facts dt {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.hu__facts dd {
+  margin: 4px 0 0;
+  font-size: 0.92rem;
+  line-height: 1.3;
+  color: var(--ink-text);
+}
+
+.hu__off {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* ---------- The road so far ---------- */
+.hu__road {
+  position: relative;
+  margin-top: clamp(64px, 10vh, 120px);
+}
+
+.hu__road-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px 32px;
+}
+
+.hu__road-head .g-meta {
+  flex-basis: 100%;
+}
+
+.hu__road-title {
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 800;
+  font-size: var(--t-h2, clamp(2.2rem, 4vw, 3.4rem));
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.hu__road-title em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.hu__road-sub {
+  color: var(--ink-dim);
+}
+
+.hu__stops {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hu__stops li {
+  position: relative;
+  display: grid;
+  grid-template-rows: 2.2rem 14px auto;
+  gap: 12px;
+  padding-right: 12px;
+}
+
+/* The line running through the year markers. */
+.hu__stops li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(2.2rem + 12px + 6px);
+  height: 1.5px;
+  background: color-mix(in srgb, var(--ink-text) 30%, transparent);
+}
+
+.hu__year {
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 800;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--ink-text);
+}
+
+.hu__dot {
+  position: relative;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--porcelain);
+  box-shadow: inset 0 0 0 2.5px var(--ink-text);
+}
+
+.hu__stops li.is-start .hu__dot {
+  background: var(--ink-text);
+}
+
+.hu__stop {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--porcelain) 55%, #fff);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink-text) 14%, transparent);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s;
+}
+
+:root[data-theme='dark'] .hu__stop {
+  background: #181b1f;
+}
+
+.hu__stop b {
+  font-family: var(--font-display);
+  font-stretch: 88%;
+  font-size: 1rem;
+  color: var(--ink-text);
+}
+
+.hu__stop span {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--ink-dim);
+}
+
+.hu__stop em {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-style: normal;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #2bb673;
+}
+
+a.hu__stop:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 1.5px var(--ink-text);
+}
+
+.hu__road-note {
+  position: absolute;
+  right: 4%;
+  top: 10px;
+}
+
+/* ---------- Narrower ---------- */
+@media (max-width: 1080px) {
+  .hu__stops {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 22px;
+  }
+}
+
+@media (max-width: 760px) {
+  .hu {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* Print on the left, all the notes in the margin to its right. */
+  .hu__print.is-main {
+    justify-self: start;
+    width: 54%;
+    margin-left: 4px;
+  }
+  .hu__n {
+    font-size: 0.98rem;
+  }
+  .hu__n.is-1,
+  .hu__n.is-3 { right: auto; left: calc(100% + 8px); }
+  .hu__n.is-1 .scr__arrow,
+  .hu__n.is-3 .scr__arrow { display: none; }
+  .hu__life,
+  .hu__facts {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .hu__stops {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 10px;
+  }
+  .hu__stops li {
+    grid-template-rows: none;
+    grid-template-columns: 3.4rem 14px minmax(0, 1fr);
+    align-items: center;
+  }
+  .hu__stops li::before {
+    top: 0;
+    bottom: 0;
+    left: calc(3.4rem + 12px + 6px);
+    right: auto;
+    width: 1.5px;
+    height: auto;
+  }
+  .hu__year {
+    font-size: 1.15rem;
+  }
+  .hu__stops li.is-next::before {
+    background: repeating-linear-gradient(180deg, color-mix(in srgb, var(--ink-text) 40%, transparent) 0 6px, transparent 6px 12px);
+    -webkit-mask-image: linear-gradient(180deg, #000 50%, transparent);
+    mask-image: linear-gradient(180deg, #000 50%, transparent);
+  }
+  .hu__road-note {
+    position: static;
+    margin-top: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hu__k i {
+    animation: none;
+  }
+}
+
+/* The last fact (who he's built for) takes the full width. */
+.hu__facts > div:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+/* This year's stop: in ink, with the five projects as links. */
+.hu__stops li.is-now .hu__dot {
+  background: var(--ink-text);
+}
+
+/* Next: the stop that isn't built yet. A dashed card on a dashed road that keeps going. */
+.hu__stops li.is-next::before {
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--ink-text) 40%, transparent) 0 6px, transparent 6px 12px);
+  -webkit-mask-image: linear-gradient(90deg, #000 60%, transparent);
+  mask-image: linear-gradient(90deg, #000 60%, transparent);
+}
+
+.hu__stops li.is-next .hu__year {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-stretch: normal;
+  color: var(--ink-dim);
+}
+
+.hu__stops li.is-next .hu__dot {
+  background: var(--porcelain);
+  box-shadow: none;
+  outline: 1.5px dashed var(--ink-text);
+  outline-offset: -1.5px;
+}
+
+.hu__stops li.is-next .hu__stop {
+  background: transparent;
+  box-shadow: none;
+  outline: 1.5px dashed color-mix(in srgb, var(--ink-text) 45%, transparent);
+  outline-offset: -1.5px;
+}
+
+.hu__next {
+  justify-self: start;
+  margin-top: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-text);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--ink-text) 35%, transparent);
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.2s;
+}
+
+.hu__next:hover,
+.hu__next:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+.hu__next span {
+  display: inline-block;
+  transition: transform 0.25s var(--ease-out);
+}
+
+.hu__next:hover span {
+  transform: translateX(3px);
+}
+
+.hu__stops li.is-now .hu__stop {
+  box-shadow: 0 0 0 1.5px var(--ink-text), 3px 4px 0 var(--ink-text);
+}
+
+.hu__five {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  margin-top: 6px;
+}
+
+.hu__five a {
+  padding: 2px 8px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink-text) 30%, transparent);
+  font-size: 0.72rem;
+  color: var(--ink-text);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.hu__five a:hover {
+  background: var(--ink-text);
+  color: var(--porcelain);
+}

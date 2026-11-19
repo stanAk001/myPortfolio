@@ -1,0 +1,44 @@
+/* A disc that's half paper, half ink, and flips over when you press it. */
+.tsw {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--ink-faint, color-mix(in srgb, var(--ink-text) 10%, transparent));
+  transition: border-color 0.3s;
+}
+
+.tsw:hover {
+  border-color: var(--ink-text);
+}
+
+.tsw__disc {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink-text);
+  background: linear-gradient(90deg, var(--ink-text) 50%, transparent 50%);
+  transition: transform 0.7s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+.tsw.is-dark .tsw__disc {
+  transform: rotate(180deg);
+}
+
+.tsw:focus-visible {
+  outline: 2px solid var(--ink-text);
+  outline-offset: 2px;
+}
+
+/* Only the theme change swaps out the default crossfade. Page navigation keeps its own. */
+.is-theming::view-transition-old(root),
+.is-theming::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+.is-theming::view-transition-new(root) {
+  z-index: 2;
+}

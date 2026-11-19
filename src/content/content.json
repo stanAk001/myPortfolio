@@ -1,0 +1,674 @@
+{
+  "site": {
+    "name": "Akeem",
+    "role": "Full-stack PERN developer",
+    "email": "akeemgbolahan58@gmail.com",
+    "socials": [
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/akeem-gbolahan-3018173a9"
+      },
+      {
+        "label": "X",
+        "url": "https://x.com/ak_stan001"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/stanAk001"
+      }
+    ],
+    "welcome": {
+      "line": "hi, i'm akeem. i build products people actually use."
+    },
+    "statement": "I’m Akeem, a full-stack PERN developer — PostgreSQL, Express, React, Node. I take an idea all the way to a live URL: the interface, the API behind it, the database under that, and the deploy.",
+    "workIntro": "Products built and shipped end to end. Real sites, recorded live.",
+    "now": {
+      "label": "Currently building",
+      "text": "Turning ideas into useful digital products.",
+      "focus": "PERN · Product engineering"
+    },
+    "engineering": {
+      "headline": "One click. *Everything it wakes up.*",
+      "intro": "Every action runs through the same stack my products are built on. Watch what you’d see, what the server sees, and where each millisecond goes. Or press the button and run it yourself."
+    },
+    "about": {
+      "headline": "Full-stack, from first commit *to live URL.*",
+      "blocks": [
+        {
+          "label": "What I build",
+          "text": "Web products, start to finish. The interface people touch, the API it talks to, the database underneath, and the deploy that puts it online."
+        },
+        {
+          "label": "How I work",
+          "text": "Ship something real early, then improve it in public. Every project on this page is live, and every one of them is still getting better."
+        },
+        {
+          "label": "What I care about",
+          "text": "Pages that respond the moment you touch them. Data models that still make sense a year later. Code someone else can read."
+        }
+      ]
+    },
+    "contact": {
+      "headline": [
+        "Good ideas deserve",
+        "*to be built.*"
+      ],
+      "note": "Email is the quickest way to reach me."
+    },
+    "hero": {
+      "headline": "Real products, *live right now.*",
+      "sub": "A stock-market school, a software review site, a shopping guide, a leisure complex’s bookings and an artist’s site — each one designed, built and launched by me. Tap one to watch it run."
+    },
+    "story": {
+      "projectId": "keemstore",
+      "idea": "A shop that tells you who each product is actually for.",
+      "chapters": [
+        {
+          "title": "It starts with *an idea.*",
+          "text": "A problem someone keeps running into. For KeemStore: shopping sites that never say who a product is really for."
+        },
+        {
+          "title": "I design *how it looks.*",
+          "text": "Every screen, colour and button — so anyone can use it without thinking."
+        },
+        {
+          "title": "I build what *you never see.*",
+          "text": "Behind every page there’s a brain that makes decisions and a memory that keeps everything safe. Tap a button, and all three work together in a blink."
+        },
+        {
+          "title": "I put it *live.*",
+          "text": "On a real web address — fast, secure, and open to anyone, anywhere."
+        },
+        {
+          "title": "And people *use it.*",
+          "text": "This is the real KeemStore, recorded live. Not a mockup."
+        }
+      ]
+    },
+    "problems": {
+      "headline": "Every product started as *a frustration.*",
+      "intro": "Before the code, there was something annoying, broken or missing. Here’s what each one fixed."
+    }
+  },
+  "github": {
+    "username": null
+  },
+  "projects": [
+    {
+      "id": "toolhaven",
+      "contribution": "Designed and built it alone: the React front end, the Express API behind tools, categories and promotion, the PostgreSQL data through Prisma, and the deploy on Vercel and Render.",
+      "anatomy": [
+        {"id":"interface","name":"The experience","text":"I built it around one question: which tool should I pick? Browsing, head-to-head comparison, curated stacks and the way a maker submits a tool each get their own page.","evidence":["/tools","/best","/compare","/stacks","/submit","/how-we-review"]},
+        {"id":"frontend","name":"Frontend","text":"React and Vite, shipped as a single-page app, so moving between tools and guides feels instant.","evidence":["React","Vite"]},
+        {"id":"api","name":"API","text":"A Node and Express API serves the catalogue. Promoted tools come from their own endpoint, apart from the main tool list.","evidence":["GET /api/tools","GET /api/categories","GET /api/best","GET /api/stacks","GET /api/promote/featured"]},
+        {"id":"data","name":"Data","text":"Tools, reviews and guides live in PostgreSQL, reached through Prisma.","evidence":["PostgreSQL","Prisma"]},
+        {"id":"hosting","name":"Hosting","text":"The site runs on Vercel and the API on Render, so each can be deployed on its own.","evidence":["Vercel — site","Render — API"]}
+      ],
+      "showcase": {
+        "headline": "I wanted a better way to discover software. So I built one.",
+        "text": "I built Toolhaven as an independent index of software. Every review says what the tool is bad at, paid placements stay out of the rankings, and prices come from the vendor’s own page.",
+        "highlight": "Paid placements are labelled and never touch the rankings"
+      },
+      "title": "Toolhaven",
+      "url": "toolhaven.net",
+      "liveUrl": "https://www.toolhaven.net",
+      "repoUrl": null,
+      "featured": true,
+      "lab": false,
+      "status": "live",
+      "category": "Software reviews & discovery",
+      "year": null,
+      "role": "Full-stack development",
+      "tagline": [
+        "Honest software reviews.",
+        "Downsides listed.",
+        "Ten minutes, not ten tabs."
+      ],
+      "headline": "Finding the right tool shouldn’t cost you a week of open tabs.",
+      "description": "An independent index of software tools. Every review lists what the tool is bad at, paid placements are labelled and kept apart from rankings, and prices come from the vendor’s own page.",
+      "why": "I wanted to make product discovery feel less like scrolling through another directory.",
+      "whatIBuilt": "A discovery platform with submissions, reviews, monetization and editorial content.",
+      "features": [
+        "A searchable tool index, with ⌘K search from anywhere",
+        "Reviews that always list the downsides",
+        "Put three tools head to head",
+        "Buying guides and curated stacks",
+        "Reader reviews and ratings",
+        "Paid placements labelled and kept out of the rankings",
+        "Night mode"
+      ],
+      "technologies": [
+        "React",
+        "Vite",
+        "Node.js",
+        "Express",
+        "PostgreSQL",
+        "Prisma",
+        "Vercel"
+      ],
+      "dna": {
+        "product": "Reviews / Directory",
+        "stack": "React / Node / PostgreSQL / Prisma",
+        "focus": "Trust / Search / Monetization"
+      },
+      "theme": {
+        "accent": "#3b6fe0",
+        "bg": "#0d1018",
+        "treatment": "directory"
+      },
+      "embed": true,
+      "image": {
+        "src": "/projects/toolhaven/cover.webp",
+        "alt": "Toolhaven home page: “Finding the right tool shouldn’t cost you a week of open tabs.” with a search bar.",
+        "width": 1440,
+        "height": 900
+      },
+      "video": {
+        "mp4": "/projects/toolhaven/trailer.mp4",
+        "ad": "/projects/toolhaven/ad.mp4",
+        "adMobile": "/projects/toolhaven/ad-mobile.mp4",
+        "adPoster": "/projects/toolhaven/ad-poster.webp",
+        "start": 6,
+        "mobile": "/projects/toolhaven/trailer-mobile.mp4",
+        "phone": "/projects/toolhaven/phone.mp4"
+      },
+      "gallery": [
+        {
+          "src": "/projects/toolhaven/section-1.webp",
+          "caption": "Browse by category",
+          "alt": "Toolhaven category grid.",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "src": "/projects/toolhaven/section-2.webp",
+          "caption": "Featured right now",
+          "alt": "Toolhaven featured reviews.",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "src": "/projects/toolhaven/section-3.webp",
+          "caption": "Buying guides",
+          "alt": "Toolhaven buying guides.",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "src": "/projects/toolhaven/mobile.webp",
+          "caption": "On a phone",
+          "alt": "Toolhaven on a phone.",
+          "width": 780,
+          "height": 1688
+        }
+      ],
+      "plain": "A website that reviews software honestly — downsides included.",
+      "hook": "Most “best tools” lists are ads in disguise. Toolhaven shows you where the money is — and keeps it out of the rankings.",
+      "highlights": [
+        { "title": "Downsides on every review", "benefit": "You learn what a tool is bad at before you pay for it, not after." },
+        { "title": "Paid placements labelled, kept out of rankings", "benefit": "Sponsors can’t buy their way up, so the order means something." },
+        { "title": "Three tools, head to head", "benefit": "Compare your shortlist side by side instead of juggling ten tabs." },
+        { "title": "Prices from the vendor’s own page", "benefit": "The number you see is the number you’ll actually be charged." },
+        { "title": "⌘K search from anywhere", "benefit": "Jump to any tool from any page without losing your place." },
+        { "title": "Buying guides and curated stacks", "benefit": "Start from a proven set of tools for the job, not a blank search box." }
+      ],
+      "problem": {
+        "visual": "tabs",
+        "search": "best project management software",
+        "headline": "Finding the right tool took a week of open tabs.",
+        "text": "Thousands of tools, and almost every “review” is quietly an ad. People ended up comparing sponsored lists that never mention a single downside.",
+        "solution": "An independent index where every review lists what the tool is bad at, paid placements are labelled and kept out of the rankings, and prices come from the vendor’s own page.",
+        "fixes": [
+          "Downsides listed, every time",
+          "Paid placements labelled",
+          "Ten minutes, not ten tabs"
+        ]
+      }
+    },
+    {
+      "id": "stockacademia",
+      "contribution": "Designed and built the whole platform: courses, the practice simulator, rankings and the forum in React, with an Express API and PostgreSQL behind accounts and the practice market.",
+      "anatomy": [
+        {"id":"interface","name":"The experience","text":"I laid it out as a path: learn in the courses, practise in the simulator, compare in the rankings, ask in the forum.","evidence":["/courses","/simulator","/rankings","/forum","/leaderboard","/pricing"]},
+        {"id":"frontend","name":"Frontend","text":"React and Vite, with Google sign-in on the front door.","evidence":["React","Vite","Google sign-in"]},
+        {"id":"api","name":"API","text":"A Node and Express API handles accounts, the practice market and the limits on free AI use.","evidence":["GET /api/auth/me","GET /api/trading/market","GET /api/ai/free-limits","GET /api/geo"]},
+        {"id":"data","name":"Data","text":"PostgreSQL sits behind the accounts and the practice market.","evidence":["PostgreSQL"]},
+        {"id":"hosting","name":"Hosting","text":"The site runs on Vercel and the API on Render.","evidence":["Vercel — site","Render — API"]}
+      ],
+      "showcase": {
+        "headline": "Making the stock market easier to understand.",
+        "text": "I built StockAcademia so a beginner can start from zero, practise with pretend money, and get any US or Nigerian stock explained in plain language.",
+        "highlight": "Explanations in English, Pidgin, Yorùbá, Hausa and Igbo"
+      },
+      "title": "StockAcademia",
+      "url": "stockacademia.com",
+      "liveUrl": "https://stockacademia.com",
+      "repoUrl": null,
+      "featured": true,
+      "lab": false,
+      "status": "live",
+      "category": "Stock-market education platform",
+      "year": null,
+      "role": "Full-stack development",
+      "tagline": [
+        "Learn the market.",
+        "Build wealth."
+      ],
+      "headline": "Learn how the stock market really works — from zero to confident investor.",
+      "description": "An AI that analyses any US or Nigerian stock in plain English, turns it into a clear plan and keeps watching it for you — plus a place to learn investing properly: structured courses from “what’s a dividend?” upward, a practice account to trade without risking real money, and plain-language explanations of US and Nigerian stocks — in English, Pidgin, Yorùbá, Hausa and Igbo.",
+      "why": null,
+      "whatIBuilt": null,
+      "features": [
+        "AI Stock Scout: scans US and Nigerian stocks for potential setups, ranked to your profile",
+        "Plain-English AI analysis with a potential entry, stop and targets",
+        "Keeps watching and alerts you when something important changes",
+        "Six structured courses, from the basics to technical analysis",
+        "A $100,000 practice account — learn without risking real money",
+        "US and Nigerian (NGX) stocks, side by side",
+        "Explanations in English, Pidgin, Yorùbá, Hausa and Igbo",
+        "The numbers that matter — P/E, ROE, margins — explained simply",
+        "1-on-1 mentorship and a community forum"
+      ],
+      "technologies": ["React", "Vite", "Node.js", "Express", "PostgreSQL", "Google sign-in", "Vercel", "Render"],
+      "dna": {
+        "product": "Education / Investing",
+        "stack": "React / Vite / Vercel",
+        "focus": "Learning / Practice / Localisation"
+      },
+      "theme": {
+        "accent": "#e9c046",
+        "bg": "#0f0e0a",
+        "treatment": "data"
+      },
+      "embed": true,
+      "image": {
+        "src": "/projects/stockacademia/cover.webp",
+        "alt": "StockAcademia home page: “Any stock, analysed. Then watched for you.”",
+        "width": 1440,
+        "height": 900
+      },
+      "video": {
+        "mp4": "/projects/stockacademia/trailer.mp4",
+        "ad": "/projects/stockacademia/ad.mp4",
+        "adMobile": "/projects/stockacademia/ad-mobile.mp4",
+        "adPoster": "/projects/stockacademia/ad-poster.webp",
+        "mobile": "/projects/stockacademia/trailer-mobile.mp4",
+        "phone": "/projects/stockacademia/phone.mp4"
+      },
+      "gallery": [
+        {
+          "src": "/projects/stockacademia/section-1.webp",
+          "caption": "Numbers that finally make sense",
+          "alt": "StockAcademia example analyses.",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "src": "/projects/stockacademia/section-2.webp",
+          "caption": "From first search to final review",
+          "alt": "StockAcademia’s five steps.",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "src": "/projects/stockacademia/section-3.webp",
+          "caption": "Six courses",
+          "alt": "StockAcademia’s courses.",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "src": "/projects/stockacademia/mobile.webp",
+          "caption": "On a phone",
+          "alt": "StockAcademia on a phone.",
+          "width": 780,
+          "height": 1688
+        }
+      ],
+      "plain": "A platform that teaches people how the stock market works — from zero to confident investor.",
+      "hook": "Any stock, analysed — then watched for you. And $100,000 of practice money to learn with, at no risk.",
+      "highlights": [
+        { "title": "AI Stock Scout", "benefit": "Scans US and Nigerian stocks for potential setups and ranks the ones that fit your profile — no more scrolling charts for ideas." },
+        { "title": "Plain-English analysis with a clear plan", "benefit": "Every analysis ends in a potential entry, stop and targets, so you know where you’d be wrong before you buy." },
+        { "title": "It keeps watching, and alerts you", "benefit": "When something important changes you get an alert — no endless feed, no staring at charts all day." },
+        { "title": "A $100,000 practice account", "benefit": "Make your first trades — and your first mistakes — without risking real money." },
+        { "title": "Five languages, including Pidgin, Yorùbá, Hausa and Igbo", "benefit": "Learn the market in the language you actually think in." },
+        { "title": "US and Nigerian (NGX) stocks side by side", "benefit": "Study the companies you know, not only Wall Street." },
+        { "title": "Six structured courses", "benefit": "A clear path from “what’s a dividend?” to technical analysis, in the right order." },
+        { "title": "1-on-1 mentorship and a community forum", "benefit": "When a lesson isn’t enough, a real person and other learners are there." }
+      ],
+      "problem": {
+        "visual": "jargon",
+        "search": "what is a p/e ratio",
+        "headline": "Investing was taught in jargon — and learned with real money.",
+        "text": "P/E, ROE, margins: words that mean nothing until someone explains them. Most material assumed US markets and English, and beginners learned by losing money.",
+        "solution": "Courses that start from zero, a practice account with $100,000 of pretend money, and the real numbers explained simply — for US and Nigerian stocks, in five languages.",
+        "fixes": [
+          "Starts from zero",
+          "Practise without risking money",
+          "US + Nigerian stocks, in 5 languages"
+        ]
+      }
+    },
+    {
+      "id": "keemstore",
+      "contribution": "Designed and built the shop and the Express API that serves its homepage, categories and guides from PostgreSQL.",
+      "anatomy": [
+        {"id":"interface","name":"The experience","text":"I organised it by how people actually shop: by room, by person, by season, with guides beside the products and the disclosure in plain sight.","evidence":["/gadgets","/home","/fashion","/guides","/gifts","/affiliate-disclosure"]},
+        {"id":"frontend","name":"Frontend","text":"React and Vite, shipped as a single-page app.","evidence":["React","Vite"]},
+        {"id":"api","name":"API","text":"A Node and Express API serves the homepage, categories and guides, rather than hard-coding them into the site.","evidence":["GET /api/homepage","GET /api/settings","GET /api/categories/by-path","GET /api/guides"]},
+        {"id":"data","name":"Data","text":"PostgreSQL holds the catalogue, the categories and the guides.","evidence":["PostgreSQL"]},
+        {"id":"hosting","name":"Hosting","text":"The site runs on Vercel and the API on Render.","evidence":["Vercel — site","Render — API"]}
+      ],
+      "showcase": {
+        "headline": "Good finds. No endless scrolling.",
+        "text": "I built a shopping guide that answers what shops never do: is this actually for you? Every pick says who it suits and who should skip it.",
+        "highlight": "Buying guides that also say what not to buy"
+      },
+      "title": "KeemStore",
+      "url": "keemstore.com",
+      "liveUrl": "https://www.keemstore.com",
+      "repoUrl": null,
+      "featured": true,
+      "lab": false,
+      "status": "live",
+      "category": "Curated commerce & buying guides",
+      "year": null,
+      "role": "Full-stack development",
+      "tagline": [
+        "Find things",
+        "worth keeping."
+      ],
+      "headline": "Smart gadgets, useful finds, fashion — with honest notes on who each one is for.",
+      "description": "A curated shopping guide. Gadgets, home, fashion, beauty and creator gear — each pick comes with a note on who it suits and who should skip it, plus buying guides and seasonal edits.",
+      "why": null,
+      "whatIBuilt": null,
+      "features": [
+        "Trending finds, refreshed through the season",
+        "Browse by room, person or problem",
+        "Buying guides with picks — and what to skip",
+        "A “who it’s for” note on every product",
+        "Under-$25 and seasonal collections",
+        "Retailer links with a clear affiliate disclosure",
+        "Newsletter sign-up"
+      ],
+      "technologies": ["React", "Vite", "Node.js", "Express", "PostgreSQL", "Vercel", "Render"],
+      "dna": {
+        "product": "Commerce / Editorial",
+        "stack": "React / Vite / Vercel",
+        "focus": "Curation / Guides / Affiliate"
+      },
+      "theme": {
+        "accent": "#e2552b",
+        "bg": "#14100d",
+        "treatment": "commerce"
+      },
+      "embed": false,
+      "image": {
+        "src": "/projects/keemstore/cover.webp",
+        "alt": "KeemStore home page: “Find things worth owning.”",
+        "width": 1440,
+        "height": 900
+      },
+      "video": {
+        "mp4": "/projects/keemstore/trailer.mp4",
+        "ad": "/projects/keemstore/ad.mp4",
+        "adMobile": "/projects/keemstore/ad-mobile.mp4",
+        "adPoster": "/projects/keemstore/ad-poster.webp",
+        "mobile": "/projects/keemstore/trailer-mobile.mp4",
+        "phone": "/projects/keemstore/phone.mp4"
+      },
+      "gallery": [
+        {
+          "src": "/projects/keemstore/section-1.webp",
+          "caption": "Start with a room, a person or a problem",
+          "alt": "KeemStore browse section.",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "src": "/projects/keemstore/section-2.webp",
+          "caption": "Worth a closer look",
+          "alt": "KeemStore product picks.",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "src": "/projects/keemstore/section-3.webp",
+          "caption": "Featured guide",
+          "alt": "KeemStore featured guide.",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "src": "/projects/keemstore/mobile.webp",
+          "caption": "On a phone",
+          "alt": "KeemStore on a phone.",
+          "width": 780,
+          "height": 1688
+        }
+      ],
+      "plain": "An online shopping guide that tells you who each product is for.",
+      "hook": "Every pick answers the one question shops never do: is this actually for you?",
+      "highlights": [
+        { "title": "A “who it’s for” note on every product", "benefit": "Know whether something suits you before you click buy." },
+        { "title": "Buying guides that say what to skip", "benefit": "Save money on the things that aren’t worth it." },
+        { "title": "Browse by room, person or problem", "benefit": "Start from what you need, not from a maze of categories." },
+        { "title": "Under-$25 and seasonal edits", "benefit": "Budget finds and gift ideas, already shortlisted." },
+        { "title": "Clear affiliate disclosure", "benefit": "You always know how the site earns, so the advice stays honest." },
+        { "title": "Trending finds, refreshed through the season", "benefit": "Something new worth seeing every time you come back." }
+      ],
+      "problem": {
+        "visual": "scroll",
+        "search": "shop · page 47 of 212",
+        "headline": "Shopping online meant endless scrolling — and still guessing.",
+        "text": "Thousands of near-identical products, and nothing that tells you who a thing is actually for. You scroll, compare, and hope.",
+        "solution": "A curated guide: fewer, better finds — each with an honest note on who it suits and who should skip it — plus buying guides that say what not to buy.",
+        "fixes": [
+          "A “who it’s for” note on every pick",
+          "Guides that say what to skip",
+          "Good finds. No endless scrolling."
+        ]
+      }
+    },
+    {
+      "id": "primetime",
+      "contribution": "Designed and built the bookings site end to end: four ways to book, the live board, Google sign-in, and the Express API on PostgreSQL.",
+      "anatomy": [
+        {"id":"interface","name":"The experience","text":"Five spaces, four ways in. I made each one behave the way it works in real life, instead of forcing everything through one booking form.","evidence":["/facilities","/match-nights","/menu","/register","/dashboard"]},
+        {"id":"frontend","name":"Frontend","text":"React and Vite, with Google sign-in, and a phone layout with its own bottom navigation.","evidence":["React","Vite","Google sign-in"]},
+        {"id":"api","name":"API","text":"An Express API. The live board has its own endpoint, and rooms and the lounge menu hang off their facility.","evidence":["GET /api/venue/pulse","GET /api/facilities","GET /api/facilities/hotel/rooms","GET /api/facilities/bar-lounge/menu","GET /api/match-nights"]},
+        {"id":"data","name":"Data","text":"PostgreSQL. Every facility record carries its own booking mode, which is how the site knows how each space should be booked.","evidence":["PostgreSQL","facility.booking_mode"]},
+        {"id":"hosting","name":"Hosting","text":"The site runs on Vercel and the API on Render.","evidence":["Vercel — site","Render — API"]}
+      ],
+      "showcase": {
+        "headline": "One venue. Four ways to book.",
+        "text": "I built the site for a leisure complex in Ibadan. A membership for the gym, dates for the hotel, slots for the pitch, and phone ordering at the lounge.",
+        "highlight": "A live board showing what’s free right now"
+      },
+      "title": "Primetime",
+      "url": "primetime-lyart.vercel.app",
+      "liveUrl": "https://primetime-lyart.vercel.app/",
+      "repoUrl": null,
+      "featured": true,
+      "lab": false,
+      "status": "live",
+      "category": "Leisure complex — memberships & bookings",
+      "year": null,
+      "role": "Full-stack development",
+      "tagline": ["Five worlds.", "One membership."],
+      "headline": "A gym, a hotel, a bar lounge and a football pitch in Ibadan — joined, booked and paid for in one place.",
+      "description": "The website for Primetime, a leisure complex in Ibadan. One membership covers the gym and table tennis; hotel rooms are booked by date, pitch slots by the hour, and the lounge needs no booking at all — you scan the code on your table and order from your phone. A live board shows what the complex is like right now.",
+      "why": null,
+      "whatIBuilt": null,
+      "features": [
+        "A live “right now” board: how busy the gym is, pitch slots left, rooms free tonight",
+        "One membership for the gym, with table tennis included",
+        "Hotel rooms booked by date and held the moment you reserve",
+        "Football pitch slots checked for clashes as you book",
+        "Lounge ordering from your phone: scan the table code, order, settle the bill",
+        "Match nights listings",
+        "Google sign-in and a personal bookings dashboard"
+      ],
+      "technologies": ["React", "Vite", "Node.js", "Express", "PostgreSQL", "Vercel", "Render"],
+      "dna": {
+        "product": "Hospitality / Bookings",
+        "stack": "PERN / Vercel / Render",
+        "focus": "Memberships / Bookings / QR ordering"
+      },
+      "theme": {
+        "accent": "#f2c14e",
+        "bg": "#0d0b08",
+        "treatment": "editorial"
+      },
+      "embed": true,
+      "image": {
+        "src": "/projects/primetime/cover.webp",
+        "alt": "Primetime home page: “Five worlds. One membership.”",
+        "width": 1440,
+        "height": 900
+      },
+      "video": {
+        "mp4": "/projects/primetime/trailer.mp4",
+        "mobile": "/projects/primetime/trailer-mobile.mp4",
+        "phone": "/projects/primetime/phone.mp4",
+        "start": 0.6
+      },
+      "gallery": [
+        { "src": "/projects/primetime/section-1.webp", "caption": "Inside the complex, right now", "alt": "Primetime live board: gym, pitch, hotel and lounge status.", "width": 1440, "height": 900 },
+        { "src": "/projects/primetime/section-2.webp", "caption": "Five worlds, one address", "alt": "Primetime facilities: gym, hotel, bar lounge, football ground, table tennis.", "width": 1440, "height": 900 },
+        { "src": "/projects/primetime/section-3.webp", "caption": "From first rep to last call", "alt": "Primetime experience section.", "width": 1440, "height": 900 },
+        { "src": "/projects/primetime/mobile.webp", "caption": "On a phone", "alt": "Primetime on a phone.", "width": 780, "height": 1688 }
+      ],
+      "plain": "A website where people join, book and pay for a leisure complex: gym, hotel, football pitch and lounge.",
+      "hook": "Four parts of one venue, each booked a different way — and the site knows which is which.",
+      "highlights": [
+        { "title": "See the complex before you leave home", "benefit": "A live board shows how busy the gym is, how many pitch slots are left and which rooms are free tonight." },
+        { "title": "One membership, the whole gym", "benefit": "Register once and train daily — table tennis comes free with it." },
+        { "title": "Rooms held the moment you reserve", "benefit": "Pick a room and your dates, pay per night, and nobody else can take it." },
+        { "title": "Pitch slots that can’t double-book", "benefit": "Availability is checked the second you book, so two teams never turn up for the same hour." },
+        { "title": "Order from your table", "benefit": "No waiting for a waiter: scan the code, order from your phone and settle the bill there." },
+        { "title": "Everything in one account", "benefit": "Sign in with Google and see every membership and booking in one dashboard." }
+      ],
+      "problem": {
+        "visual": "dms",
+        "search": "Calling to ask if the pitch is free",
+        "headline": "One venue, four ways to book — and all of them a phone call.",
+        "text": "A gym, a hotel, a football pitch and a lounge each work differently. Without one system, every membership, room and match slot means a call, a wait and a chance of two people booking the same thing.",
+        "solution": "One site that knows how each space works: a membership for the gym, dates for the hotel, slots for the pitch, and walk-in phone ordering for the lounge — with a live board showing what’s free right now.",
+        "fixes": [
+          "Join, book and pay online",
+          "No double-booked pitches or rooms",
+          "Order from the table, no waiting"
+        ]
+      }
+    },
+    {
+      "id": "hadex",
+      "contribution": "Designed and built the one-page site and the endpoint that serves its content, so the page can change without a redeploy.",
+      "anatomy": [
+        {"id":"interface","name":"The experience","text":"One page with one job: show the energy first, then make booking easy. Watch, dates, the word from people who booked him, then book.","evidence":["Watch","Dates","Word","Book"]},
+        {"id":"frontend","name":"Frontend","text":"React and Vite, one page built to get out of the way of the video.","evidence":["React","Vite"]},
+        {"id":"api","name":"API","text":"A Node and Express endpoint on the same domain serves the page’s content, so it isn’t baked in.","evidence":["GET /api/content"]},
+        {"id":"data","name":"Data","text":"PostgreSQL holds what the page shows.","evidence":["PostgreSQL"]},
+        {"id":"hosting","name":"Hosting","text":"Site and endpoint both run on Vercel.","evidence":["Vercel"]}
+      ],
+      "showcase": {
+        "headline": "Let the crowd make the case.",
+        "text": "Bookings came through DMs, one question at a time. I built one place that does the convincing: performance video first, then upcoming dates, reviews and a clear way to book.",
+        "highlight": "Performance video up front"
+      },
+      "title": "Hadex",
+      "url": "hadex-project.vercel.app",
+      "liveUrl": "https://hadex-project.vercel.app",
+      "repoUrl": null,
+      "featured": false,
+      "lab": true,
+      "status": "live",
+      "category": "Artist website",
+      "year": null,
+      "role": "Full-stack development",
+      "tagline": [
+        "The voice that",
+        "moves the crowd."
+      ],
+      "headline": "Hadex — hypeman, MC and club anchor.",
+      "description": "A website for Hadex, a hypeman, MC and club anchor based in Ilorin, Nigeria — performance video, upcoming dates, reviews and bookings for clubs, concerts and weddings.",
+      "why": null,
+      "whatIBuilt": null,
+      "features": [],
+      "technologies": ["React", "Vite", "Node.js", "Express", "PostgreSQL", "Vercel"],
+      "dna": {
+        "product": "Entertainment / Booking",
+        "focus": "Video / Bookings"
+      },
+      "theme": {
+        "accent": "#c8ff00",
+        "bg": "#0b0d10",
+        "treatment": "editorial"
+      },
+      "embed": true,
+      "image": {
+        "src": "/projects/hadex/cover.webp",
+        "alt": "Hadex home page: a crowd at a concert behind the HADEX wordmark.",
+        "width": 1440,
+        "height": 900
+      },
+      "video": {
+        "mp4": "/projects/hadex/trailer.mp4",
+        "mobile": "/projects/hadex/trailer-mobile.mp4",
+        "phone": "/projects/hadex/phone.mp4"
+      },
+      "gallery": [
+        {
+          "src": "/projects/hadex/section-1.webp",
+          "caption": "Watch him work",
+          "alt": "Hadex performance video section.",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "src": "/projects/hadex/section-2.webp",
+          "caption": "Catch him outside",
+          "alt": "Hadex upcoming dates.",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "src": "/projects/hadex/section-3.webp",
+          "caption": "Word on the street",
+          "alt": "Hadex reviews.",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "src": "/projects/hadex/mobile.webp",
+          "caption": "On a phone",
+          "alt": "Hadex on a phone.",
+          "width": 780,
+          "height": 1688
+        }
+      ],
+      "plain": "A booking website for a hypeman and MC.",
+      "hook": "Built so an organiser can watch the crowd move before they ever send a message.",
+      "highlights": [
+        { "title": "Performance video up front", "benefit": "Clients feel the energy of a real night within seconds of landing." },
+        { "title": "Upcoming dates in one place", "benefit": "Fans and organisers see where he’s playing next, without asking." },
+        { "title": "What people say about him", "benefit": "Reviews sit right beside the booking button, so the proof is there when it matters." },
+        { "title": "Booking in one tap", "benefit": "Clubs, concerts and weddings book him without a back-and-forth in DMs." }
+      ],
+      "problem": {
+        "visual": "dms",
+        "search": "instagram.com/direct/inbox",
+        "headline": "A performer’s best proof is the crowd — and it didn’t fit in a bio.",
+        "text": "Bookings came through DMs, one question at a time: are you free, how much, do you have videos? Nowhere showed the energy of a real night.",
+        "solution": "One place that does the convincing: performance video up front, upcoming dates, what people say about him, and a clear way to book.",
+        "fixes": [
+          "Watch him work, instantly",
+          "Dates and reviews in one place",
+          "Booking in one tap"
+        ]
+      }
+    }
+  ]
+}

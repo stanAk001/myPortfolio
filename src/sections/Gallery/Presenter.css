@@ -1,0 +1,758 @@
+/*
+  The presentation. The corner is lit warm white with the figure dark against it; the stage next to it
+  is the dark page, where each chapter's visual cuts in. Cuts are quick whip slides with a moment of
+  motion blur, never a slow fade.
+*/
+
+.pr {
+  --pr-h: clamp(440px, 64vh, 620px);
+  display: grid;
+  gap: 18px;
+}
+
+.pr__stage-wrap {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.9fr) minmax(0, 2.1fr);
+  gap: clamp(18px, 2vw, 32px);
+  height: var(--pr-h);
+}
+
+/* ---------- The corner ---------- */
+
+.pr__corner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #101316;
+}
+
+/* The pool of light he stands in. */
+.pr__light {
+  position: absolute;
+  inset: 6% 10% 0;
+  border-radius: 999px 999px 0 0;
+  background: var(--warm-white);
+  transform-origin: bottom center;
+  transition: opacity 0.6s;
+}
+
+.pr.is-waiting .pr__light {
+  opacity: 0.7;
+}
+
+.pr__fig {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 92%;
+  height: auto;
+  overflow: visible;
+  transform: translateX(-50%);
+  fill: #15130f;
+}
+
+.pr__shirt {
+  fill: #121010;
+}
+
+.pr__seam {
+  fill: none;
+  stroke: #2a251e;
+  stroke-width: 1.2;
+}
+
+.pr__button {
+  fill: #2c2720;
+}
+
+.pr__trousers {
+  fill: #0d0c0a;
+}
+
+/* The only colour on him: the orange embroidery on the shirt, gold glasses and watch, white earbuds. */
+.pr__motif path {
+  fill: none;
+  stroke: #e0782f;
+  stroke-width: 1.7;
+  stroke-linejoin: round;
+}
+
+.pr__glasses {
+  fill: rgb(220 214 201 / 0.08);
+  stroke: #c9a24a;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.pr__glint {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  opacity: 0;
+}
+
+.pr__bud {
+  fill: #dcd6c9;
+}
+
+.pr__watch {
+  fill: #c9a24a;
+}
+
+/* Match cut: for one frame the photo replaces the figure, with a flash of light. */
+.pr__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 14%;
+  opacity: 0;
+}
+
+.pr__flash {
+  position: absolute;
+  inset: 0;
+  background: var(--warm-white);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pr.is-real .pr__photo {
+  opacity: 1;
+}
+
+.pr.is-real .pr__fig,
+.pr.is-real .pr__light {
+  opacity: 0;
+}
+
+.pr.is-real .pr__flash {
+  animation: pr-flash 0.5s ease-out;
+}
+
+@keyframes pr-flash {
+  0% { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+
+.pr__nametag {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 2;
+  display: grid;
+  gap: 2px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgb(17 20 23 / 0.88);
+  font-size: 0.86rem;
+}
+
+.pr__nametag span {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(220 214 201 / 0.6);
+}
+
+/* ---------- The stage ---------- */
+
+.pr__stage {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 18px;
+  min-width: 0;
+}
+
+/* Caption: what he's saying, word by word. */
+.pr__say {
+  min-height: 2.6em;
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 600;
+  font-size: clamp(1.25rem, 1.9vw, 1.85rem);
+  line-height: 1.2;
+}
+
+.pr__say-no {
+  margin-right: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.42em;
+  font-weight: 400;
+  vertical-align: 0.5em;
+  color: var(--vermilion);
+}
+
+.pr__w {
+  opacity: 0;
+}
+
+.pr__say.is-on .pr__w {
+  animation: pr-word 0.35s var(--ease-out) forwards;
+  animation-delay: calc(var(--cut, 0s) + 0.3s + var(--i) * 70ms);
+}
+
+@keyframes pr-word {
+  from { opacity: 0; filter: blur(3px); }
+  to { opacity: 1; filter: none; }
+}
+
+.pr__screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #151a1d;
+  box-shadow: inset 0 0 0 1px rgb(220 214 201 / 0.07);
+}
+
+/* The new visual whips in from the right on his gesture; the old one leaves to the left. */
+.pr__slide {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(18px, 2.4vw, 36px);
+  opacity: 0;
+  transform: translateX(14%);
+  pointer-events: none;
+  transition:
+    transform 0.7s var(--ease-in-out),
+    opacity 0.45s,
+    filter 0.7s;
+  filter: blur(8px);
+}
+
+.pr__slide.is-past {
+  transform: translateX(-14%);
+}
+
+.pr__slide.is-on {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  pointer-events: auto;
+  transition-delay: var(--cut, 0.32s);
+}
+
+/* Hello: the line, then the stack lighting up one at a time. */
+.pr__hi,
+.pr__end {
+  display: grid;
+  gap: 22px;
+  justify-items: start;
+  width: 100%;
+}
+
+.pr__big {
+  font-family: var(--font-display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: var(--t-h2);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+.pr__big span {
+  display: block;
+  font-weight: 250;
+}
+
+.pr__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pr__chips li {
+  padding: 8px 14px;
+  border: 1px solid rgb(220 214 201 / 0.14);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+}
+
+.pr__slide.is-on .pr__chips li {
+  animation: pr-chip 0.9s var(--ease-out) both;
+  animation-delay: calc(var(--cut, 0s) + 0.9s + var(--i) * 0.45s);
+}
+
+@keyframes pr-chip {
+  0% { opacity: 0.3; border-color: rgb(220 214 201 / 0.14); }
+  40% { opacity: 1; border-color: var(--vermilion); color: var(--vermilion); }
+  100% { opacity: 1; border-color: rgb(220 214 201 / 0.3); }
+}
+
+/* Design: the real interfaces, fanned out like prints on a table. */
+.pr__fan {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.pr__fan figure {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 52%;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 1px rgb(220 214 201 / 0.1),
+    0 30px 50px -24px rgb(0 0 0 / 0.9);
+  transform: translate(-50%, -50%);
+}
+
+.pr__fan img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+}
+
+.pr__fan figcaption {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgb(17 20 23 / 0.85);
+  font-size: 0.68rem;
+}
+
+.pr__slide.is-on .pr__fan figure {
+  animation: pr-fan 1s var(--ease-out) both;
+  animation-delay: calc(var(--cut, 0s) + 0.45s + var(--i) * 0.16s);
+}
+
+.pr__fan figure:nth-child(1) { --x: -66%; --y: -62%; --r: -7deg; }
+.pr__fan figure:nth-child(2) { --x: -34%; --y: -44%; --r: 4deg; }
+.pr__fan figure:nth-child(3) { --x: -62%; --y: -36%; --r: -2deg; }
+.pr__fan figure:nth-child(4) { --x: -38%; --y: -56%; --r: 6deg; }
+
+.pr__fan figure {
+  transform: translate(var(--x), var(--y)) rotate(var(--r));
+}
+
+@keyframes pr-fan {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10%) rotate(0deg) scale(0.9);
+  }
+}
+
+/* API and Data: real patterns, written out line by line. */
+.pr__code {
+  width: min(100%, 560px);
+  overflow: hidden;
+  border-radius: 10px;
+  background: #0d1013;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.08);
+}
+
+.pr__file {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgb(220 214 201 / 0.06);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: rgb(220 214 201 / 0.55);
+}
+
+.pr__code pre {
+  margin: 0;
+  padding: 16px 18px 20px;
+  font-family: var(--font-mono);
+  font-size: clamp(0.72rem, 0.95vw, 0.88rem);
+  line-height: 1.8;
+  white-space: pre-wrap;
+  color: rgb(220 214 201 / 0.85);
+}
+
+.pr__ln {
+  display: inline;
+}
+
+.pr__slide.is-on .pr__ln {
+  animation: pr-line 0.4s var(--ease-out) both;
+  animation-delay: calc(var(--cut, 0s) + 0.55s + var(--i) * 0.22s);
+}
+
+@keyframes pr-line {
+  from { opacity: 0; }
+}
+
+.pr__ln.is-k { color: #9fc9ff; }
+.pr__ln.is-ok { color: #5fd39a; }
+.pr__ln.is-c { color: rgb(220 214 201 / 0.45); }
+.pr__ln.is-hl { color: var(--vermilion); }
+
+/* Live: every product and how it's doing right now. */
+.pr__board {
+  width: min(100%, 560px);
+  overflow: hidden;
+  border-radius: 10px;
+  background: #0d1013;
+  box-shadow: 0 0 0 1px rgb(220 214 201 / 0.08);
+}
+
+.pr__pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #5fd39a;
+  animation: pulse 2s ease-out infinite;
+}
+
+.pr__board ul {
+  display: grid;
+  padding: 6px 14px 10px;
+}
+
+.pr__board li {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgb(220 214 201 / 0.05);
+}
+
+.pr__slide.is-on .pr__board li {
+  animation: pr-line 0.5s var(--ease-out) both;
+  animation-delay: calc(var(--cut, 0s) + 0.5s + var(--i) * 0.15s);
+}
+
+.pr__board img {
+  width: 54px;
+  height: 34px;
+  border-radius: 4px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.pr__board span {
+  display: grid;
+}
+
+.pr__board b {
+  font-size: 0.9rem;
+}
+
+.pr__board small {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  color: rgb(220 214 201 / 0.5);
+}
+
+.pr__board em {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-style: normal;
+  color: rgb(220 214 201 / 0.6);
+}
+
+.pr__board li.is-up em {
+  color: #5fd39a;
+}
+
+/* That's me. */
+.pr__open {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgb(220 214 201 / 0.7);
+}
+
+.pr__open i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #5fd39a;
+}
+
+.pr__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- Controls: chapters as a timeline ---------- */
+
+.pr__controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.pr__chapters {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.pr__chapters button {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 6px 0;
+  text-align: left;
+  font-size: 0.78rem;
+  color: rgb(220 214 201 / 0.45);
+  transition: color 0.3s;
+}
+
+.pr__chapters button:hover,
+.pr__chapters button.is-on {
+  color: var(--warm-white);
+}
+
+.pr__chapters i {
+  position: relative;
+  height: 2px;
+  overflow: hidden;
+  background: rgb(220 214 201 / 0.12);
+}
+
+.pr__chapters i::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--vermilion);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.pr__chapters .is-past i::after,
+.pr__chapters .is-on i::after {
+  transform: scaleX(1);
+}
+
+.pr__chapters .is-past i::after {
+  background: rgb(220 214 201 / 0.45);
+}
+
+.pr__chapters i.is-running::after {
+  animation: pr-fill var(--ms) linear forwards;
+}
+
+@keyframes pr-fill {
+  from { transform: scaleX(0); }
+}
+
+.pr__buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.pr__ctl {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid rgb(220 214 201 / 0.14);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  transition: border-color 0.3s;
+}
+
+.pr__ctl:hover {
+  border-color: var(--warm-white);
+}
+
+/* ---------- Phones: him top left, the stage underneath ---------- */
+
+@media (max-width: 760px) {
+  .pr__stage-wrap {
+    grid-template-columns: minmax(0, 1fr);
+    height: auto;
+  }
+  .pr__corner {
+    height: 300px;
+  }
+  .pr__fig {
+    width: auto;
+    height: 100%;
+  }
+  .pr__say {
+    min-height: 3.6em;
+  }
+  .pr__screen {
+    height: 340px;
+  }
+  .pr__chapters {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .pr__controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .pr__fan figure {
+    width: 64%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pr__slide {
+    transition: opacity 0.3s;
+    transform: none;
+    filter: none;
+  }
+  .pr__w {
+    opacity: 1;
+    animation: none !important;
+  }
+  .pr__slide.is-on .pr__chips li,
+  .pr__slide.is-on .pr__fan figure,
+  .pr__slide.is-on .pr__ln,
+  .pr__slide.is-on .pr__board li,
+  .pr__pulse,
+  .pr.is-real .pr__flash {
+    animation: none;
+  }
+}
+
+/* Hello: the agenda. */
+.pr__kicker {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(220 214 201 / 0.5);
+}
+
+.pr__agenda {
+  display: grid;
+  width: 100%;
+}
+
+.pr__agenda li {
+  display: grid;
+  grid-template-columns: 2.6em minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgb(220 214 201 / 0.08);
+  font-size: clamp(1.05rem, 1.5vw, 1.4rem);
+  color: rgb(220 214 201 / 0.45);
+}
+
+.pr__agenda b {
+  font-family: var(--font-display);
+  font-stretch: 85%;
+  font-weight: 700;
+  color: var(--warm-white);
+}
+
+.pr__agenda-no,
+.pr__agenda code {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: rgb(220 214 201 / 0.4);
+}
+
+.pr__slide.is-on .pr__agenda li {
+  animation: pr-agenda 0.9s var(--ease-out) both;
+  animation-delay: calc(var(--cut, 0s) + 0.6s + var(--i) * 0.5s);
+}
+
+@keyframes pr-agenda {
+  0% { opacity: 0; transform: translateX(16px); }
+  60% { opacity: 1; color: var(--warm-white); }
+  100% { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pr__slide.is-on .pr__agenda li {
+    animation: none;
+  }
+}
+
+/* When he points, his hand reaches out of his frame toward the stage. */
+.pr__corner {
+  overflow: visible;
+  z-index: 2;
+}
+
+.pr__light,
+.pr__photo,
+.pr__flash {
+  border-radius: 14px;
+}
+
+.pr__light {
+  border-radius: 999px 999px 0 0;
+}
+
+/* Glasses on the turning figure: gold frames, a hint of glass. */
+.pr__lens {
+  fill: rgb(220 214 201 / 0.08);
+  stroke: #c9a24a;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.pr__frame {
+  fill: none;
+  stroke: #c9a24a;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+/* Redrawn figure: a hairline edge on the limbs so the arms read against the shirt; fewer details. */
+.pr__limb {
+  stroke: #2f2921;
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+  paint-order: stroke;
+}
+
+.pr__fig .pr__motif path {
+  stroke: #cf7436;
+  stroke-width: 1.4;
+}
+
+.pr__fig .pr__lens,
+.pr__fig .pr__frame {
+  stroke-width: 1.3;
+}
+
+.pr__fig .pr__hair {
+  fill: #0a0908;
+}
+
+@media (max-width: 760px) {
+  .pr__stage-wrap {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 10px;
+    height: auto;
+  }
+  .pr__corner {
+    height: auto;
+    min-height: 260px;
+  }
+  .pr__screen {
+    height: auto;
+    min-height: 260px;
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .pr__screen [class*='__row'],
+  .pr__screen li {
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 6px;
+  }
+  .pr__screen li > :last-child:not(:nth-child(2)) {
+    grid-column: 2;
+    font-size: 0.6rem;
+  }
+}

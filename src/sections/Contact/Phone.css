@@ -1,0 +1,909 @@
+/*
+  A graphite phone with a polished edge, thin black bezel, the photo as wallpaper and a glassy dock.
+  It keeps its own colours in both themes (a screen is a screen); the drafting grid sits behind it.
+*/
+section.ct:not(.ct--compact)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px) 0 0 / 32px 32px;
+  -webkit-mask-image: radial-gradient(80% 80% at 35% 70%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(80% 80% at 35% 70%, #000 0%, transparent 75%);
+  pointer-events: none;
+}
+
+section.ct > .ct__grid {
+  position: relative;
+  z-index: 1;
+}
+
+/*
+  Text on the left, the phone on its own on the right. On phones: text first, then the phone.
+*/
+section.ct:not(.ct--compact) .ct__grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  column-gap: clamp(28px, 5vw, 96px);
+}
+
+section.ct:not(.ct--compact) .ct__left {
+  align-self: center;
+  gap: 22px;
+}
+
+section.ct:not(.ct--compact) .ct__title {
+  font-size: clamp(2.6rem, 5.4vw, 5.6rem);
+  line-height: 0.96;
+}
+
+.ct__lede {
+  max-width: 34ch;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--fg-dim);
+}
+
+.ct__phone {
+  display: grid;
+  justify-items: center;
+}
+
+@media (max-width: 760px) {
+  section.ct:not(.ct--compact) .ct__grid {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 40px;
+  }
+}
+
+.ct__mailline {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  font-size: 0.92rem;
+  color: var(--fg-dim);
+}
+
+.ct__mailline a {
+  color: var(--fg);
+}
+
+.ct__mailline button {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.ct__mailline button:hover {
+  color: var(--fg);
+}
+
+/* ---------- The phone ---------- */
+.ph {
+  --w: clamp(220px, min(24vw, 38vh), 320px);
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  perspective: 1600px;
+}
+
+.ph__body {
+  position: relative;
+  width: var(--w);
+  aspect-ratio: 9 / 19.4;
+  padding: calc(var(--w) * 0.036);
+  border-radius: calc(var(--w) * 0.19);
+  background: linear-gradient(145deg, #5b5e63 0%, #2a2c30 18%, #1b1c1f 50%, #2d2f33 82%, #6a6d72 100%);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.14),
+    inset 0 0 0 calc(var(--w) * 0.012) #111,
+    0 50px 90px -40px rgb(0 0 0 / 0.85),
+    0 18px 30px -18px rgb(0 0 0 / 0.6);
+  /* --px/--py (−1..1) come from the pointer, so the phone turns toward it. */
+  transform: rotateY(calc(-11deg + var(--px, 0) * 13deg)) rotateX(calc(3deg - var(--py, 0) * 9deg)) rotateZ(1deg);
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease-out);
+}
+
+/* While writing a message the phone turns to face you straight on, so typing is easy. */
+.ph.is-composing .ph__body {
+  transform: none;
+}
+
+/* ---------- Mail: a new message ---------- */
+.ph__compose {
+  position: absolute;
+  z-index: 7;
+  inset: calc(var(--u) * 13) 0 0;
+  overflow: hidden;
+  border-radius: calc(var(--u) * 7) calc(var(--u) * 7) 0 0;
+  background: #f5f5f7;
+  color: #111;
+  box-shadow: 0 -10px 30px rgb(0 0 0 / 0.35);
+  transform: translateY(104%);
+  transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+
+.ph__compose.is-open {
+  transform: none;
+}
+
+.ph__screen:has(.ph__compose.is-open) .ph__wall {
+  filter: blur(4px) brightness(0.7);
+}
+
+.pc {
+  --f: max(12px, calc(var(--u) * 4.4));
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-size: var(--f);
+}
+
+.pc__head {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: calc(var(--u) * 4) calc(var(--u) * 5) calc(var(--u) * 3);
+}
+
+.pc__head b {
+  font-weight: 650;
+}
+
+.pc__cancel {
+  justify-self: start;
+  font-size: var(--f);
+  color: #0a7aff;
+}
+
+.pc__send {
+  justify-self: end;
+  display: grid;
+  place-items: center;
+  width: calc(var(--u) * 9);
+  height: calc(var(--u) * 9);
+  min-width: 28px;
+  min-height: 28px;
+  border-radius: 50%;
+  background: #0a7aff;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.pc__send svg {
+  width: 60%;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pc__send:hover {
+  transform: scale(1.08);
+}
+
+.pc__send.is-sending {
+  opacity: 0.6;
+}
+
+.pc__row {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 2.4);
+  min-height: calc(var(--u) * 11);
+  margin: 0 calc(var(--u) * 5);
+  border-bottom: 1px solid rgb(0 0 0 / 0.1);
+}
+
+.pc__row > span {
+  flex: none;
+  color: #8a8a8e;
+}
+
+.pc__to {
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: rgb(10 122 255 / 0.12);
+  font-weight: 500;
+  color: #0a7aff;
+}
+
+.pc__row input {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: #111;
+  outline: none;
+}
+
+.pc__row input::placeholder,
+.pc__body::placeholder {
+  color: #b0b0b5;
+}
+
+.pc__row.has-error {
+  border-bottom-color: #ff3b30;
+}
+
+.pc__kinds {
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 1.6);
+  padding: calc(var(--u) * 2.4) 0;
+}
+
+.pc__kind {
+  position: relative;
+  padding: calc(var(--u) * 1.2) calc(var(--u) * 3);
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.14);
+  font-size: calc(var(--f) * 0.88);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.pc__kind input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pc__kind.is-on {
+  background: #111;
+  color: #fff;
+  box-shadow: none;
+}
+
+.pc__kind:has(input:focus-visible) {
+  outline: 2px solid #0a7aff;
+  outline-offset: 2px;
+}
+
+.pc__body {
+  flex: 1;
+  min-height: 0;
+  margin: calc(var(--u) * 3) calc(var(--u) * 5) 0;
+  padding: 0;
+  border: 0;
+  resize: none;
+  background: none;
+  font: inherit;
+  line-height: 1.45;
+  color: #111;
+  outline: none;
+}
+
+/* Focus inside the phone looks like a phone's: a blue caret, no page-style outline. */
+.pc .pc__body:focus,
+.pc .pc__body:focus-visible,
+.pc .pc__row input:focus,
+.pc .pc__row input:focus-visible {
+  outline: none;
+  box-shadow: none;
+  caret-color: #0a7aff;
+}
+
+.pc .pc__row:focus-within {
+  border-bottom-color: #0a7aff;
+}
+
+.pc__body.has-error::placeholder {
+  color: #ff3b30;
+}
+
+.pc__err {
+  margin: calc(var(--u) * 1) calc(var(--u) * 5) 0;
+  font-size: calc(var(--f) * 0.82);
+  color: #d70015;
+}
+
+.pc__foot {
+  padding: calc(var(--u) * 3) calc(var(--u) * 5) calc(var(--u) * 6);
+  font-size: calc(var(--f) * 0.78);
+  color: #8a8a8e;
+}
+
+.pc__cancel:focus-visible,
+.pc__send:focus-visible,
+.pc__done:focus-visible {
+  outline: 2px solid #0a7aff;
+  outline-offset: 2px;
+}
+
+/* Sent */
+.pc--sent {
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--u) * 3);
+  padding: 0 calc(var(--u) * 8);
+  text-align: center;
+}
+
+.pc--sent h3 {
+  font-size: calc(var(--f) * 1.35);
+  font-weight: 700;
+}
+
+.pc--sent p {
+  color: #6b6b70;
+  line-height: 1.45;
+}
+
+.pc__tick {
+  display: grid;
+  place-items: center;
+  width: calc(var(--u) * 16);
+  height: calc(var(--u) * 16);
+  border-radius: 50%;
+  background: #30d158;
+  animation: pc-pop 0.5s cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+
+.pc__tick svg {
+  width: 56%;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes pc-pop {
+  from { transform: scale(0.4); opacity: 0; }
+}
+
+.pc__done {
+  margin-top: calc(var(--u) * 2);
+  padding: calc(var(--u) * 2.4) calc(var(--u) * 8);
+  border-radius: 999px;
+  background: #0a7aff;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* 16px fields on phones so the browser doesn't zoom in on tap. */
+@media (max-width: 760px) {
+  .pc {
+    --f: 16px;
+  }
+}
+
+.ph__btn {
+  position: absolute;
+  width: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #3a3c40, #75787d);
+}
+
+.ph__btn.is-action { left: -3px; top: 17%; height: 5%; }
+.ph__btn.is-up { left: -3px; top: 25%; height: 8.5%; }
+.ph__btn.is-down { left: -3px; top: 35.5%; height: 8.5%; }
+.ph__btn.is-power { right: -3px; top: 27%; height: 13%; transform: scaleX(-1); }
+
+.ph__screen {
+  --u: calc(var(--w) / 100);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: calc(var(--w) * 0.158);
+  background: #000;
+  color: #fff;
+  font-family: var(--font-text);
+  isolation: isolate;
+}
+
+.ph__wall {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 22%;
+  /* The wallpaper sits a bit deeper than the glass, so it shifts against the tilt. */
+  transform: scale(1.1) translate(calc(var(--px, 0) * -3.5%), calc(var(--py, 0) * -2.5%));
+  transition: filter 0.6s;
+}
+
+/* Light on the glass that slides across as the phone turns. */
+.ph__glare {
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgb(255 255 255 / 0.13) 47%, rgb(255 255 255 / 0.04) 53%, transparent 62%) no-repeat;
+  background-size: 260% 100%;
+  background-position: calc(50% - var(--px, 0) * 45%) 0;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Home screen: the products as apps, four per row, sitting just above the dock so the message at
+   the top never covers them and the face in the wallpaper stays clear. */
+.ph__apps {
+  position: absolute;
+  z-index: 3;
+  bottom: calc(var(--u) * 38);
+  left: calc(var(--u) * 6);
+  right: calc(var(--u) * 6);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  row-gap: calc(var(--u) * 6);
+  column-gap: calc(var(--u) * 3);
+}
+
+.ph__apps .ph__app {
+  gap: calc(var(--u) * 1.8);
+  min-width: 0;
+}
+
+.ph__icon.is-product {
+  overflow: hidden;
+  background: #111;
+}
+
+.ph__icon.is-product img,
+.ph__mini img,
+.ph__launch-icon.is-product img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* PrimeTime's logo is a circle, not a tile, so it sits on black with a margin. */
+.ph__app.is-primetime .ph__icon {
+  background: #0c0a09;
+}
+
+.ph__app.is-primetime .ph__icon img {
+  width: 82%;
+  height: 82%;
+}
+
+.ph__mini img {
+  border-radius: calc(var(--u) * 2.2);
+}
+
+.ph__launch-icon.is-product {
+  height: calc(var(--u) * 26);
+  overflow: hidden;
+  border-radius: calc(var(--u) * 6.5);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.15);
+}
+
+.ph__apps .ph__name {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: calc(var(--u) * 3.5);
+  font-weight: 500;
+  line-height: 1.1;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 0.6);
+}
+.ph__screen:has(.ph__launch) .ph__wall {
+  filter: blur(6px);
+}
+
+.ph__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgb(0 0 0 / 0.42) 0%, transparent 22%, transparent 44%, rgb(0 0 0 / 0.55) 100%);
+}
+
+/* Status bar */
+.ph__status {
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--u) * 5.2);
+  left: calc(var(--u) * 9);
+  right: calc(var(--u) * 8);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: calc(var(--u) * 5.4);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ph__icons {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+}
+
+.ph__icons svg {
+  width: calc(var(--u) * 6.4);
+  fill: #fff;
+}
+
+.ph__battery {
+  position: relative;
+  width: calc(var(--u) * 8.5);
+  height: calc(var(--u) * 4.2);
+  border-radius: calc(var(--u) * 1.3);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.55);
+}
+
+.ph__battery b {
+  position: absolute;
+  inset: calc(var(--u) * 0.8);
+  right: calc(var(--u) * 2.2);
+  border-radius: calc(var(--u) * 0.7);
+  background: #fff;
+}
+
+.ph__battery::after {
+  content: '';
+  position: absolute;
+  right: calc(var(--u) * -1.3);
+  top: 32%;
+  width: calc(var(--u) * 0.9);
+  height: 36%;
+  border-radius: 0 2px 2px 0;
+  background: rgb(255 255 255 / 0.55);
+}
+
+/* The island */
+.ph__island {
+  position: absolute;
+  z-index: 5;
+  top: calc(var(--u) * 3.6);
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--u) * 2.4);
+  width: calc(var(--u) * 32);
+  height: calc(var(--u) * 9);
+  padding: 0 calc(var(--u) * 3);
+  overflow: hidden;
+  border-radius: 999px;
+  background: #000;
+  transform: translateX(-50%);
+  transition:
+    width 0.55s cubic-bezier(0.3, 1.4, 0.5, 1),
+    height 0.55s cubic-bezier(0.3, 1.4, 0.5, 1),
+    border-radius 0.55s;
+  white-space: nowrap;
+}
+
+.ph__island.is-wide {
+  width: calc(var(--u) * 86);
+  height: calc(var(--u) * 15);
+  border-radius: calc(var(--u) * 8);
+}
+
+/* Status at rest: sits at the right end of the island, like a camera indicator. */
+.ph__dot {
+  flex: none;
+  width: calc(var(--u) * 2.4);
+  height: calc(var(--u) * 2.4);
+  border-radius: 50%;
+  background: #30d158;
+  box-shadow: 0 0 0 calc(var(--u) * 0.8) rgb(48 209 88 / 0.25);
+  animation: ph-live 2.2s ease-in-out infinite;
+}
+
+.ph__dot.is-rest {
+  margin-left: auto;
+}
+
+@keyframes ph-live {
+  50% { opacity: 0.45; }
+}
+
+.ph__island-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: calc(var(--u) * 4.6);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  animation: ph-fade 0.35s 0.15s both;
+}
+
+@keyframes ph-fade {
+  from { opacity: 0; }
+}
+
+.ph__mini {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: calc(var(--u) * 9);
+  height: calc(var(--u) * 9);
+  border-radius: calc(var(--u) * 2.4);
+  animation: ph-fade 0.35s 0.1s both;
+}
+
+.ph__mini svg {
+  width: 72%;
+  height: 72%;
+}
+
+.ph__spin {
+  flex: none;
+  width: calc(var(--u) * 4.4);
+  height: calc(var(--u) * 4.4);
+  border: 2px solid rgb(255 255 255 / 0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ph-spin 0.7s linear infinite;
+}
+
+@keyframes ph-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* The message from Akeem */
+.ph__note {
+  position: absolute;
+  z-index: 4;
+  top: calc(var(--u) * 15);
+  left: calc(var(--u) * 4);
+  right: calc(var(--u) * 4);
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 3);
+  padding: calc(var(--u) * 3.4);
+  border-radius: calc(var(--u) * 6);
+  background: rgb(245 245 247 / 0.86);
+  color: #111;
+  box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.5);
+  opacity: 0;
+  transform: translateY(calc(var(--u) * -22)) scale(0.92);
+  transition: transform 0.65s cubic-bezier(0.25, 1.35, 0.5, 1), opacity 0.35s;
+  pointer-events: none;
+}
+
+.ph__note.is-in {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.ph__note:hover {
+  background: rgb(255 255 255 / 0.95);
+}
+
+.ph__note-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: calc(var(--u) * 10);
+  height: calc(var(--u) * 10);
+  border-radius: calc(var(--u) * 2.6);
+  background: linear-gradient(180deg, #4fb2ff, #1a6cf0);
+  color: #fff;
+}
+
+.ph__note-icon svg {
+  width: 70%;
+}
+
+.ph__note-body {
+  display: grid;
+  min-width: 0;
+  font-size: calc(var(--u) * 4.2);
+  line-height: 1.25;
+}
+
+.ph__note-body b {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 650;
+}
+
+.ph__note-body small {
+  font-weight: 400;
+  font-size: 0.85em;
+  color: #6b6b70;
+}
+
+/* The dock */
+.ph__dock {
+  position: absolute;
+  z-index: 3;
+  left: calc(var(--u) * 4);
+  right: calc(var(--u) * 4);
+  bottom: calc(var(--u) * 8);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: calc(var(--u) * 2);
+  padding: calc(var(--u) * 3.4) calc(var(--u) * 3);
+  border-radius: calc(var(--u) * 9);
+  background: rgb(255 255 255 / 0.2);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
+}
+
+.ph__app {
+  display: grid;
+  justify-items: center;
+  gap: calc(var(--u) * 1.4);
+  color: #fff;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.ph__icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: calc(var(--u) * 16);
+  height: calc(var(--u) * 16);
+  border-radius: calc(var(--u) * 4.2);
+  box-shadow: 0 calc(var(--u) * 1.2) calc(var(--u) * 3) rgb(0 0 0 / 0.3), inset 0 1px 0 rgb(255 255 255 / 0.18);
+  transition: transform 0.25s var(--ease-out), filter 0.2s;
+}
+
+.ph__icon svg {
+  width: 66%;
+  height: 66%;
+}
+
+.ph__icon em {
+  position: absolute;
+  top: calc(var(--u) * -1.6);
+  right: calc(var(--u) * -1.6);
+  display: grid;
+  place-items: center;
+  min-width: calc(var(--u) * 5.6);
+  height: calc(var(--u) * 5.6);
+  border-radius: 999px;
+  background: #ff3b30;
+  font-size: calc(var(--u) * 3.6);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.ph__app:hover .ph__icon {
+  transform: translateY(calc(var(--u) * -1.2)) scale(1.06);
+}
+
+.ph__app:active .ph__icon {
+  transform: scale(0.9);
+  filter: brightness(0.85);
+}
+
+.ph__app:focus-visible {
+  outline: none;
+}
+
+.ph__app:focus-visible .ph__icon {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.ph__name {
+  display: none;
+}
+
+/* The apps' own colours */
+.is-mail.ph__icon,
+.ph__app.is-mail .ph__icon,
+.ph__mini.is-mail,
+.ph__launch.is-mail { background: linear-gradient(180deg, #4fb2ff, #1a6cf0); color: #fff; }
+.ph__app.is-linkedin .ph__icon,
+.ph__mini.is-linkedin,
+.ph__launch.is-linkedin { background: #0a66c2; color: #fff; }
+.ph__app.is-x .ph__icon,
+.ph__mini.is-x,
+.ph__launch.is-x { background: #000; color: #fff; box-shadow: 0 calc(var(--u) * 1.2) calc(var(--u) * 3) rgb(0 0 0 / 0.3), inset 0 0 0 1px rgb(255 255 255 / 0.22); }
+.ph__app.is-github .ph__icon,
+.ph__mini.is-github,
+.ph__launch.is-github { background: #24292f; color: #fff; box-shadow: 0 calc(var(--u) * 1.2) calc(var(--u) * 3) rgb(0 0 0 / 0.3), inset 0 0 0 1px rgb(255 255 255 / 0.16); }
+
+.ph__home {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: calc(var(--u) * 2.4);
+  width: 36%;
+  height: calc(var(--u) * 1.4);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.8);
+  transform: translateX(-50%);
+}
+
+/* App launch: the app's colour grows out of its icon, then its logo shows. */
+.ph__launch {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: calc(var(--u) * 4);
+  animation: ph-bloom 1.9s cubic-bezier(0.3, 0.9, 0.3, 1) both;
+}
+
+.ph__launch-icon {
+  width: calc(var(--u) * 26);
+  animation: ph-mark 1.9s both;
+}
+
+.ph__launch-icon svg {
+  width: 100%;
+}
+
+.ph__launch-name {
+  font-size: calc(var(--u) * 5);
+  font-weight: 600;
+  animation: ph-mark 1.9s both;
+}
+
+@keyframes ph-bloom {
+  0% { clip-path: circle(calc(var(--u) * 8) at var(--ox) var(--oy)); border-radius: 30%; }
+  30% { clip-path: circle(150% at var(--ox) var(--oy)); }
+  80% { clip-path: circle(150% at var(--ox) var(--oy)); opacity: 1; }
+  100% { clip-path: circle(150% at var(--ox) var(--oy)); opacity: 0; }
+}
+
+@keyframes ph-mark {
+  0%, 18% { opacity: 0; transform: scale(0.7); }
+  38%, 78% { opacity: 1; transform: none; }
+  100% { opacity: 0; }
+}
+
+.ph__cap {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  text-align: center;
+}
+
+.ph__cap span:last-child {
+  opacity: 0.7;
+}
+
+@media (max-width: 760px) {
+  .ph {
+    --w: min(78vw, 310px);
+    margin-top: 8px;
+  }
+  .ph__body {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ph__body,
+  .ph__wall,
+  .ph__note,
+  .ph__island {
+    transition: none;
+  }
+  .ph__launch,
+  .ph__launch-icon,
+  .ph__launch-name,
+  .ph__avail i,
+  .ph__spin {
+    animation: none;
+  }
+  .ph__body {
+    transform: none;
+  }
+}
+
+.ph__lock,
+.ph__mailbar {
+  display: none;
+}

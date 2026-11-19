@@ -1,0 +1,115 @@
+/*
+  A lower third, like subtitles on a commentary track: a solid ink plate at the bottom of the
+  screen (no glass, no blur), a mono label, one plain sentence at a time.
+*/
+.cm {
+  position: absolute;
+  z-index: 3;
+  left: 4%;
+  right: 4%;
+  bottom: 5%;
+  display: grid;
+  gap: 6px;
+  max-width: 560px;
+  padding: 12px 16px 13px;
+  border-radius: 6px;
+  background: #121212;
+  box-shadow: 0 18px 40px -18px rgb(0 0 0 / 0.6);
+  color: #f2efe8;
+  pointer-events: none;
+  animation: cm-in 0.5s var(--ease-out) both;
+}
+
+@keyframes cm-in {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+.cm__tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(242 239 232 / 0.55);
+}
+
+.cm__tag > span:first-child {
+  color: #f2efe8;
+}
+
+.cm__count {
+  font-variant-numeric: tabular-nums;
+}
+
+.cm__ticks {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.cm__ticks i {
+  position: relative;
+  width: 18px;
+  height: 2px;
+  overflow: hidden;
+  background: rgb(242 239 232 / 0.18);
+}
+
+.cm__ticks i.is-done {
+  background: rgb(242 239 232 / 0.7);
+}
+
+.cm__ticks i.is-now::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--p-accent, #f2efe8);
+  transform-origin: left;
+  transform: scaleX(var(--t, 0));
+  transition: transform 0.2s linear;
+}
+
+.cm__line {
+  font-size: clamp(0.78rem, 1vw, 0.92rem);
+  line-height: 1.45;
+  animation: cm-line 0.45s var(--ease-out) both;
+}
+
+.cm__line b {
+  font-weight: 600;
+}
+
+@keyframes cm-line {
+  from { opacity: 0; filter: blur(3px); transform: translateY(4px); }
+}
+
+/* On big screens the phone sits over the lower left of the screen, so stay clear of it. */
+@media (min-width: 1081px) {
+  .cm {
+    left: 22%;
+  }
+}
+
+@media (max-width: 760px) {
+  .cm {
+    left: 3%;
+    right: 27%;
+    bottom: 4%;
+    padding: 8px 10px 9px;
+  }
+  .cm__line {
+    font-size: 0.7rem;
+  }
+  .cm__ticks i {
+    width: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm,
+  .cm__line {
+    animation: none;
+  }
+}

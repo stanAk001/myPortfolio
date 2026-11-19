@@ -1,0 +1,253 @@
+/*
+  Poster layout: a masthead rule, a headline as big as the screen allows, then the copy on the left
+  and the live work on the right. The accent shows up once, as a solid block.
+*/
+.sr {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
+  column-gap: clamp(24px, 4vw, 72px);
+  padding: calc(var(--nav-h) + 2vh) var(--gutter) 4vh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.sr__ambient {
+  display: none;
+}
+
+/* ---------- Masthead ---------- */
+
+.sr__masthead {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--bone);
+}
+
+.sr__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--bone);
+}
+
+.sr__dot {
+  width: 8px;
+  height: 8px;
+  background: var(--signal);
+}
+
+/* ---------- Headline ---------- */
+
+.sr__headline {
+  grid-column: 1 / -1;
+  margin: clamp(14px, 2.6vh, 32px) 0 clamp(20px, 4vh, 48px);
+  font-size: clamp(3rem, min(10.4vw, 19svh), 12.5rem);
+  font-weight: 600;
+  line-height: 0.88;
+  letter-spacing: -0.06em;
+}
+
+.sr__headline .split__word {
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+  vertical-align: top;
+}
+
+/* The key phrase is printed in reverse: black on a white block. */
+.sr__headline em {
+  display: inline-block;
+  padding: 0 0.12em 0.02em 0.06em;
+  margin-left: -0.02em;
+  background: var(--bone);
+  color: var(--ink);
+  letter-spacing: -0.03em;
+}
+
+/* ---------- Copy ---------- */
+
+.sr__copy {
+  display: grid;
+  gap: clamp(18px, 3vh, 28px);
+  align-content: start;
+  padding-top: 18px;
+  border-top: 1px solid var(--bone-faint);
+}
+
+.sr__sub {
+  max-width: 34ch;
+  font-size: var(--fs-md);
+  line-height: 1.45;
+  color: var(--bone);
+}
+
+.sr__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ---------- Stage ---------- */
+
+.sr__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.62fr);
+  align-items: end;
+  gap: 18px clamp(20px, 2.6vw, 40px);
+  min-height: 0;
+}
+
+.sr__devices {
+  position: relative;
+  grid-row: 1 / span 2;
+  padding: 0 0 6% 14%;
+  transform-style: preserve-3d;
+}
+
+.sr__laptop {
+  width: 100%;
+}
+
+.sr__phone {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 22%;
+  transform: translateZ(60px);
+}
+
+.sr__media {
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.sr__media.is-on {
+  opacity: 1;
+}
+
+.sr__caption {
+  display: grid;
+  gap: 10px;
+  align-content: end;
+}
+
+.sr__live {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--bone);
+}
+
+.sr__what {
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  line-height: 1.4;
+  color: var(--bone-dim);
+  animation: sr-fade 0.8s var(--ease-out);
+}
+
+.sr__what b {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--bone);
+  font-size: 1.6em;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+@keyframes sr-fade {
+  from { opacity: 0; transform: translateY(8px); }
+}
+
+.sr__tabs {
+  display: grid;
+  border-top: 1px solid var(--bone);
+}
+
+.sr__tabs button {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--bone-faint);
+  text-align: left;
+  font-size: 0.9rem;
+  color: var(--bone-dim);
+  transition: color 0.3s;
+}
+
+.sr__tabs button::after {
+  content: '→';
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.sr__tabs button[aria-current],
+.sr__tabs button:hover {
+  color: var(--bone);
+}
+
+.sr__tabs button[aria-current]::after {
+  opacity: 1;
+}
+
+.sr__tabs i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  overflow: hidden;
+}
+
+.sr__tabs button[aria-current] i::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--signal);
+  transform-origin: left;
+}
+
+.sr__tabs i.is-running::after {
+  animation: sr-progress var(--slide) linear forwards;
+}
+
+@keyframes sr-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media (max-width: 960px) {
+  .sr {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    align-content: start;
+    padding-top: calc(var(--nav-h) + 12px);
+  }
+  .sr__count {
+    display: none;
+  }
+  .sr__headline {
+    font-size: clamp(2.8rem, 15vw, 5rem);
+  }
+  .sr__copy {
+    margin-bottom: 36px;
+  }
+  .sr__stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sr__devices {
+    grid-row: auto;
+    padding-left: 12%;
+  }
+  .sr__phone {
+    width: 26%;
+  }
+}

@@ -1,0 +1,96 @@
+.term {
+  position: relative;
+  background: #0a0a09;
+  border: 1px solid var(--bone-faint);
+  box-shadow: 0 50px 100px -50px rgb(0 0 0 / 0.9);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  cursor: text;
+}
+
+.term__bar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--bone-faint);
+  color: var(--bone-dim);
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.term__dots {
+  display: flex;
+  gap: 6px;
+}
+
+.term__dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.12);
+}
+
+.term__dots i:first-child {
+  background: var(--signal);
+}
+
+.term__screen {
+  height: clamp(300px, 46vh, 440px);
+  overflow-y: auto;
+  padding: 18px 18px 22px;
+  line-height: 1.75;
+  scrollbar-width: thin;
+}
+
+.term__line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--bone);
+}
+
+.term__line--dim { color: var(--bone-dim); }
+.term__line--cmd { color: var(--bone); margin-top: 8px; }
+.term__line--err { color: #ff7a59; }
+.term__line--ok { color: #5fd39a; }
+
+.term__line a {
+  border-bottom: 1px dashed var(--bone-dim);
+}
+
+.term__line a:hover {
+  color: var(--signal);
+  border-color: var(--signal);
+}
+
+.term__input {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.term__prompt {
+  color: var(--signal);
+  white-space: nowrap;
+}
+
+.term__input input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  outline: 0;
+  color: var(--bone);
+  font: inherit;
+  caret-color: var(--signal);
+}
+
+@media (max-width: 600px) {
+  .term {
+    font-size: 0.74rem;
+  }
+  .term__bar .label {
+    display: none;
+  }
+}

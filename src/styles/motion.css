@@ -1,0 +1,131 @@
+/*
+  The shared reveal animations: things rise a little and fade in, and lines slide up out of a mask.
+  Everything else on the site is a variation of these two.
+*/
+
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.9s var(--ease-out) var(--d, 0ms),
+    transform 1.2s var(--ease-out) var(--d, 0ms);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Masked lines: the parent doesn't fade, its lines do the work. */
+.reveal-lines {
+  opacity: 1;
+  transform: none;
+}
+
+.line {
+  display: block;
+  overflow: hidden;
+  /* Room for descenders and italic overhang inside the mask. */
+  padding: 0 0.06em 0.1em;
+  margin: 0 -0.06em -0.1em;
+}
+
+.line > span {
+  display: block;
+}
+
+.reveal-lines .line > span {
+  transform: translate3d(0, 110%, 0);
+  transition: transform 1.2s var(--ease-out) calc(var(--d, 0ms) + var(--i, 0) * 90ms);
+}
+
+.reveal-lines.is-in .line > span {
+  transform: none;
+}
+
+.split__word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.split__char {
+  display: inline-block;
+}
+
+.magnetic {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-lines .line > span {
+    transform: none !important;
+    transition: opacity 0.4s linear !important;
+  }
+}
+
+/*
+  Section titles get a short line drawn first, with the words rising in a beat after it.
+*/
+.ap-title {
+  position: relative;
+  padding-bottom: 18px;
+}
+
+.ap-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: min(140px, 30%);
+  height: 2px;
+  background: var(--signal);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.8s var(--ease-out);
+}
+
+.ap-title.is-in::after {
+  transform: scaleX(1);
+}
+
+.ap-title .line > span {
+  transition-delay: calc(0.25s + var(--i, 0) * 90ms) !important;
+}
+
+/* The contact card swings open on its left edge. */
+.reveal-hinge {
+  opacity: 0;
+  transform: perspective(1600px) rotateY(-16deg);
+  transform-origin: left center;
+  transition:
+    opacity 0.9s var(--ease-out),
+    transform 1.4s var(--ease-out);
+}
+
+.reveal-hinge.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Press feedback: things you press give a little. */
+.g-btn:active,
+.px__link:active,
+.ct__copy:active,
+.ct__social:active,
+.nav__cta:active,
+.bc__tab:active,
+.hl__tag:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ap-title::after {
+    transform: scaleX(1);
+    transition: none;
+  }
+  .reveal-hinge {
+    transform: none;
+    transition: opacity 0.4s linear;
+  }
+}

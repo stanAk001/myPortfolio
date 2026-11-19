@@ -1,0 +1,134 @@
+/*
+  Handwritten notes in ballpoint blue. The only hand-made thing on the page. Lighter in dark mode
+  so it stays readable.
+*/
+.scr {
+  --pen: #2b47c4;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Caveat', 'Segoe Print', cursive;
+  font-weight: 600;
+  font-size: clamp(1.05rem, 1.35vw, 1.4rem);
+  line-height: 1.05;
+  color: var(--pen);
+  transform: rotate(-3deg);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+:root[data-theme='dark'] .scr,
+.tone-ink .scr,
+.scr.is-on-dark {
+  --pen: #9db0ff;
+}
+
+.scr.is-down,
+.scr.is-up {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.scr__arrow {
+  flex: none;
+  width: 46px;
+  height: 18px;
+  overflow: visible;
+}
+
+.scr__arrow.is-down,
+.scr__arrow.is-up {
+  width: 20px;
+  height: 40px;
+  margin-left: 18px;
+}
+
+.scr__arrow path {
+  fill: none;
+  stroke: var(--pen);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: scr-draw 0.9s 0.4s ease-out forwards;
+  animation-play-state: paused;
+}
+
+.scr__text {
+  clip-path: inset(0 100% 0 0);
+  animation: scr-write 0.7s steps(18) forwards;
+  animation-play-state: paused;
+}
+
+/* Writes itself in the first time the note scrolls into view. */
+.is-in .scr__arrow path,
+.is-in .scr__text,
+.scr.is-in .scr__arrow path,
+.scr.is-in .scr__text {
+  animation-play-state: running;
+}
+
+@keyframes scr-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes scr-write {
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scr__arrow path,
+  .scr__text {
+    animation: none;
+    stroke-dashoffset: 0;
+    clip-path: none;
+  }
+}
+
+/* ---------- Where the notes sit ---------- */
+.rl {
+  position: relative;
+}
+
+/* Below the recording, pointing up. Above it, the fixed nav covers it on short screens. */
+.rl__scr {
+  position: absolute;
+  z-index: 3;
+  right: 3%;
+  top: calc(100% + 6px);
+}
+
+.pj__heading {
+  position: relative;
+}
+
+/* Taken out of the flow so it never pushes the stage down. */
+.pj__scr {
+  position: absolute;
+  right: 0;
+  top: 4px;
+}
+
+.ct__phone {
+  position: relative;
+}
+
+.ct__scr {
+  position: absolute;
+  z-index: 3;
+  right: calc(50% + min(150px, 15vw));
+  bottom: 7%;
+}
+
+.hu__off .scr {
+  transform: rotate(-4deg);
+}
+
+@media (max-width: 760px) {
+  .rl__scr,
+  .ct__scr,
+  .pj__scr {
+    display: none;
+  }
+}

@@ -874,9 +874,10 @@ section.ct:not(.ct--compact) .ct__title {
   opacity: 0.7;
 }
 
+/* On a phone it's a phone inside a phone, so keep it well short of filling the screen. */
 @media (max-width: 760px) {
   .ph {
-    --w: min(78vw, 310px);
+    --w: min(60vw, 28vh, 250px);
     margin-top: 8px;
   }
   .ph__body {

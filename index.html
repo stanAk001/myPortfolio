@@ -5,9 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Akeem — Full-stack PERN developer</title>
     <meta name="description" content="Akeem is a full-stack PERN developer in Ibadan, Nigeria. He designs, builds and ships web products: Toolhaven, StockAcademia, KeemStore, Primetime and Hadex." />
-    <meta name="theme-color" content="#ece6db" />
+    <meta name="theme-color" content="#111417" />
     <script>
-      try { if (localStorage.getItem('theme') === 'dark') document.documentElement.dataset.theme = 'dark' } catch {}
+      // Dark by default. Light only if the visitor switched to it before.
+      var light = false
+      try { light = localStorage.getItem('theme') === 'light' } catch {}
+      document.documentElement.dataset.theme = light ? 'light' : 'dark'
+      if (light) document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ece6db')
     </script>
 
     <!-- Link previews (WhatsApp, LinkedIn, X, Slack). __SITE_URL__ is filled in at build time, see vite.config.js. -->

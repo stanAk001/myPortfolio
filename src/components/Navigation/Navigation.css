@@ -36,6 +36,15 @@
   border-bottom-color: color-mix(in srgb, var(--ink-text) 8%, transparent);
 }
 
+/* On phones the first screen is dark in both themes, so in light mode a see-through bar would put
+   dark text on a dark screen. Give it its paper from the start. */
+@media (max-width: 760px) {
+  :root:not([data-theme='dark']) .nav::before {
+    background: rgb(242 238 230 / 0.96);
+    border-bottom-color: color-mix(in srgb, var(--ink-text) 8%, transparent);
+  }
+}
+
 .nav.is-open::before {
   background: transparent;
   border-color: transparent;
